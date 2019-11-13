@@ -18,10 +18,10 @@ app.use(bodyParser.json());
 /** RECIPE ROUTES */
 
 /**
- * GET /recipes
- * purpose: get all recipes
+ * GET /categories
+ * purpose: get all categories
  */
-app.get('/recipes', (req, res) => {
+app.get('/categories', (req, res) => {
     // Want to return an array of all the lists in the database
     Categories.find({}).then((categories) => {
         res.send(categories);
@@ -29,10 +29,10 @@ app.get('/recipes', (req, res) => {
 });
 
 /**
- * POST /recipes
- * Purpose: Create a recipe
+ * POST /categories
+ * Purpose: Create a category
  */
-app.post('/recipes', (req, res) => {
+app.post('/categories', (req, res) => {
     // Want to create a new recipe and return the new recipe back to the user (including id)
     // The recipe information (fields) will be passed in via the JSON request body
     let categoryName = req.body.categoryName;
@@ -48,10 +48,10 @@ app.post('/recipes', (req, res) => {
 });
 
 /**
- * PATCH /recipes/:id
- * purpose: Update a specified recipe
+ * PATCH /categories/:id
+ * purpose: Update a specified category
  */
-app.patch('/recipes/:id', (req, res) => {
+app.patch('/categories/:id', (req, res) => {
     // Want to update the specified recipe (recipe id in the url) with new values specified in the JSON body of request
     Categories.findOneAndUpdate({ _id: req.params.id }, {
         $set: req.body
@@ -61,10 +61,10 @@ app.patch('/recipes/:id', (req, res) => {
 });
 
 /**
- * DELETE /recipes/:id
- * purpose: Delete specified recipe
+ * DELETE /categories/:id
+ * purpose: Delete specified category
  */
-app.delete('/recipes/:id', (req, res) => {
+app.delete('/categories/:id', (req, res) => {
     // Want to delete the specified Recipe (recipe id in url)
     Categories.findOneAndDelete({ _id: req.params.id})
     .then((removedCategory) => {
