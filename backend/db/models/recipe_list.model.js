@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const RecipeSchema = new mongoose.Schema({
-    title: {
+    recipeName: {
         type: String,
         required: true,
         minlength: 1,
@@ -19,7 +19,7 @@ const RecipeSchema = new mongoose.Schema({
         minlength: 1,
         trim: true
     },
-    _listId: {
+    _categoryId: {
         type: mongoose.Types.ObjectId,
         required: true
     }

@@ -72,6 +72,46 @@ app.delete('/categories/:id', (req, res) => {
     })
 });
 
+
+/**
+ * GET /categories/:categoryId/recipes
+ * purpose: Get all recipes for a specified category
+ */
+app.get('/categories/:categoryId/recipes', (req, res) => {
+    // Want to return all recipes that belong to a certain category
+    Recipe.find({
+        _categoryId: req.params.categoryId
+    })
+    .then((recipes) => {
+        res.send(recipes);
+    })
+});
+
+/**
+ * POST /categories/:categoryId/recipes
+ * Purpose: Create a new recipe in a specified category
+ */
+app.post('/categories/:categoryId/recipes', (req, res) => {
+    // Want to create a new recipe and return the new recipe back to the user (including id)
+    // The recipe information (fields) will be passed in via the JSON request body
+    let recipeName = req.body.recipeName;
+    let ingredientsInfo = req.body.ingredientsInfo;
+    let directions = req.body.directions;
+
+
+    let newRecipe = new Recipe({
+        recipeName,
+        ingredientsInfo,
+        directions,
+        _categoryId: req.params.categoryId
+    })
+
+    newRecipe.save().then((recipeDoc) => {
+        res.send(recipeDoc);
+    })
+
+});
+
 app.listen(port, () => {
     console.log("Server is listening on port", port);
 })

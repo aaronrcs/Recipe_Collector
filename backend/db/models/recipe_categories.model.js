@@ -6,10 +6,6 @@ const RecipeCategoriesSchema = new mongoose.Schema({
         required: true,
         minlength: 1,
         trim: true
-    },
-    _categoryId: {
-        type: mongoose.Types.ObjectId,
-        required: true
     }
 })
 
