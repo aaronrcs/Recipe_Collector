@@ -87,6 +87,18 @@ app.get('/categories/:categoryId/recipes', (req, res) => {
     })
 });
 
+// Purpose: Return one recipe based on recipeId
+app.get('/categories/:categoryId/recipes/:recipeId', (req, res) => {
+    // Want to return all recipes that belong to a certain category
+    Recipe.findOne({
+        _id: req.params.recipeId,
+        _categoryId: req.params.categoryId
+    })
+    .then((recipe) => {
+        res.send(recipe);
+    })
+});
+
 /**
  * POST /categories/:categoryId/recipes
  * Purpose: Create a new recipe in a specified category
@@ -110,6 +122,37 @@ app.post('/categories/:categoryId/recipes', (req, res) => {
         res.send(recipeDoc);
     })
 
+});
+
+/**
+ * PATCH /categories/:categoryId/recipes/:recipeId
+ * purpose: Update an existing recipe
+ */
+app.patch('/categories/:categoryId/recipes/:recipeId', (req, res) => {
+    // Want to update an existing recipe (specified by recipeId)
+    Recipe.findOneAndUpdate({
+        _id: req.params.recipeId,
+        _categoryId: req.params.categoryId
+    },{
+        $set: req.body
+    }
+    ).then(() => {
+        res.send("Updated Successfully!")
+    })
+});
+
+/**
+ * DELETE /categories/:categoryId/recipes/:recipeId
+ * purpose: Delete an existing recipe
+ */
+app.delete('/categories/:categoryId/recipes/:recipeId', (req, res) => {
+    // Want to update an existing recipe (specified by recipeId)
+    Recipe.findOneAndRemove({
+        _id: req.params.recipeId,
+        _categoryId: req.params.categoryId
+    }).then((removedRecipe) => {
+        res.send(removedRecipe);
+    })
 });
 
 app.listen(port, () => {
