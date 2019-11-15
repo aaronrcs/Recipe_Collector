@@ -1,4 +1,4 @@
-<div class="centered-content">
+<div class="recipe-view-content">
     <div class="task-manager-container">
 
         <!-- Sidebar Container -->
@@ -7,33 +7,32 @@
                 Categories
             </h1>
             <div class="list-menu">
-                <a class="list-menu-item is-active">
-                    <p>Category 1</p>
-                </a>
-                <a class="list-menu-item">
-                    <p>Category 2</p>
-                </a>
-                <a class="list-menu-item">
-                    <p>Category 3</p>
+                <a class="list-menu-item" *ngFor="let item of categories" [routerLink]="['/categories', item._id]" routerLinkActive="is-active">
+                    <p>{{item.categoryName}}</p>
                 </a>
             </div>
 
-            <button class="button is-primary has-text-white"> + New Category</button>
+            <button class="button is-primary has-text-white" routerLink="/new-category"> + New Category</button>
         </div>
 
-        <!-- Task List Container -->
+        <!-- Recipe List Container -->
         <div class="task-list-container has-background-light">
             <h1 class="title has-text-primary">
                 Recipe Lists
             </h1>
 
-            <!-- Task Elements -->
-            <div class="task">
-                <p>Recipe 1</p>
+            <!-- Object Values for Recipe List -->
+            <!-- recipeName,
+                ingredientsInfo,
+                directions, 
+            -->
+            <!-- Current Recipes -->
+            <div class="task" *ngFor="let item of recipes">
+                <p>{{item.recipeName}}</p>
+                <p>{{item.ingredientsInfo}}</p>
+                <p>{{item.directions}}</p>
             </div>
-            <div class="task">
-                <p>Recipe 2</p>
-            </div>
+
         </div>
 
     </div>

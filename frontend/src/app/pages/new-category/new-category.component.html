@@ -1,0 +1,14 @@
+<div class="new-category-content">
+    <div class="modal-box">
+        <h1 class="title">
+            Create a new Category
+        </h1>
+
+        <input #categoryTitleInput class="input has-background-light is-medium" type="text" placeholder="Enter list name...">
+        <br><br>
+        <div class="buttons is-right">
+            <button class="button is-medium" routerLink="/">Cancel</button>
+            <button class="button is-primary has-text-white is-medium" (click)="createCategory(categoryTitleInput.value)">Create</button>
+        </div>
+    </div>
+</div>
