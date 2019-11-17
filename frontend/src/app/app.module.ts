@@ -7,18 +7,22 @@ import { AppComponent } from './app.component';
 import { RecipeViewComponent } from './pages/recipe-view/recipe-view.component';
 
 import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
 import { NewCategoryComponent } from './pages/new-category/new-category.component';
+import { NewRecipeComponent } from './pages/new-recipe/new-recipe.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     RecipeViewComponent,
-    NewCategoryComponent
+    NewCategoryComponent,
+    NewRecipeComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

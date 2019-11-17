@@ -125,7 +125,6 @@ app.post('/categories/:categoryId/recipes', (req, res) => {
     let ingredientsInfo = req.body.ingredientsInfo;
     let directions = req.body.directions;
 
-
     let newRecipe = new Recipe({
         recipeName,
         ingredientsInfo,

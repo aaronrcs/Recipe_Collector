@@ -1,5 +1,7 @@
+import { Categories } from './../../models/categories.models';
 import { RecipeService } from 'src/app/recipe.service';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-new-category',
@@ -8,15 +10,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NewCategoryComponent implements OnInit {
 
-  constructor( private recipeService: RecipeService) { }
+  constructor( private recipeService: RecipeService, private router: Router) { }
 
   ngOnInit() {
   }
 
   createCategory(categoryName: string){
-    return this.recipeService.createCategory(categoryName).subscribe((response: any) => {
-      console.log("Response: ", response);
+    return this.recipeService.createCategory(categoryName).subscribe((category: Categories) => {
+      console.log("Response: ", category);
       // Now we navigate /categories/response._id
+      
+      this.router.navigate(['/categories', category._id]);
     })
 
   }
