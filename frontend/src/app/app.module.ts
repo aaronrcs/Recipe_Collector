@@ -10,13 +10,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NewCategoryComponent } from './pages/new-category/new-category.component';
 import { NewRecipeComponent } from './pages/new-recipe/new-recipe.component';
+import { LoginPageComponent } from './pages/login-page/login-page.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     RecipeViewComponent,
     NewCategoryComponent,
-    NewRecipeComponent
+    NewRecipeComponent,
+    LoginPageComponent
   ],
   imports: [
     BrowserModule,

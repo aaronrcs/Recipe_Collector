@@ -1,3 +1,4 @@
+import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { NewRecipeComponent } from './pages/new-recipe/new-recipe.component';
 import { NewCategoryComponent } from './pages/new-category/new-category.component';
 import { RecipeViewComponent } from './pages/recipe-view/recipe-view.component';
@@ -7,6 +8,7 @@ import { Routes, RouterModule } from '@angular/router';
 const routes: Routes = [
   { path: '', redirectTo:'categories', pathMatch: 'full'},
   { path: 'new-category', component: NewCategoryComponent},
+  { path: 'login', component: LoginPageComponent},
   { path: 'new-recipe', component: NewRecipeComponent},
   { path: 'categories', component: RecipeViewComponent},
   { path: 'categories/:categoryId', component: RecipeViewComponent},
