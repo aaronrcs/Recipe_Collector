@@ -18,13 +18,18 @@ export class RecipeViewComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
-      /**
+      if(params.categoryId){
+        /**
        * Passing the active Params (categoryId) to getRecipes
        * to obtain all recipes for a certain Category
        */
-      this.recipeService.getRecipes(params.categoryId).subscribe((recipes: RecipeDetails[]) => {
-        this.recipes = recipes;
-      })
+        this.recipeService.getRecipes(params.categoryId).subscribe((recipes: RecipeDetails[]) => {
+          this.recipes = recipes;
+        })
+      } else {
+        this.recipes = undefined;
+      }
+      
     })
 
     // Subscribing to Observeable to get an array of all existing Categories

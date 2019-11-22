@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const { mongoose } = require('./db/mongoose');
+const jwt = require('jsonwebtoken');
 
 let port = process.env.PORT || 3000;
 
@@ -26,6 +27,24 @@ app.use(function (req, res, next) {
 
     next();
 });
+
+// check whether the request has a valid JWT access token
+let authenticate = (req, res, next) => {
+    let token = req.header('x-access-token');
+
+    // verify the JWT
+    jwt.verify(token, User.getJWTSecret(), (err, decoded) => {
+        if (err) {
+            // there was an error
+            // jwt is invalid - * DO NOT AUTHENTICATE *
+            res.status(401).send(err);
+        } else {
+            // jwt is valid
+            req.user_id = decoded._id;
+            next();
+        }
+    });
+}
 
 // Verify Refresh Token Middleware (which will be verifying the session)
 let verifySession = (req, res, next) => {
@@ -89,9 +108,12 @@ let verifySession = (req, res, next) => {
  * GET /categories
  * purpose: get all categories
  */
-app.get('/categories', (req, res) => {
+app.get('/categories', authenticate, (req, res) => {
     // Want to return an array of all the lists in the database
-    Categories.find({}).then((categories) => {
+    Categories.find({
+        _userId: req.user_id
+    })
+    .then((categories) => {
         res.send(categories);
     })
 });
@@ -100,13 +122,14 @@ app.get('/categories', (req, res) => {
  * POST /categories
  * Purpose: Create a category
  */
-app.post('/categories', (req, res) => {
+app.post('/categories', authenticate, (req, res) => {
     // Want to create a new recipe and return the new recipe back to the user (including id)
     // The recipe information (fields) will be passed in via the JSON request body
     let categoryName = req.body.categoryName;
 
     let newCategory = new Categories({
-        categoryName
+        categoryName,
+        _userId: req.user_id
     })
 
     newCategory.save().then((categoryDoc) => {
@@ -119,9 +142,9 @@ app.post('/categories', (req, res) => {
  * PATCH /categories/:id
  * purpose: Update a specified category
  */
-app.patch('/categories/:id', (req, res) => {
+app.patch('/categories/:id', authenticate, (req, res) => {
     // Want to update the specified recipe (recipe id in the url) with new values specified in the JSON body of request
-    Categories.findOneAndUpdate({ _id: req.params.id }, {
+    Categories.findOneAndUpdate({ _id: req.params.id, _userId: req.user_id }, {
         $set: req.body
     }).then(() => {
         res.send('Updated Successfully!');
@@ -132,11 +155,17 @@ app.patch('/categories/:id', (req, res) => {
  * DELETE /categories/:id
  * purpose: Delete specified category
  */
-app.delete('/categories/:id', (req, res) => {
+app.delete('/categories/:id', authenticate, (req, res) => {
     // Want to delete the specified Recipe (recipe id in url)
-    Categories.findOneAndDelete({ _id: req.params.id})
+    Categories.findOneAndDelete({ 
+        _id: req.params.id,
+        _userId: req.user_id
+    })
     .then((removedCategory) => {
         res.send(removedCategory);
+        
+        // Delete all recipes from a certain Category
+        deleteRecipesFromCategories(removedCategory._id);
     })
 });
 
@@ -145,7 +174,7 @@ app.delete('/categories/:id', (req, res) => {
  * GET /categories/:categoryId/recipes
  * purpose: Get all recipes for a specified category
  */
-app.get('/categories/:categoryId/recipes', (req, res) => {
+app.get('/categories/:categoryId/recipes', authenticate, (req, res) => {
     // Want to return all recipes that belong to a certain category
     Recipe.find({
         _categoryId: req.params.categoryId
@@ -171,22 +200,42 @@ app.get('/categories/:categoryId/recipes/:recipeId', (req, res) => {
  * POST /categories/:categoryId/recipes
  * Purpose: Create a new recipe in a specified category
  */
-app.post('/categories/:categoryId/recipes', (req, res) => {
+app.post('/categories/:categoryId/recipes', authenticate, (req, res) => {
     // Want to create a new recipe and return the new recipe back to the user (including id)
     // The recipe information (fields) will be passed in via the JSON request body
-    let recipeName = req.body.recipeName;
-    let ingredientsInfo = req.body.ingredientsInfo;
-    let directions = req.body.directions;
+    
+    Categories.findOne({
+        _id: req.params.categoryId,
+        _userId: req.user_id
+    }).then((category) => {
+        if (category) {
+            // category object with the specified conditions was found
+            // therefore the currently authenticated user can create new tasks
+            return true;
+        }
 
-    let newRecipe = new Recipe({
-        recipeName,
-        ingredientsInfo,
-        directions,
-        _categoryId: req.params.categoryId
-    })
+        // else - the category object is undefined
+        return false;
+    }).then((canCreateRecipe) => {
+        if (canCreateRecipe) {
+            let recipeName = req.body.recipeName;
+            let ingredientsInfo = req.body.ingredientsInfo;
+            let directions = req.body.directions;
 
-    newRecipe.save().then((recipeDoc) => {
-        res.send(recipeDoc);
+            let newRecipe = new Recipe({
+                recipeName,
+                ingredientsInfo,
+                directions,
+                _categoryId: req.params.categoryId
+            })
+        
+            newRecipe.save().then((recipeDoc) => {
+                res.send(recipeDoc);
+            })
+        } else {
+            console.log("404 not found");
+            res.sendStatus(404);
+        }
     })
 
 });
@@ -195,31 +244,74 @@ app.post('/categories/:categoryId/recipes', (req, res) => {
  * PATCH /categories/:categoryId/recipes/:recipeId
  * purpose: Update an existing recipe
  */
-app.patch('/categories/:categoryId/recipes/:recipeId', (req, res) => {
+app.patch('/categories/:categoryId/recipes/:recipeId', authenticate, (req, res) => {
     // Want to update an existing recipe (specified by recipeId)
-    Recipe.findOneAndUpdate({
-        _id: req.params.recipeId,
-        _categoryId: req.params.categoryId
-    },{
-        $set: req.body
-    }
-    ).then(() => {
-        res.send("Updated Successfully!")
+
+    Categories.findOne({
+        _id: req.params.categoryId,
+        _userId: req.user_id
+    }).then((category) => {
+        if (category) {
+            // category object with the specified conditions was found
+            // therefore the currently authenticated user can make updates to recipes within specified category
+            return true;
+        }
+
+        // else - the category object is undefined
+        return false;
+    }).then((canUpdateRecipes) => {
+        if(canUpdateRecipes){
+            // The currently authenticated user can update recipes
+
+            Recipe.findOneAndUpdate({
+                _id: req.params.recipeId,
+                _categoryId: req.params.categoryId
+            },{
+                $set: req.body
+            }
+            ).then(() => {
+                res.send("Updated Successfully!")
+            })
+        } else {
+            console.log("404 not found");
+            res.sendStatus(404);
+        }
     })
+    
 });
 
 /**
  * DELETE /categories/:categoryId/recipes/:recipeId
  * purpose: Delete an existing recipe
  */
-app.delete('/categories/:categoryId/recipes/:recipeId', (req, res) => {
+app.delete('/categories/:categoryId/recipes/:recipeId', authenticate, (req, res) => {
     // Want to update an existing recipe (specified by recipeId)
-    Recipe.findOneAndRemove({
-        _id: req.params.recipeId,
-        _categoryId: req.params.categoryId
-    }).then((removedRecipe) => {
-        res.send(removedRecipe);
+    Categories.findOne({
+        _id: req.params.categoryId,
+        _userId: req.user_id
+    }).then((category) => {
+        if (category) {
+            // category object with the specified conditions was found
+            // therefore the currently authenticated user can make updates to recipes within specified category
+            return true;
+        }
+
+        // else - the category object is undefined
+        return false;
+    }).then((canRemoveRecipe) => {
+        if(canRemoveRecipe){
+            Recipe.findOneAndRemove({
+                _id: req.params.recipeId,
+                _categoryId: req.params.categoryId
+            }).then((removedRecipe) => {
+                res.send(removedRecipe);
+            })
+        } else {
+            console.log("404 not found");
+            res.sendStatus(404);
+        }
     })
+    
 });
 
 /** USER ROUTES */
@@ -296,6 +388,15 @@ app.get('/users/me/access-token', verifySession, (req, res) => {
         res.status(400).send(error);
     });
 })
+
+/* HELPER METHODS */
+let deleteRecipesFromCategories = (_categoryId) => {
+    Recipe.deleteMany({
+        _categoryId
+    }).then(() => {
+        console.log("Recipes from " + _categoryId + " were deleted!");
+    })
+}
 
 app.listen(port, () => {
     console.log("Server is listening on port", port);

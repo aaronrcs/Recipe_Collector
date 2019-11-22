@@ -17,27 +17,42 @@
 
         <!-- Recipe List Container -->
         <div class="task-list-container has-background-light">
-            <h1 class="title has-text-primary">
-                Recipe Lists
-            </h1>
+            <div *ngIf="recipes">
+                <h1 class="title has-text-primary">
+                    Recipe Lists
+                </h1>
+            
+                <!-- Object Values for Recipe List -->
+                <!-- 
+                    recipeName,
+                    ingredientsInfo,
+                    directions, 
+                -->
+                <!-- Current Recipes -->
+                <div class="recipe-container">
+                    <div class="task" *ngFor="let item of recipes">
+                        <p>{{item.recipeName}}</p>
+                        <p>{{item.ingredientsInfo}}</p>
+                        <p>{{item.directions}}</p>
+                    </div>
+                </div>
 
-            <!-- Object Values for Recipe List -->
-            <!-- 
-                recipeName,
-                ingredientsInfo,
-                directions, 
-            -->
-            <!-- Current Recipes -->
-            <div class="task" *ngFor="let item of recipes">
-                <p>{{item.recipeName}}</p>
-                <p>{{item.ingredientsInfo}}</p>
-                <p>{{item.directions}}</p>
+                <h1 *ngIf="recipes.length === 0" class="empty-state"> 
+                    There are no recipes created for this category. 
+                    Click the add button below
+                    to create a new recipe. 
+                </h1>
+            
+                <button class="add-button button is-primary" routerLink="./new-recipe">
+                    + New Recipe
+                </button>
+
             </div>
 
-            <button class="circle-add-button button is-primary" routerLink="./new-recipe">
-                + New Recipe
-            </button>
-
+            <div *ngIf="!recipes">
+                <h1 class="empty-state"> Please select a Category in the sidebar to view Recipes. </h1>
+            </div>
+            
         </div>
 
     </div>
