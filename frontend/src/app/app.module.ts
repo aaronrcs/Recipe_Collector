@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -11,6 +11,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NewCategoryComponent } from './pages/new-category/new-category.component';
 import { NewRecipeComponent } from './pages/new-recipe/new-recipe.component';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
+import { WebReqInterceptor } from './web-req-interceptor';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,11 @@ import { LoginPageComponent } from './pages/login-page/login-page.component';
     HttpClientModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS, useClass: WebReqInterceptor, multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
