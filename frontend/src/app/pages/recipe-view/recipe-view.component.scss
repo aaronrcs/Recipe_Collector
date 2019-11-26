@@ -19,7 +19,7 @@
     border-bottom-left-radius: 8px;
 }
 
-.task-list-container{
+.main-recipe-container{
     position: relative;
     display: flex;
     flex-direction: column;
@@ -27,6 +27,15 @@
     padding: 42px;
     border-top-right-radius: 8px;
     border-bottom-right-radius: 8px;
+
+    .top-bar{
+        margin-bottom: 20px;
+        display: flex;
+        .title{
+            flex-grow: 1;
+            margin: 0;
+        }
+    }
 }
 
 .list-menu{
@@ -55,7 +64,7 @@
 
 }
 
-.task{
+.recipe{
     background-color: white;
     padding: 15px 20px;
     border-radius: 5px;
@@ -73,10 +82,6 @@
         }
     }
 
-    &.complete{
-        text-decoration: line-through;
-        opacity: 0.8;
-    }
 }
 
 .add-button{
@@ -88,19 +93,27 @@
 }
 
 // Recipe Container Styles:
-.main-recipe-container{
+.recipe-list-container{
     position: relative;
     height: 68vh;
 }
 .recipe-container{
     overflow-y:auto;
-    height: 60vh;
+    height: 100%;
 }
 
-.empty-state{
+.empty-recipe-list{
     font-size: 20px;
     color: #777;
-    text-align: center;
+    width: 84%;
     position: absolute;
-    top: 10%;
+    top: 2%;
+}
+
+.not-selected-category{
+    font-size: 20px;
+    color: #777;
+    width: 84%;
+    position: absolute;
+    top: 17%;
 }

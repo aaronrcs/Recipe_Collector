@@ -31,6 +31,16 @@ html, body{
     height: 100%;
 }
 
+.modal-box{
+    min-height: 280px;
+    width: 100%;
+    height: 21%;
+    max-width: 580px;
+    background: white;
+    border-radius: 5px;
+    padding: 35px;
+}
+
 .title{
     font-family: 'Lato';
     font-size: 20px;
@@ -38,16 +48,32 @@ html, body{
     letter-spacing: 2px;
 }
 
+.signup-page-content{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    width: 100%;
+    padding-top: 14%;
+}
+
 .login-page-content{
     display: flex;
     justify-content: center;
     align-content: center;
     width: 100%;
-    // height: 100%;
     padding-top: 14%;
 }
 
 .new-category-content{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    width: 100%;
+    height: 100%;
+    padding-top: 14%;
+}
+
+.edit-category-content{
     display: flex;
     justify-content: center;
     align-content: center;

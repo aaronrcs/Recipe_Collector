@@ -7,7 +7,8 @@
                 Categories
             </h1>
             <div class="list-menu">
-                <a class="list-menu-item" *ngFor="let item of categories" [routerLink]="['/categories', item._id]" routerLinkActive="is-active">
+                <a class="list-menu-item" *ngFor="let item of categories" [routerLink]="['/categories', item._id]"
+                    routerLinkActive="is-active">
                     <p>{{item.categoryName}}</p>
                 </a>
             </div>
@@ -16,12 +17,33 @@
         </div>
 
         <!-- Recipe List Container -->
-        <div class="task-list-container has-background-light">
-            <div class="main-recipe-container" *ngIf="recipes">
+        <div class="main-recipe-container has-background-light">
+            <div class="top-bar">
                 <h1 class="title has-text-primary">
                     Recipe Lists
                 </h1>
-            
+                <div class="dropdown is-hoverable is-right">
+                    <div class="dropdown-trigger">
+                        <button class="button" aria-haspopup="true" aria-controls="dropdown-menu4">
+                            <span class="icon is-small">
+                                <i class="fas fa-cog" aria-hidden="true"></i>
+                            </span>
+                        </button>
+                    </div>
+                    <div class="dropdown-menu" id="dropdown-menu4" role="menu">
+                        <div class="dropdown-content">
+                            <a [routerLink]="['/edit-category', selectedCategoryId]" class="dropdown-item">
+                                Edit
+                            </a>
+                            <a (click)="onDeleteCategoryClick()" class="dropdown-item has-text-danger">
+                                Delete
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="recipe-list-container" *ngIf="recipes">
+
                 <!-- Object Values for Recipe List -->
                 <!-- 
                     recipeName,
@@ -30,30 +52,36 @@
                 -->
                 <!-- Current Recipes -->
                 <div class="recipe-container">
-                    <div class="task" *ngFor="let item of recipes">
+                    <div class="recipe" *ngFor="let item of recipes">
                         <p>{{item.recipeName}}</p>
                         <p>{{item.ingredientsInfo}}</p>
                         <p>{{item.directions}}</p>
                     </div>
                 </div>
 
-                <h1 *ngIf="recipes.length === 0" class="empty-state"> 
-                    There are no recipes created for this category. 
-                    Click the add button below
-                    to create a new recipe. 
-                </h1>
-            
-                <button class="add-button button is-primary has-text-black" routerLink="./new-recipe">
-                    + New Recipe
-                </button>
+                <!-- If no recipes have been created for a selected Category, this text will appear -->
+                <div *ngIf="recipes.length === 0">
+                    <h1 class="empty-recipe-list">
+                        -- There are no recipes created for this category.
+                        Click the 'New Recipe' below
+                        to create a new recipe! --
+                    </h1>
+                </div>
 
             </div>
 
+            <button class="add-button button is-primary has-text-black" routerLink="./new-recipe">
+                + New Recipe
+            </button>
+
+            <!-- If user hasn't selected any Category, this text will appear -->
             <div *ngIf="!recipes">
-                <h1 class="empty-state"> Please select a Category in the sidebar to view Recipes. </h1>
+                <h1 class="not-selected-category"> 
+                    -- Create a new Category by clicking on the 'New Category' button. 
+                    Then, select a Category in the sidebar to view Recipes. -- 
+                </h1>
             </div>
-            
-        </div>
 
+        </div>
     </div>
 </div>

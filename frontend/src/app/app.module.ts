@@ -12,6 +12,8 @@ import { NewCategoryComponent } from './pages/new-category/new-category.componen
 import { NewRecipeComponent } from './pages/new-recipe/new-recipe.component';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { WebReqInterceptor } from './web-req-interceptor';
+import { SignupPageComponent } from './pages/signup-page/signup-page.component';
+import { EditCategoryComponent } from './pages/edit-category/edit-category.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,9 @@ import { WebReqInterceptor } from './web-req-interceptor';
     RecipeViewComponent,
     NewCategoryComponent,
     NewRecipeComponent,
-    LoginPageComponent
+    LoginPageComponent,
+    SignupPageComponent,
+    EditCategoryComponent
   ],
   imports: [
     BrowserModule,

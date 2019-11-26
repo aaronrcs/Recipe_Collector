@@ -14,9 +14,18 @@ export class RecipeService {
     return this.webRequestService.post('categories', { categoryName })
   }
 
+  updateCategory(categoryId: string, categoryName: string){
+    return this.webRequestService.patch(`categories/${categoryId}`, { categoryName })
+  }
+
   // Get all created Categories
   getCategory(){
     return this.webRequestService.get('categories');
+  }
+
+  // Delete a specified Category
+  deleteCategory(categoryId: string){
+    return this.webRequestService.delete(`categories/${categoryId}`);
   }
 
   // Get Recipes for a certain Category

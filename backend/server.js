@@ -147,7 +147,9 @@ app.patch('/categories/:id', authenticate, (req, res) => {
     Categories.findOneAndUpdate({ _id: req.params.id, _userId: req.user_id }, {
         $set: req.body
     }).then(() => {
-        res.send('Updated Successfully!');
+        res.send({
+            message: "Updated Successfully!"
+        });
     })
 });
 

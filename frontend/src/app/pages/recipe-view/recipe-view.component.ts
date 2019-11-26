@@ -2,7 +2,7 @@ import { RecipeDetails } from './../../models/recipe.models';
 import { Categories } from './../../models/categories.models';
 import { Component, OnInit } from '@angular/core';
 import { RecipeService } from 'src/app/recipe.service';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 @Component({
   selector: 'app-recipe-view',
@@ -14,11 +14,14 @@ export class RecipeViewComponent implements OnInit {
   categories: Categories[];
   recipes: RecipeDetails[];
 
-  constructor(private recipeService: RecipeService, private route: ActivatedRoute) { }
+  selectedCategoryId: string;
+
+  constructor(private recipeService: RecipeService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
       if(params.categoryId){
+        this.selectedCategoryId = params.categoryId;
         /**
        * Passing the active Params (categoryId) to getRecipes
        * to obtain all recipes for a certain Category
@@ -36,6 +39,13 @@ export class RecipeViewComponent implements OnInit {
     this.recipeService.getCategory().subscribe((categories: Categories[]) => {
       this.categories = categories;
     })
+  }
+
+  onDeleteCategoryClick(){
+      this.recipeService.deleteCategory(this.selectedCategoryId).subscribe((res: any) => {
+        console.log("Deleted: ", res);
+        this.router.navigate(['/categories']);
+      })
   }
 
 }
