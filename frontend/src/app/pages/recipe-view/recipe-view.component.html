@@ -1,13 +1,13 @@
 <div class="recipe-view-content">
-    <div class="task-manager-container">
+    <div class="recipe-manager-container">
 
         <!-- Sidebar Container -->
         <div class="sidebar has-background-white">
             <h1 class="title has-text-primary">
                 Categories
             </h1>
-            <div class="list-menu">
-                <a class="list-menu-item" *ngFor="let item of categories" [routerLink]="['/categories', item._id]"
+            <div class="category-menu">
+                <a class="category-menu-item" *ngFor="let item of categories" [routerLink]="['/categories', item._id]"
                     routerLinkActive="is-active">
                     <p>{{item.categoryName}}</p>
                 </a>
@@ -51,11 +51,24 @@
                     directions, 
                 -->
                 <!-- Current Recipes -->
-                <div class="recipe-container">
-                    <div class="recipe" *ngFor="let item of recipes">
-                        <p>{{item.recipeName}}</p>
-                        <p>{{item.ingredientsInfo}}</p>
-                        <p>{{item.directions}}</p>
+                <div class="recipe-container"  *ngFor="let recipe of recipes">
+                    <div class="recipe-items">
+                        <p>{{recipe.recipeName}}</p>
+                        <p>{{recipe.ingredientsInfo}}</p>
+                        <p>{{recipe.directions}}</p>
+                    </div>
+                    <div class="recipe-buttons">
+                        <button class="button" [routerLink]="['/categories', selectedCategoryId, 'edit-recipes', recipe._id]">
+                            <div class="icon">
+                                <i class="fas fa-edit"></i>
+                            </div>
+                        </button>
+                        <button class="button is-danger" (click)="onDeleteRecipeClick(recipe._id)" style="margin-left: 10px">
+                            <div class="icon">
+                                <i class="fas fa-trash"></i>
+                            </div>
+                        </button>
+
                     </div>
                 </div>
 

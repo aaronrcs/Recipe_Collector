@@ -23,10 +23,7 @@ export class NewRecipeComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
-      /**
-       */
       this.categoryId = params['categoryId'];
-      
     })
   }
 

@@ -43,9 +43,17 @@ export class RecipeViewComponent implements OnInit {
 
   onDeleteCategoryClick(){
       this.recipeService.deleteCategory(this.selectedCategoryId).subscribe((res: any) => {
-        console.log("Deleted: ", res);
+        console.log("Category Deleted: ", res);
         this.router.navigate(['/categories']);
       })
+  }
+
+  onDeleteRecipeClick(recipeId: string){
+    this.recipeService.deleteRecipe(this.selectedCategoryId, recipeId).subscribe((res: any) => {
+      this.recipes = this.recipes.filter(val => val._id !== recipeId);
+      console.log("Recipe Deleted: ", res);
+      // this.router.navigate(['/categories']);
+    })
   }
 
 }

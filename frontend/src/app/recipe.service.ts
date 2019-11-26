@@ -37,5 +37,16 @@ export class RecipeService {
   createRecipe(recipeInfo: RecipeDetails, categoryId: string){
     return this.webRequestService.post(`categories/${categoryId}/recipes`,recipeInfo)
   }
+
+  // Delete a Recipe
+  deleteRecipe(categoryId: string, recipeId: string){
+    return this.webRequestService.delete(`categories/${categoryId}/recipes/${recipeId}`);
+  }
+
+  // Update specified Recipe
+  updateRecipe(categoryId: string, recipeId: string, recipeInfo: string){
+    return this.webRequestService.patch(`categories/${categoryId}/recipes/${recipeId}`, recipeInfo)
+
+  }
 }
 

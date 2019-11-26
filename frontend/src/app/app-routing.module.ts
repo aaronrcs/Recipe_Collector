@@ -1,3 +1,4 @@
+import { EditRecipesComponent } from './pages/edit-recipes/edit-recipes.component';
 import { EditCategoryComponent } from './pages/edit-category/edit-category.component';
 import { SignupPageComponent } from './pages/signup-page/signup-page.component';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
@@ -17,6 +18,7 @@ const routes: Routes = [
   { path: 'categories', component: RecipeViewComponent},
   { path: 'categories/:categoryId', component: RecipeViewComponent},
   { path: 'categories/:categoryId/new-recipe', component: NewRecipeComponent},
+  { path: 'categories/:categoryId/edit-recipes/:recipeId', component: EditRecipesComponent}
 
 ];
 

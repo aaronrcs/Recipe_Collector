@@ -148,7 +148,7 @@ app.patch('/categories/:id', authenticate, (req, res) => {
         $set: req.body
     }).then(() => {
         res.send({
-            message: "Updated Successfully!"
+            message: "Updated Category Successfully!"
         });
     })
 });
@@ -272,7 +272,9 @@ app.patch('/categories/:categoryId/recipes/:recipeId', authenticate, (req, res) 
                 $set: req.body
             }
             ).then(() => {
-                res.send("Updated Successfully!")
+                res.send({
+                    message: "Updated Recipe Successfully!"
+                });
             })
         } else {
             console.log("404 not found");

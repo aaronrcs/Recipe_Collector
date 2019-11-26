@@ -14,6 +14,7 @@ import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { WebReqInterceptor } from './web-req-interceptor';
 import { SignupPageComponent } from './pages/signup-page/signup-page.component';
 import { EditCategoryComponent } from './pages/edit-category/edit-category.component';
+import { EditRecipesComponent } from './pages/edit-recipes/edit-recipes.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { EditCategoryComponent } from './pages/edit-category/edit-category.compo
     NewRecipeComponent,
     LoginPageComponent,
     SignupPageComponent,
-    EditCategoryComponent
+    EditCategoryComponent,
+    EditRecipesComponent
   ],
   imports: [
     BrowserModule,

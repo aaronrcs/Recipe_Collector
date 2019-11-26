@@ -1,6 +1,6 @@
 @import '../../../main-styles.scss';
 
-.task-manager-container{
+.recipe-manager-container{
     display: flex;
     width: 100%;
     height: 100%;
@@ -8,6 +8,7 @@
     max-height: 600px;
 }
 
+// Sidebar Styles:
 .sidebar{
     display: flex;
     flex-direction: column;
@@ -18,6 +19,35 @@
     border-top-left-radius: 8px;
     border-bottom-left-radius: 8px;
 }
+
+// Category List Styles:
+.category-menu{
+    display: flex;
+    flex-direction: column;
+    margin-top: 15px;
+    flex-grow: 1;
+
+    .category-menu-item{
+        display: flex;
+        align-items: center;
+        padding: 10px 15px;
+        width: 100%;
+        color: #5f5f5f;
+        margin-bottom: 5px;
+
+        &:hover{
+            background: $light;
+        }
+    
+        &.is-active{
+            background-color: #cff8ef;
+            color: $dark-green;
+        }
+    }
+
+}
+
+// Recipe Container Styles:
 
 .main-recipe-container{
     position: relative;
@@ -38,52 +68,52 @@
     }
 }
 
-.list-menu{
-    display: flex;
-    flex-direction: column;
-    margin-top: 15px;
-    flex-grow: 1;
-
-    .list-menu-item{
-        display: flex;
-        align-items: center;
-        padding: 10px 15px;
-        width: 100%;
-        color: #5f5f5f;
-        margin-bottom: 5px;
-
-        &:hover{
-            background: $light;
-        }
-    
-        &.is-active{
-            background-color: #cff8ef;
-            color: $dark-green;
-        }
-    }
-
+.recipe-list-container {
+    position: relative;
+    height: 68vh;
 }
 
-.recipe{
+.recipe-container {
+
     background-color: white;
     padding: 15px 20px;
     border-radius: 5px;
     margin-top: 10px;
 
-    &:not(.complete){
-        cursor: pointer;
-        transition: box-shadow 0.2s ease, transform ease 0.2s;
-        &:active{
-            transform: scale(0.95);
+    cursor: pointer;
+    transition: box-shadow 0.2s ease,
+    transform ease 0.2s;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    &:active {
+      transform: scale(0.95);
+    }
+
+    &:hover {
+      box-shadow: 0 0 0 5px #eee;
+
+        .recipe-buttons{
+            opacity: 1;
+            transform: scale(1);
         }
-    
-        &:hover{
-            box-shadow: 0 0 0 5px #eee;
-        }
+    }
+
+    .recipe-items{
+        flex-grow: 1;
+    }
+
+    .recipe-buttons{
+        opacity: 0;
+        transition: opacity 0.2s, transform 0.2s;
+        transform: scale(0.5);
     }
 
 }
 
+// Button Styles:
 .add-button{
     position: absolute;
     bottom: 35px;
@@ -92,16 +122,7 @@
     // width: 20%;
 }
 
-// Recipe Container Styles:
-.recipe-list-container{
-    position: relative;
-    height: 68vh;
-}
-.recipe-container{
-    overflow-y:auto;
-    height: 100%;
-}
-
+// Empty States Styles:
 .empty-recipe-list{
     font-size: 20px;
     color: #777;
