@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const validate = require('mongoose-validator')
 const _ = require('lodash');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
@@ -8,18 +9,49 @@ const bcrypt = require('bcryptjs');
 // JWT Secret
 const jwtSecret = "51778657246321226641fsdklafjasdkljfsklfjd7148924065";
 
+// Personally customed made validation
+// Check if the email exists in database
+// extend(
+//     'isEmailExists',
+//     async function(value) {
+//         const emailCount = await mongoose.models.User.countDocuments({email: value });
+//         return !emailCount;
+//     },
+//     'Email already exists'
+//   )
+
+// // Custom Validations for Email and Password
+// var emailValidator = [
+//     validate({
+//       validator: 'isEmail',
+//       message: 'This is not a valid email address.',
+//     }),
+//     validate({
+//         validator: 'isEmailExists',
+//     })
+//   ]
+
+// var passwordValidator = [
+//     validate({
+//       validator: 'isLength',
+//       arguments: [1, 12],
+//       message: 'Password should be {ARGS[0]} and {ARGS[1]} characters long',
+//     })
+//   ]
+
 const UserSchema = new mongoose.Schema({
     email: {
         type: String,
         required: true,
-        minlength: 1,
         trim: true,
-        unique: true
+        unique: true,
+        minlength: 5,
     },
     password: {
         type: String,
         required: true,
-        minlength: 8
+        minlength: 5,
+
     },
     sessions: [{
         token: {
@@ -32,6 +64,12 @@ const UserSchema = new mongoose.Schema({
         }
     }]
 });
+
+// make sure the email is unique when signing up
+// UserSchema.path('email').validate(async (value) => {
+//     const emailCount = await mongoose.models.User.countDocuments({email: value });
+//     return !emailCount;
+// }, 'Email already exists');
 
 
 // *** Instance methods ***

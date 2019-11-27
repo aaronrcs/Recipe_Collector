@@ -15,7 +15,6 @@ export class WebReqInterceptor implements HttpInterceptor {
 
   accessTokenRefreshed: Subject<any> = new Subject();
 
-
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<any> {
     // Handle the request
     request = this.addAuthHeader(request);
@@ -23,7 +22,10 @@ export class WebReqInterceptor implements HttpInterceptor {
     // call next() and handle the response
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
-        console.log(error);
+        console.log("HTTP ERROR: ", error);
+        // console.log("Error Email: ",error.error.errors.email.message);
+        // console.log("Error Password: ",error.error.errors.password.message);
+
 
         if (error.status === 401) {
           // 401 error so we are unauthorized

@@ -1,7 +1,7 @@
 import { WebRequestService } from './web-request.service';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { shareReplay, tap } from 'rxjs/operators';
+import { shareReplay, tap, catchError } from 'rxjs/operators';
 import { HttpResponse, HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -33,6 +33,11 @@ export class AuthService {
 
         console.log("You signed up!");
         console.log("Response: ", res);
+
+        // Catch error
+        catchError((err) => {
+          return err
+        })
       })
     )
   }
