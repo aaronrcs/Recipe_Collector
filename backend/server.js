@@ -8,6 +8,7 @@ let port = process.env.PORT || 3000;
 
 // Load in mongoose Models
 const { Categories, Recipe, User } = require('./db/models/model_index');
+const checkUserData  = require('./db/models/user.model');
 
 /**
  * Load in Middleware
@@ -324,30 +325,45 @@ app.delete('/categories/:categoryId/recipes/:recipeId', authenticate, (req, res)
  * POST /users
  * Purpose: sign up
  */
-app.post('/users', (req, res) => {
+app.post('/users', async (req, res) => {
     // User sign up
     let body = req.body;
     let newUser = new User(body);
+    const { error } = checkUserData.validateUserSignUp(body);
 
-    newUser.save().then(() => {
-        return newUser.createSession();
-    }).then((refreshToken) => {
-        // Session created successfully - refreshToken returned.
-        // now we geneate an access auth token for the user
+    if(error){
+        console.log("Validation Error: ", error);
+        return res.status(400).send(error.details)
+    }
 
-        return newUser.generateAccessAuthToken().then((accessToken) => {
-            // access auth token generated successfully, now we return an object containing the auth tokens
-            return { accessToken, refreshToken }
-        });
-    }).then((authTokens) => {
-        // Now we construct and send the response to the user with their auth tokens in the header and the user object in the body
-        res
-            .header('x-refresh-token', authTokens.refreshToken)
-            .header('x-access-token', authTokens.accessToken)
-            .send(newUser);
-    }).catch((e) => {
-        res.status(400).send(e);
-    })
+    // Check if this user already exisits
+    let user = await User.findOne({ email: req.body.email });
+    if (user) {
+        return res.status(400).json({duplicateUser: 'This email already exisits!'});
+    } else {
+        // else create a new user
+        newUser.save().then(() => {
+            return newUser.createSession();
+        }).then((refreshToken) => {
+            // Session created successfully - refreshToken returned.
+            // now we geneate an access auth token for the user
+    
+            return newUser.generateAccessAuthToken().then((accessToken) => {
+                // access auth token generated successfully, now we return an object containing the auth tokens
+                return { accessToken, refreshToken }
+            });
+        }).then((authTokens) => {
+            // Now we construct and send the response to the user with their auth tokens in the header and the user object in the body
+            res
+                .header('x-refresh-token', authTokens.refreshToken)
+                .header('x-access-token', authTokens.accessToken)
+                .send(newUser);
+        }).catch((e) => {
+            res.status(400).send(e);
+        })
+    }
+
+    
 
 });
 

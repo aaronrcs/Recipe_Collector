@@ -1,47 +1,67 @@
 <div class="signup-page-content">
     <div class="signup-box">
-        
         <h1 class="title has-text-primary">Sign Up</h1>
+        <div class="signup-info">
+          <ul style="list-style-type:disc;">
+              <b>Passwords</b> must contain the following criteria:
+              <br><br>
+            <li>At least 1 lowercase alphabetical character.</li>
+            <li>Contain at least 1 lowercase alphabetical character.</li>
+            <li>Contain at least 1 uppercase alphabetical character.</li>
+            <li>Contain at least 1 numeric character.</li>
+            <li>Contain at least one special character.(e.g !,@,$,%,^&)</li>
+            <li> Password <b>length</b> must at least 8 characters long.</li>
+          </ul>
+        </div>
+        <div *ngIf="errorMessage && !duplicateUser">
+          <br>
+          <!-- <div *ngFor="let error of errorMessage">
+            <h1 class="error-message">{{error.message}}</h1>
+          </div> -->
+          <h1 class="error-message">*{{errorMessage}}</h1>
+        </div>
+  
+        <hr>
+        <form [formGroup]="signUpForm">
 
-        <div class="field">
-            <p class="control has-icons-left has-icons-right">
-              <input ng-model="email" #emailInput class="input has-background-light" type="email" placeholder="Email">
-              <span class="icon is-small is-left">
-                <i class="fas fa-envelope"></i>
-              </span>
-            </p>
-            <!-- If Email Input box is empty -->
-            <div *ngIf="emptyEmailMessage">
-                <h1 class="error-message">*{{emptyEmailMessage}}</h1>
-            </div>
-            <!-- If Email Error -->
-            <div *ngIf="emailErrormessage">
-                <h1 class="error-message">*{{emailErrormessage}}</h1>
-            </div>
-          </div>
-          <div class="field">
-            <p class="control has-icons-left">
-              <input #pwInput class="input has-background-light" type="password" placeholder="Password">
-              <span class="icon is-small is-left">
-                <i class="fas fa-lock"></i>
-              </span>
-            </p>
-            <!-- If Password Input box is empty -->
-            <div *ngIf="emptyPasswordMessage">
-                <h1 class="error-message">*{{emptyPasswordMessage}}</h1>
-            </div>
-            <!-- If Password Error -->
-            <div *ngIf="passwordErrormessage">
-                <h1 class="error-message">*{{passwordErrormessage}}</h1>
-            </div>
-          </div>
-          <div class="field" style="display: flex; justify-content: flex-end;">
-            <p class="control">
-              <button class="button is-success has-text-white" (click)="onSignupClicked(emailInput.value, pwInput.value)">
-                Sign up
-              </button>
-            </p>
-          </div>
+            <div class="field">
+                <p class="control has-icons-left has-icons-right">
+                  <input formControlName="email" #emailInput class="input has-background-light" type="email" placeholder="Email" [ngClass]="{'is-invalid':submitted && f.password.errors}">
+                  <span class="icon is-small is-left">
+                    <i class="fas fa-envelope"></i>
+                  </span>
+                </p>
+                <div *ngIf="f.email.errors" class="error-message">
+                    <div *ngIf="submitted && f.email.errors.required">Email is required.</div>
+                    <div *ngIf="f.email.errors.email">Email must be a valid email address.</div>
+                </div>
+                <div *ngIf="duplicateUser">
+                  <h1 class="error-message">{{duplicateUser}}</h1>
+                </div>
+                
+              </div>
+              <div class="field">
+                <p class="control has-icons-left">
+                  <input formControlName="password" #pwInput class="input has-background-light" type="password" placeholder="Password" [ngClass]="{'is-invalid':submitted && f.password.errors}">
+                  <span class="icon is-small is-left">
+                    <i class="fas fa-lock"></i>
+                  </span>
+                </p>
+
+                <div *ngIf="f.password.errors" class="error-message">
+                    <div *ngIf="submitted && f.password.errors.required">Password is required.</div>
+                    <div *ngIf="f.password.errors.pattern">Password must meet the above requirements.</div>
+                </div>
+                
+              </div>
+              <div class="field" style="display: flex; justify-content: flex-end;">
+                <p class="control">
+                  <button class="button is-success has-text-white" (click)="onSignupClicked(emailInput.value, pwInput.value)">
+                    Sign up
+                  </button>
+                </p>
+              </div>
+        </form>
           <br>
           <p>
             Already got an account?

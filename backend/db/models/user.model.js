@@ -4,6 +4,7 @@ const _ = require('lodash');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 const bcrypt = require('bcryptjs');
+const Joi = require('joi');
 
 
 // JWT Secret
@@ -45,12 +46,10 @@ const UserSchema = new mongoose.Schema({
         required: true,
         trim: true,
         unique: true,
-        minlength: 5,
     },
     password: {
         type: String,
         required: true,
-        minlength: 5,
 
     },
     sessions: [{
@@ -65,6 +64,49 @@ const UserSchema = new mongoose.Schema({
     }]
 });
 
+// Function that validates 
+const validateUserSignUp = (user) => {
+    const schema = {
+        email: Joi.string().min(5).email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }).required().error(errors => {
+            errors.forEach(err => {
+              switch (err.type) {
+                case "any.empty":
+                    err.message = "Email should not be empty!";
+                    break;
+                case "string.email":
+                    err.message = "Email must be a valid!";
+                    break;
+                case "string.min":
+                    err.message = `Email should have at least ${err.context.limit} characters!`;
+                    break;
+                default:
+                  break;
+              }
+            });
+            return errors;
+          }),
+          password: Joi.string().min(8).required().error(errors => {
+            errors.forEach(err => {
+              switch (err.type) {
+                case "any.empty":
+                    err.message = "Password should not be empty!";
+                    break;
+                case "string.min":
+                    err.message = `Password should have at least ${err.context.limit} characters!`;
+                    break;
+                case "string.regex.base":
+                    err.message = `Password fails to match required pattern!`;
+                    break;
+                default:
+                  break;
+              }
+            });
+            return errors;
+          })
+    };
+    return Joi.validate(user, schema, {abortEarly: false});
+}
+
 // make sure the email is unique when signing up
 // UserSchema.path('email').validate(async (value) => {
 //     const emailCount = await mongoose.models.User.countDocuments({email: value });
@@ -73,14 +115,6 @@ const UserSchema = new mongoose.Schema({
 
 
 // *** Instance methods ***
-
-UserSchema.methods.toJSON = function () {
-    const user = this;
-    const userObject = user.toObject();
-
-    // return the document except the password and sessions (these shouldn't be made available)
-    return _.omit(userObject, ['password', 'sessions']);
-}
 
 UserSchema.methods.generateAccessAuthToken = function () {
     const user = this;
@@ -225,4 +259,5 @@ let generateRefreshTokenExpiryTime = () => {
 
 const User = mongoose.model('User', UserSchema);
 
-module.exports = { User }
+module.exports = { User, validateUserSignUp }
+// exports.validateUser = validateUser;
