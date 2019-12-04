@@ -375,7 +375,8 @@ app.post('/users/login', (req, res) => {
     let email = req.body.email;
     let password = req.body.password;
 
-    User.findByCredentials(email, password).then((user) => {
+    User.findByCredentials(email, password, res).then((user) => {
+        
         return user.createSession().then((refreshToken) => {
             // Session created successfully - refreshToken returned.
             // now we geneate an access auth token for the user
@@ -392,7 +393,15 @@ app.post('/users/login', (req, res) => {
                 .send(user);
         })
     }).catch((e) => {
-        res.status(400).send(e);
+        // res.status(400).json({error: e});
+
+        // Check if this email exists
+        User.findOne({ email }).then(email => {
+            // Will return 400 status if email does not exist
+            if(!email){
+                return res.status(400).json({ emailnotfound: "Email not found" });
+            }
+        })
     });
 })
 

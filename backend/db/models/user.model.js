@@ -182,21 +182,25 @@ UserSchema.statics.findByIdAndToken = function (_id, token) {
 }
 
 
-UserSchema.statics.findByCredentials = function (email, password) {
+UserSchema.statics.findByCredentials = function (email, password, response) {
     let User = this;
+
     return User.findOne({ email }).then((user) => {
-        if (!user) return Promise.reject();
+
+        // if (!user) return Promise.reject();
 
         return new Promise((resolve, reject) => {
-            bcrypt.compare(password, user.password, (err, res) => {
-                if (res) {
+            bcrypt.compare(password, user.password).then(passwordMatch => {
+                if (passwordMatch) {
                     resolve(user);
                 }
                 else {
-                    reject();
+                    return response.status(400).json({ passwordnotfound: "Incorrect password!" });
+                    // reject(new Error("Incorrect password!"));
                 }
             })
         })
+        // .catch(alert)
     })
 }
 
