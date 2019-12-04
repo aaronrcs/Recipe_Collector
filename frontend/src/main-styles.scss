@@ -31,6 +31,15 @@ html, body{
     height: 100%;
 }
 
+// Error Messages Styles:
+
+.error-message{
+    color: red;
+}
+.is-invalid{
+    border: 2px solid red;
+}
+
 .modal-box{
     min-height: 280px;
     width: 100%;

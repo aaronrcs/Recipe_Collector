@@ -1,8 +1,8 @@
 import { AuthService } from './../../auth.service';
 import { Component, OnInit } from '@angular/core';
-import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { HttpResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 
 @Component({
@@ -40,20 +40,6 @@ export class SignupPageComponent implements OnInit {
     return this.signUpForm.controls; 
   }
 
-  strong(control: FormControl) {
-    let hasNumber = /\d/.test(control.value);
-    let hasUpper = /[A-Z]/.test(control.value);
-    let hasLower = /[a-z]/.test(control.value);
-    // console.log('Num, Upp, Low', hasNumber, hasUpper, hasLower);
-    const valid = hasNumber && hasUpper && hasLower;
-    if (!valid) {
-        // return what´s not valid
-        return { strong: true };
-    }
-    return null;
-}
-
-
   onSignupClicked(email: string, password: string){
 
     this.submitted = true;
@@ -69,7 +55,7 @@ export class SignupPageComponent implements OnInit {
       (err) => {
         // If error upon signing up
         this.errorMessage = this.inputErrorMessage;
-        console.log("Input Error: ", err);
+        console.log("Signup Error: ", err);
         
         // duplicateUser will recieve an error message when the email already exists
         this.duplicateUser = err.error.duplicateUser;

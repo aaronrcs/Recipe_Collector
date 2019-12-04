@@ -3,29 +3,48 @@
 
         <h1 class="title has-text-primary">Login</h1>
 
-        <div class="field">
+        <div *ngIf="errorMessage">
+          <br>
+          <h1 class="error-message">*{{errorMessage}}</h1>
+        </div>
+
+        <form [formGroup]="loginForm">
+          <div class="field">
             <p class="control has-icons-left has-icons-right">
-              <input #emailInput class="input has-background-light" type="email" placeholder="Email">
+              <input formControlName="email" #emailInput class="input has-background-light" type="email" placeholder="Email" [ngClass]="{'is-invalid':submitted && f.email.errors}">
               <span class="icon is-small is-left">
                 <i class="fas fa-envelope"></i>
               </span>
             </p>
+            <!-- Showing Email Errors to User -->
+            <div *ngIf="f.email.errors" class="error-message">
+              <div *ngIf="submitted && f.email.errors.required">Email is required.</div>
+              <div *ngIf="f.email.errors.email">Email must be a valid email address.</div>
+            </div>
+
           </div>
           <div class="field">
             <p class="control has-icons-left">
-              <input #pwInput class="input has-background-light" type="password" placeholder="Password">
+              <input formControlName="password" #pwInput class="input has-background-light" type="password" placeholder="Password" [ngClass]="{'is-invalid':submitted && f.password.errors}">
               <span class="icon is-small is-left">
                 <i class="fas fa-lock"></i>
               </span>
             </p>
+            <!-- Showing password Errors to User -->
+            <div *ngIf="f.password.errors" class="error-message">
+              <div *ngIf="submitted && f.password.errors.required">Password is required.</div>
+            </div>
           </div>
           <div class="field" style="display: flex; justify-content: flex-end;">
             <p class="control">
-              <button class="button is-success has-text-white" (click)="onLoginClicked(emailInput.value, pwInput.value)">
+              <button class="button is-success has-text-white" (click)="onLoginClicked(emailInput.value, pwInput.value)" [disabled]="loginForm.invalid">
                 Login
               </button>
             </p>
           </div>
+
+        </form>
+
           <br>
           <p>
             Don't have an account?
