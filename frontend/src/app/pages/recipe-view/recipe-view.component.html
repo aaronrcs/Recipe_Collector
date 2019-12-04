@@ -6,9 +6,10 @@
             <h1 class="title has-text-primary">
                 Categories
             </h1>
+            <!-- routerLinkActive="is-active" -->
             <div class="category-menu">
                 <a class="category-menu-item" *ngFor="let item of categories" [routerLink]="['/categories', item._id]"
-                    routerLinkActive="is-active">
+                routerLinkActive="is-active">
                     <p>{{item.categoryName}}</p>
                 </a>
             </div>
@@ -52,10 +53,10 @@
                 -->
                 <!-- Current Recipes -->
                 <div class="recipe-container"  *ngFor="let recipe of recipes">
-                    <div class="recipe-items">
-                        <p>{{recipe.recipeName}}</p>
-                        <p>{{recipe.ingredientsInfo}}</p>
-                        <p>{{recipe.directions}}</p>
+                    <div class="recipe-items" id="{{recipe._id}}">
+                        <p>Name: {{recipe.recipeName}}</p>
+                        <p>Ingredients: {{recipe.ingredientsInfo}}</p>
+                        <p>Directions: {{recipe.directions}}</p>
                     </div>
                     <div class="recipe-buttons">
                         <button class="button" [routerLink]="['/categories', selectedCategoryId, 'edit-recipes', recipe._id]">
@@ -67,6 +68,9 @@
                             <div class="icon">
                                 <i class="fas fa-trash"></i>
                             </div>
+                        </button>
+                        <button class="button is-primary" (click)="convertToPdf(recipe._id)" style="margin-left: 10px">
+                            Convert
                         </button>
 
                     </div>
@@ -87,11 +91,18 @@
                 + New Recipe
             </button>
 
-            <!-- If user hasn't selected any Category, this text will appear -->
-            <div *ngIf="!recipes">
-                <h1 class="not-selected-category"> 
+            <!-- When Categories are empty, this text will appear-->
+            <div *ngIf="isEmptyObject(categories)">
+                <h1 class="is-category-empty"> 
                     -- Create a new Category by clicking on the 'New Category' button. 
                     Then, select a Category in the sidebar to view Recipes. -- 
+                </h1>
+            </div>
+
+            <!-- If Categories are created but not selected upon logging in -->
+            <div *ngIf="!isEmptyObject(categories) && !recipes">
+                <h1 class="is-category-empty">
+                    Welcome back! Make sure to click on a Category to view your recipes!
                 </h1>
             </div>
 

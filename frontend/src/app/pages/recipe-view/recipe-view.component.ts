@@ -3,6 +3,8 @@ import { Categories } from './../../models/categories.models';
 import { Component, OnInit } from '@angular/core';
 import { RecipeService } from 'src/app/recipe.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import * as jspdf from 'jspdf'; 
+import html2canvas from 'html2canvas';
 
 @Component({
   selector: 'app-recipe-view',
@@ -20,6 +22,7 @@ export class RecipeViewComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
+
       if(params.categoryId){
         this.selectedCategoryId = params.categoryId;
         /**
@@ -28,6 +31,7 @@ export class RecipeViewComponent implements OnInit {
        */
         this.recipeService.getRecipes(params.categoryId).subscribe((recipes: RecipeDetails[]) => {
           this.recipes = recipes;
+          console.log("Recipes: ", this.recipes);
         })
       } else {
         this.recipes = undefined;
@@ -39,6 +43,33 @@ export class RecipeViewComponent implements OnInit {
     this.recipeService.getCategory().subscribe((categories: Categories[]) => {
       this.categories = categories;
     })
+  }
+
+  isEmptyObject(obj) {
+    for(let key in obj) {
+        if(obj.hasOwnProperty(key))
+            return false;
+    }
+    return true;
+  }
+
+  convertToPdf(recipeId: string){
+    // console.log("Selected: ", recipeId);
+    let data = document.getElementById(`${recipeId}`);
+    html2canvas(data).then(canvas => {
+      // Few necessary setting options
+      let imgWidth = 108;
+      let pageHeight = 295;
+      let imgHeight = canvas.height * imgWidth / canvas.width;
+      let heightLeft = imgHeight;
+      
+      const contentDataURL = canvas.toDataURL('image/png')
+      let pdf = new jspdf('p', 'mm', 'a4'); // A4 size page of PDF
+      let position = 0;
+      pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight)
+      pdf.save('recipe3.pdf'); // Generated PDF
+    });
+
   }
 
   onDeleteCategoryClick(){

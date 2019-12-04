@@ -71,6 +71,7 @@
 .recipe-list-container {
     position: relative;
     height: 68vh;
+    overflow-y: auto;
 }
 
 .recipe-container {
@@ -116,9 +117,10 @@
 // Button Styles:
 .add-button{
     position: absolute;
-    bottom: 35px;
-    right: 35px;
-    height: 50px;
+    /* bottom: 10%; */
+    right: 16%;
+    height: 7%;
+    top: 7%;
     // width: 20%;
 }
 
@@ -131,7 +133,7 @@
     top: 2%;
 }
 
-.not-selected-category{
+.is-category-empty{
     font-size: 20px;
     color: #777;
     width: 84%;

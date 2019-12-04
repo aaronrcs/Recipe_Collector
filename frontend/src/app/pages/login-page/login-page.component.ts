@@ -1,7 +1,7 @@
 import { AuthService } from './../../auth.service';
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { Router, Params, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 
@@ -22,7 +22,10 @@ export class LoginPageComponent implements OnInit {
   //Boolean to check when the form was submitted
   submitted = false;
 
-  constructor( private authService: AuthService, private router: Router, private formBuilder: FormBuilder) { }
+  selectedCategoryId: string;
+
+
+  constructor( private authService: AuthService, private router: Router, private formBuilder: FormBuilder, private route: ActivatedRoute) { }
 
   ngOnInit() {
 
@@ -32,6 +35,14 @@ export class LoginPageComponent implements OnInit {
         Validators.required
       ]]
     });
+
+    // this.route.params.subscribe((params: Params) => {
+    //   // if(params.categoryId){
+    //     this.selectedCategoryId = params.categoryId;
+       
+    //   // }
+      
+    // })
   }
 
   // Simple getter function for FormControls
