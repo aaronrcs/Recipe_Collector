@@ -1,13 +1,12 @@
 <div class="new-recipe-content">
-    <div class="modal-box">
+    <div class="modal-box-new-recipe">
         <h1 class="title">
             Create a new Recipe
         </h1>
         <form [formGroup]="recipeForm" (ngSubmit)="createRecipe()">
             <input formControlName="recipeName" class="input has-background-light is-medium" type="text" placeholder="Enter a Recipe Name">
-            <input formControlName="ingredientsInfo" class="input has-background-light is-medium" type="text" placeholder="Enter Ingredient Details">
-            <input formControlName="directions" class="input has-background-light is-medium" type="text" placeholder="Enter Directions">
-
+            <textarea formControlName="ingredientsInfo" class="textarea has-background-light" placeholder="Enter Ingredient Details"></textarea>
+            <textarea formControlName="directions" class="textarea has-background-light" placeholder="Enter Directions"></textarea>
             <br><br>
             <div class="buttons is-right">
                 <button class="button is-medium" routerLink="/">Cancel</button>

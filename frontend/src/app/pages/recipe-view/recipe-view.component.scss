@@ -140,3 +140,18 @@
     position: absolute;
     top: 17%;
 }
+
+// Expansion Panel Styles:
+
+.expansion-panel{
+    background-color: gainsboro;
+}
+
+.expansion-headers{
+    background-color: #e2dcdc;
+    margin-bottom: 8px;
+
+    &:active{
+        background-color: #e2dcdc;
+    }
+}

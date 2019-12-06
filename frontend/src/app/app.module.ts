@@ -1,6 +1,6 @@
 import { HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -15,6 +15,8 @@ import { WebReqInterceptor } from './web-req-interceptor';
 import { SignupPageComponent } from './pages/signup-page/signup-page.component';
 import { EditCategoryComponent } from './pages/edit-category/edit-category.component';
 import { EditRecipesComponent } from './pages/edit-recipes/edit-recipes.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,12 @@ import { EditRecipesComponent } from './pages/edit-recipes/edit-recipes.componen
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    MatExpansionModule
+  ],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
   ],
   providers: [
     {
@@ -40,4 +47,5 @@ import { EditRecipesComponent } from './pages/edit-recipes/edit-recipes.componen
   ],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }

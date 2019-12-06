@@ -29,6 +29,7 @@ html{
 
 html, body{
     height: 100%;
+    margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
 // Error Messages Styles:
@@ -97,7 +98,7 @@ html, body{
     align-content: center;
     width: 100%;
     height: 100%;
-    padding-top: 14%;
+    padding-top: 10%;
 }
 
 .recipe-view-content{
