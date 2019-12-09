@@ -119,6 +119,18 @@ app.get('/categories', authenticate, (req, res) => {
     })
 });
 
+// Return a single Category based on categoryId
+app.get('/categories/:categoryId', authenticate, (req, res) => {
+
+    Categories.findOne({
+        _id: req.params.categoryId,
+        _userId: req.user_id
+    })
+    .then((singleCategory) => {
+        res.send(singleCategory);
+    })
+})
+
 /**
  * POST /categories
  * Purpose: Create a category
@@ -236,7 +248,6 @@ app.post('/categories/:categoryId/recipes', authenticate, (req, res) => {
                 res.send(recipeDoc);
             })
         } else {
-            console.log("404 not found");
             res.sendStatus(404);
         }
     })
@@ -278,7 +289,6 @@ app.patch('/categories/:categoryId/recipes/:recipeId', authenticate, (req, res) 
                 });
             })
         } else {
-            console.log("404 not found");
             res.sendStatus(404);
         }
     })
@@ -312,7 +322,6 @@ app.delete('/categories/:categoryId/recipes/:recipeId', authenticate, (req, res)
                 res.send(removedRecipe);
             })
         } else {
-            console.log("404 not found");
             res.sendStatus(404);
         }
     })
@@ -332,7 +341,6 @@ app.post('/users', async (req, res) => {
     const { error } = checkUserData.validateUserSignUp(body);
 
     if(error){
-        console.log("Validation Error: ", error);
         return res.status(400).send(error.details)
     }
 

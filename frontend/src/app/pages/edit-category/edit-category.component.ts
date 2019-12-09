@@ -1,6 +1,8 @@
+import { Categories } from './../../models/categories.models';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { RecipeService } from 'src/app/recipe.service';
+import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-edit-category',
@@ -12,17 +14,41 @@ export class EditCategoryComponent implements OnInit {
   constructor( private route: ActivatedRoute, private recipeService: RecipeService, private router: Router) { }
 
   categoryId: string;
+  singleCategoryInfo: Categories;
+
+  editCategoryForm = new FormGroup({
+    categoryName: new FormControl('')
+  });
+
 
   ngOnInit() {
 
     this.route.params.subscribe(
       (params: Params) => {
         this.categoryId = params.categoryId;
+
+        this.recipeService.getSingleCategory(this.categoryId).subscribe((singleCategory: Categories) => {
+          this.singleCategoryInfo = singleCategory;
+          console.log("Single Category: ", this.singleCategoryInfo);
+  
+          // Using 'setValue' to set the value of each input with the specified information
+          // This will will help when using wants edit/update a Category name
+          this.editCategoryForm.setValue({
+            categoryName: this.singleCategoryInfo.categoryName
+          });
+  
+        })
     })
   }
 
-  updateCategory(categoryName: string){
-    this.recipeService.updateCategory(this.categoryId, categoryName).subscribe(() => {
+  cancel(){
+    this.router.navigate(['/categories', this.categoryId]);
+  }
+
+  updateCategory(){
+    let formData = this.editCategoryForm.value;
+
+    this.recipeService.updateCategory(this.categoryId, formData).subscribe(() => {
       this.router.navigate(['/categories', this.categoryId]);
     })
   }

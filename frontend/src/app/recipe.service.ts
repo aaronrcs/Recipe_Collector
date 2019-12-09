@@ -14,9 +14,14 @@ export class RecipeService {
     return this.webRequestService.post('categories', { categoryName })
   }
 
+  // Return one single Category based off categoryId
+  getSingleCategory(categoryId: string){
+    return this.webRequestService.get(`categories/${categoryId}`);
+  }
+
   // Update a Category
   updateCategory(categoryId: string, categoryName: string){
-    return this.webRequestService.patch(`categories/${categoryId}`, { categoryName })
+    return this.webRequestService.patch(`categories/${categoryId}`, categoryName )
   }
 
   // Get all created Categories

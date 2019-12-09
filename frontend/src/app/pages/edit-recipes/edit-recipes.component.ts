@@ -46,6 +46,10 @@ export class EditRecipesComponent implements OnInit {
     })
   }
 
+  cancel(){
+    this.router.navigate(['/categories', this.categoryId]);
+  }
+
   updateRecipe(){
     let formData = this.editRecipeForm.value;
     
