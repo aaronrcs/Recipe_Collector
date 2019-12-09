@@ -3,13 +3,7 @@
             <h1 class="title">
                 Edit your Recipe!
             </h1>
-            <div *ngIf="singleRecipeInfo">
-                <!-- Name: {{item.recipeName}}
-                Ingredients: {{item.ingredientsInfo}}
-                Directions: {{item.directions}} -->
-                <!-- {{singleRecipeInfo.recipeName}} -->
-            </div>
-            <form *ngIf="singleRecipeInfo" [formGroup]="editRecipeForm" (ngSubmit)="updateRecipe()">
+            <form [formGroup]="editRecipeForm" (ngSubmit)="updateRecipe()">
                 <input formControlName="recipeName" class="input has-background-light is-medium" type="text" placeholder="Edit Recipe Name (If necessary)">
                 <textarea formControlName="ingredientsInfo" class="textarea has-background-light" placeholder="Edit Ingredient Details (If necessary)"></textarea>
                 <textarea formControlName="directions" class="textarea has-background-light" placeholder="Edit Directions (If necessary)"></textarea>
