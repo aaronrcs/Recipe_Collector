@@ -1,12 +1,18 @@
 <div class="new-recipe-content">
-        <div class="modal-box">
+        <div class="modal-box-edit-recipe">
             <h1 class="title">
                 Edit your Recipe!
             </h1>
-            <form [formGroup]="editRecipeForm" (ngSubmit)="updateRecipe()">
-                <input formControlName="recipeName" class="input has-background-light is-medium" type="text" placeholder="Enter a Recipe Name">
-                <input formControlName="ingredientsInfo" class="input has-background-light is-medium" type="text" placeholder="Enter Ingredient Details">
-                <input formControlName="directions" class="input has-background-light is-medium" type="text" placeholder="Enter Directions">
+            <div *ngIf="singleRecipeInfo">
+                <!-- Name: {{item.recipeName}}
+                Ingredients: {{item.ingredientsInfo}}
+                Directions: {{item.directions}} -->
+                <!-- {{singleRecipeInfo.recipeName}} -->
+            </div>
+            <form *ngIf="singleRecipeInfo" [formGroup]="editRecipeForm" (ngSubmit)="updateRecipe()">
+                <input formControlName="recipeName" class="input has-background-light is-medium" type="text" placeholder="Edit Recipe Name (If necessary)">
+                <textarea formControlName="ingredientsInfo" class="textarea has-background-light" placeholder="Edit Ingredient Details (If necessary)"></textarea>
+                <textarea formControlName="directions" class="textarea has-background-light" placeholder="Edit Directions (If necessary)"></textarea>
     
                 <br><br>
                 <div class="buttons is-right">

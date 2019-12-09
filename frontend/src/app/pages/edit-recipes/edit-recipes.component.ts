@@ -13,6 +13,8 @@ export class EditRecipesComponent implements OnInit {
 
   categoryId: string;
   recipeId: string;
+  singleRecipeInfo: RecipeDetails;
+  recipes: RecipeDetails;
 
   editRecipeForm = new FormGroup({
     recipeName: new FormControl(''),
@@ -26,6 +28,21 @@ export class EditRecipesComponent implements OnInit {
     this.route.params.subscribe((params: Params) => {
       this.categoryId = params['categoryId'];
       this.recipeId = params['recipeId'];
+
+      this.recipeService.getSingleRecipe(this.categoryId, this.recipeId).subscribe((singleRecipe: RecipeDetails) => {
+        this.singleRecipeInfo = singleRecipe;
+
+        // Using 'setValue' to set the value of each input with the specified information
+        // This will will help when using wants edit/update any recipes they created
+        this.editRecipeForm.setValue({
+          recipeName: this.singleRecipeInfo.recipeName,
+          ingredientsInfo: this.singleRecipeInfo.ingredientsInfo,
+          directions: this.singleRecipeInfo.directions
+      
+        });
+
+      })
+
     })
   }
 

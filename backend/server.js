@@ -188,7 +188,7 @@ app.get('/categories/:categoryId/recipes', authenticate, (req, res) => {
 });
 
 // Purpose: Return one recipe based on recipeId
-app.get('/categories/:categoryId/recipes/:recipeId', (req, res) => {
+app.get('/categories/:categoryId/recipes/:recipeId', authenticate, (req, res) => {
     // Want to return all recipes that belong to a certain category
     Recipe.findOne({
         _id: req.params.recipeId,

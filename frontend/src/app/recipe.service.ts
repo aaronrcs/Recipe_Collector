@@ -14,6 +14,7 @@ export class RecipeService {
     return this.webRequestService.post('categories', { categoryName })
   }
 
+  // Update a Category
   updateCategory(categoryId: string, categoryName: string){
     return this.webRequestService.patch(`categories/${categoryId}`, { categoryName })
   }
@@ -46,6 +47,12 @@ export class RecipeService {
   // Update specified Recipe
   updateRecipe(categoryId: string, recipeId: string, recipeInfo: string){
     return this.webRequestService.patch(`categories/${categoryId}/recipes/${recipeId}`, recipeInfo)
+
+  }
+
+  // Get one Recipe based on recipeId
+  getSingleRecipe(categoryId: string, recipeId: string){
+    return this.webRequestService.get(`categories/${categoryId}/recipes/${recipeId}`);
 
   }
 }
