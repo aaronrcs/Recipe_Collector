@@ -58,6 +58,11 @@
                             <p>Name: {{recipe.recipeName}}</p>
                             <!-- <p>Ingredients: {{recipe.ingredientsInfo}}</p> -->
                             <!-- <p>Directions: {{recipe.directions}}</p> -->
+                            <!-- <p> Image: {{recipe.recipeImage}}</p> -->
+
+                            <span *ngIf="recipe.recipeImage">
+                                <img [src]="recipe.recipeImage">
+                            </span>
                         </div>
 
                         <div class="recipe-buttons">
@@ -74,7 +79,7 @@
                                 </div>
                             </button>
                             <!-- generatePdf(recipe._id) -->
-                            <button class="button is-primary" (click)="getRecipeInfoPdf(recipe.recipeName)"
+                            <button class="button is-primary" (click)="getRecipeInfoPdf(recipe.recipeName, recipe.recipeImage)"
                                 style="margin-left: 10px">
                                 Convert
                             </button>
@@ -117,7 +122,6 @@
                         </mat-expansion-panel>
                     </mat-accordion>
                 </div>
-
 
                 <!-- If no recipes have been created for a selected Category, this text will appear -->
                 <div *ngIf="recipes.length === 0">

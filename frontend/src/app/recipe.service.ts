@@ -40,8 +40,16 @@ export class RecipeService {
   }
 
   // Create a new Recipe
-  createRecipe(recipeInfo: RecipeDetails, categoryId: string){
-    return this.webRequestService.post(`categories/${categoryId}/recipes`,recipeInfo)
+  createRecipe(recipeName: string, ingredientsInfo: string, directions: string, recipeImage: File, categoryId: string){
+
+    // console.log("Recipe Info: ", recipeInfo);
+    var formData: any = new FormData();
+    formData.append("recipeName", recipeName);
+    formData.append("ingredientsInfo", ingredientsInfo);
+    formData.append("directions", directions);
+    formData.append("recipeImage", recipeImage);
+
+    return this.webRequestService.post(`categories/${categoryId}/recipes`,formData)
   }
 
   // Delete a Recipe

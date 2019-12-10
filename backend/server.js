@@ -4,6 +4,11 @@ const bodyParser = require('body-parser');
 const { mongoose } = require('./db/mongoose');
 const jwt = require('jsonwebtoken');
 
+const multer = require('multer');
+const GridFsStorage = require('multer-gridfs-storage');
+const Grid = require('gridfs-stream');
+const methodOverride = require('method-override');
+
 let port = process.env.PORT || 3000;
 
 // Load in mongoose Models
@@ -14,6 +19,68 @@ const checkUserData  = require('./db/models/user.model');
  * Load in Middleware
  */
 app.use(bodyParser.json());
+app.use(methodOverride('_method'));
+
+app.use('/public', express.static('public'));
+
+// Mongo URI
+// const mongoURI = 'mongodb://localhost:27017/RecipeCollector';
+
+/** Setting up Middleware for Uploading Images */
+// Create mongo connection
+// const conn = mongoose.createConnection(mongoURI);
+
+// Init gfs
+// let gfs;
+
+// conn.once('open', () => {
+//   // Init stream
+//   gfs = Grid(conn.db, mongoose.mongo);  
+// //   gfs.collection('uploads');
+// });
+
+// Create storage engine
+// const storage = new GridFsStorage({
+//     url: mongoURI,
+//     file: (req, file) => {
+//       return new Promise((resolve, reject) => {
+//           const filename = file.originalname;
+//           const fileInfo = {
+//             filename: filename          
+//         };
+//           resolve(fileInfo);
+//       });
+//     }
+//   });
+  
+//   const upload = multer({ storage });
+
+const DIR = './public/';
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, DIR);
+      },
+    filename: (req, file, cb) => {
+      const fileName = file.originalname.toLowerCase().split(' ').join('-');
+      cb(null, fileName)
+    }
+  });
+
+  let upload = multer({
+    storage: storage,
+    limits: {
+      fileSize: 1024 * 1024 * 5
+    },
+    fileFilter: (req, file, cb) => {
+      if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg") {
+        cb(null, true);
+      } else {
+        cb(null, false);
+        return cb(new Error('Only .png, .jpg and .jpeg format allowed!'));
+      }
+    }
+  });
 
 // CORS HEADERS MIDDLEWARE
 app.use(function (req, res, next) {
@@ -215,9 +282,25 @@ app.get('/categories/:categoryId/recipes/:recipeId', authenticate, (req, res) =>
  * POST /categories/:categoryId/recipes
  * Purpose: Create a new recipe in a specified category
  */
-app.post('/categories/:categoryId/recipes', authenticate, (req, res) => {
+app.post('/categories/:categoryId/recipes', upload.single('recipeImage'), authenticate, (req, res) => {
     // Want to create a new recipe and return the new recipe back to the user (including id)
     // The recipe information (fields) will be passed in via the JSON request body
+
+            const url = req.protocol + '://' + req.get('host')
+            let recipeName = req.body.recipeName;
+            let ingredientsInfo = req.body.ingredientsInfo;
+            let directions = req.body.directions;
+            let recipeImage = url + '/public/' + req.file.filename;
+
+            console.log("Recipe Image: ", req.file);
+
+            let newRecipe = new Recipe({
+                recipeName,
+                ingredientsInfo,
+                directions,
+                recipeImage,
+                _categoryId: req.params.categoryId
+            })
     
     Categories.findOne({
         _id: req.params.categoryId,
@@ -233,16 +316,7 @@ app.post('/categories/:categoryId/recipes', authenticate, (req, res) => {
         return false;
     }).then((canCreateRecipe) => {
         if (canCreateRecipe) {
-            let recipeName = req.body.recipeName;
-            let ingredientsInfo = req.body.ingredientsInfo;
-            let directions = req.body.directions;
-
-            let newRecipe = new Recipe({
-                recipeName,
-                ingredientsInfo,
-                directions,
-                _categoryId: req.params.categoryId
-            })
+            
         
             newRecipe.save().then((recipeDoc) => {
                 res.send(recipeDoc);

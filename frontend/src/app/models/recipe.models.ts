@@ -4,4 +4,5 @@ export class RecipeDetails {
     recipeName: string;
     ingredientsInfo: string;
     directions: string;
+    recipeImage: string;
 }

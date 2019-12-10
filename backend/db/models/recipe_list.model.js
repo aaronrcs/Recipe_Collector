@@ -19,6 +19,11 @@ const RecipeSchema = new mongoose.Schema({
         minlength: 1,
         trim: true
     },
+    recipeImage: {
+        type: String,
+        minlength: 1,
+        trim: true
+    },
     _categoryId: {
         type: mongoose.Types.ObjectId,
         required: true

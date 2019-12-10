@@ -20,8 +20,11 @@ export class RecipeViewComponent implements OnInit {
   panelOpenStateIngred = false;
   panelOpenStateDirect = false;
 
-
   selectedCategoryId: string;
+
+  recipeImage: string;
+  recipeImagePdf: string;
+  fileString:any= "";
 
   constructor(private recipeService: RecipeService, private route: ActivatedRoute, private router: Router) { }
 
@@ -60,9 +63,21 @@ export class RecipeViewComponent implements OnInit {
   }
 
   // Using pdfmake
-  getRecipeInfoPdf(recipeName: string){
+  getRecipeInfoPdf(recipeName: string, recipeImage: string){
     // let data = document.getElementById(`${recipeId}`);
     // console.log("Recipe Name: ", recipeName);
+
+    let fileName = recipeImage.substring(29);
+    let filePath = recipeImage.substring(0,29);
+
+    // this.testConvert(fileName, filePath).then((result) => {
+    //   console.log("Convert: ", result);
+    //   this.getBase64(result);
+    // })
+
+    
+    console.log('File Path: ', filePath);
+    console.log('File Name: ', fileName);
     const docDefinition = { 
       content: [
         {
@@ -71,6 +86,13 @@ export class RecipeViewComponent implements OnInit {
           fontSize: 20,
           alignment: 'center',
           margin: [0, 0, 0, 20]
+        },
+        {
+          columns: [
+            [
+              // this.getProfilePicObject()
+            ]
+          ]
         }
       ],
       styles: {
@@ -85,6 +107,50 @@ export class RecipeViewComponent implements OnInit {
     // Open pdf file in another tab
     pdfMake.createPdf(docDefinition).open();
     
+  }
+
+  testConvert(fileName: string, filePath: string){
+    return new Promise(resolve => {
+      var file = new File([fileName], filePath);
+      var reader = new FileReader();
+      // Read file content on file loaded event
+      reader.onload = function(event) {
+        // resolve(event.target.result);
+        // console.log("Result: ", event.target.result);
+      };
+
+      // this.getBase64(file);
+      
+      // Convert data to base64 
+      reader.readAsDataURL(file);
+      
+    });
+  }
+
+  getProfilePicObject() {
+
+    if (this.recipeImagePdf) {
+      return {
+        image: this.recipeImagePdf,
+        width: 75,
+        alignment : 'center'
+      };
+    }
+    return null;
+  }
+
+  getBase64(file) {
+    console.log("File In Base64: ", file);
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      this.recipeImagePdf = reader.result as string;
+      console.log("Actual image: ", this.recipeImagePdf);
+    };
+    reader.onerror = (error) => {
+      console.log('Error: ', error);
+    };
+
   }
 
   onDeleteCategoryClick(){

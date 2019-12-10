@@ -7,6 +7,30 @@
             <input formControlName="recipeName" class="input has-background-light is-medium" type="text" placeholder="Enter a Recipe Name">
             <textarea formControlName="ingredientsInfo" class="textarea has-background-light" placeholder="Enter Ingredient Details"></textarea>
             <textarea formControlName="directions" class="textarea has-background-light" placeholder="Enter Directions"></textarea>
+
+            <div class="file has-name is-fullwidth">
+                <label class="file-label">
+                  <input class="file-input" type="file" (change)="fileChanged($event)">
+                  <span class="file-cta">
+                    <span class="file-icon">
+                      <i class="fas fa-upload"></i>
+                    </span>
+                    <span class="file-label">
+                      Choose a file…
+                    </span>
+                  </span>
+                  <span class="file-name" *ngIf="imageFileName">
+                      {{imageFileName}}
+                  </span>
+                  <span class="file-name" *ngIf="notEmptyFile">
+                        Recipe Image (Optional)
+                  </span>
+                </label>
+              </div>
+
+            <!-- <input type="file" (change)="fileChanged($event)" aria-describedby="fileHelpId">
+            <img *ngIf="recipeImage" [src]="recipeImage"> -->
+
             <br><br>
             <div class="buttons is-right">
                 <button class="button is-medium" routerLink="/">Cancel</button>
