@@ -63,21 +63,12 @@ export class RecipeViewComponent implements OnInit {
   }
 
   // Using pdfmake
-  getRecipeInfoPdf(recipeName: string, recipeImage: string){
-    // let data = document.getElementById(`${recipeId}`);
-    // console.log("Recipe Name: ", recipeName);
-
-    let fileName = recipeImage.substring(29);
-    let filePath = recipeImage.substring(0,29);
-
-    // this.testConvert(fileName, filePath).then((result) => {
-    //   console.log("Convert: ", result);
-    //   this.getBase64(result);
-    // })
-
+  getRecipeInfoPdf(recipeName: string, recipeImageBlob: string){
     
-    console.log('File Path: ', filePath);
-    console.log('File Name: ', fileName);
+    // this.recipeImagePdf = recipeImageBlob;
+
+    // console.log("Blob: ", recipeImageBlob);
+
     const docDefinition = { 
       content: [
         {
@@ -90,7 +81,7 @@ export class RecipeViewComponent implements OnInit {
         {
           columns: [
             [
-              // this.getProfilePicObject()
+              this.getRecipePhoto(recipeImageBlob)
             ]
           ]
         }
@@ -109,29 +100,12 @@ export class RecipeViewComponent implements OnInit {
     
   }
 
-  testConvert(fileName: string, filePath: string){
-    return new Promise(resolve => {
-      var file = new File([fileName], filePath);
-      var reader = new FileReader();
-      // Read file content on file loaded event
-      reader.onload = function(event) {
-        // resolve(event.target.result);
-        // console.log("Result: ", event.target.result);
-      };
+  // Function for setting up image for external PDF file
+  getRecipePhoto(imageBlob: string) {
 
-      // this.getBase64(file);
-      
-      // Convert data to base64 
-      reader.readAsDataURL(file);
-      
-    });
-  }
-
-  getProfilePicObject() {
-
-    if (this.recipeImagePdf) {
+    if (imageBlob) {
       return {
-        image: this.recipeImagePdf,
+        image: imageBlob,
         width: 75,
         alignment : 'center'
       };
@@ -140,12 +114,10 @@ export class RecipeViewComponent implements OnInit {
   }
 
   getBase64(file) {
-    console.log("File In Base64: ", file);
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => {
       this.recipeImagePdf = reader.result as string;
-      console.log("Actual image: ", this.recipeImagePdf);
     };
     reader.onerror = (error) => {
       console.log('Error: ', error);
@@ -153,12 +125,14 @@ export class RecipeViewComponent implements OnInit {
 
   }
 
+  // Function to Delete Categories
   onDeleteCategoryClick(){
       this.recipeService.deleteCategory(this.selectedCategoryId).subscribe((res: any) => {
         this.router.navigate(['/categories']);
       })
   }
 
+  // Function to delete Recipes
   onDeleteRecipeClick(recipeId: string){
     this.recipeService.deleteRecipe(this.selectedCategoryId, recipeId).subscribe((res: any) => {
       this.recipes = this.recipes.filter(val => val._id !== recipeId);

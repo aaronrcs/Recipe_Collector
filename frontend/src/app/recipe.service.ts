@@ -40,7 +40,7 @@ export class RecipeService {
   }
 
   // Create a new Recipe
-  createRecipe(recipeName: string, ingredientsInfo: string, directions: string, recipeImage: File, categoryId: string){
+  createRecipe(recipeName: string, ingredientsInfo: string, directions: string, recipeImage: File, recipeImageBlob:string, categoryId: string){
 
     // console.log("Recipe Info: ", recipeInfo);
     var formData: any = new FormData();
@@ -48,6 +48,8 @@ export class RecipeService {
     formData.append("ingredientsInfo", ingredientsInfo);
     formData.append("directions", directions);
     formData.append("recipeImage", recipeImage);
+    formData.append("recipeImageBlob", recipeImageBlob);
+
 
     return this.webRequestService.post(`categories/${categoryId}/recipes`,formData)
   }

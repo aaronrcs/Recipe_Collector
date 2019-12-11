@@ -291,14 +291,17 @@ app.post('/categories/:categoryId/recipes', upload.single('recipeImage'), authen
             let ingredientsInfo = req.body.ingredientsInfo;
             let directions = req.body.directions;
             let recipeImage = url + '/public/' + req.file.filename;
+            let recipeImageBlob = req.body.recipeImageBlob
 
             console.log("Recipe Image: ", req.file);
+            console.log("Recipe Blob: ", recipeImageBlob);
 
             let newRecipe = new Recipe({
                 recipeName,
                 ingredientsInfo,
                 directions,
                 recipeImage,
+                recipeImageBlob,
                 _categoryId: req.params.categoryId
             })
     

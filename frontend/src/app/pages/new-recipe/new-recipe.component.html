@@ -10,7 +10,7 @@
 
             <div class="file has-name is-fullwidth">
                 <label class="file-label">
-                  <input class="file-input" type="file" (change)="fileChanged($event)">
+                  <input class="file-input" type="file" (change)="fileChanged($event)" value="test">
                   <span class="file-cta">
                     <span class="file-icon">
                       <i class="fas fa-upload"></i>
@@ -28,12 +28,12 @@
                 </label>
               </div>
 
-            <!-- <input type="file" (change)="fileChanged($event)" aria-describedby="fileHelpId">
-            <img *ngIf="recipeImage" [src]="recipeImage"> -->
+            <!-- <input type="file" (change)="fileChanged($event)" aria-describedby="fileHelpId"> -->
+            <!-- <img *ngIf="recipeImage" [src]="recipeImage"> -->
 
             <br><br>
             <div class="buttons is-right">
-                <button class="button is-medium" routerLink="/">Cancel</button>
+                <button class="button is-medium" (click)="cancel()">Cancel</button>
                 <button type="submit" class="button is-primary has-text-white is-medium">Create</button>
             </div>
         </form>

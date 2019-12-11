@@ -56,12 +56,10 @@
                     <div class="recipe-container">
                         <div class="recipe-items" id="{{recipe._id}}">
                             <p>Name: {{recipe.recipeName}}</p>
-                            <!-- <p>Ingredients: {{recipe.ingredientsInfo}}</p> -->
-                            <!-- <p>Directions: {{recipe.directions}}</p> -->
-                            <!-- <p> Image: {{recipe.recipeImage}}</p> -->
 
+                            <!-- Recipe Image -->
                             <span *ngIf="recipe.recipeImage">
-                                <img [src]="recipe.recipeImage">
+                                <img class="recipeImage" [src]="recipe.recipeImageBlob">
                             </span>
                         </div>
 
@@ -79,7 +77,7 @@
                                 </div>
                             </button>
                             <!-- generatePdf(recipe._id) -->
-                            <button class="button is-primary" (click)="getRecipeInfoPdf(recipe.recipeName, recipe.recipeImage)"
+                            <button class="button is-primary" (click)="getRecipeInfoPdf(recipe.recipeName, recipe.recipeImageBlob)"
                                 style="margin-left: 10px">
                                 Convert
                             </button>
