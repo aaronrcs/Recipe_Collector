@@ -41,6 +41,8 @@ export class NewRecipeComponent implements OnInit {
   fileChanged(e) {
     this.notEmptyFile = false;
     const file = (e.target as HTMLInputElement).files[0];
+
+    // console.log("File: ", file);
         
     this.imageFileName = file.name;
 

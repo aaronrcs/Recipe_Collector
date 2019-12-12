@@ -42,8 +42,7 @@ export class RecipeService {
   // Create a new Recipe
   createRecipe(recipeName: string, ingredientsInfo: string, directions: string, recipeImage: File, recipeImageBlob:string, categoryId: string){
 
-    // console.log("Recipe Info: ", recipeInfo);
-    var formData: any = new FormData();
+    let formData: any = new FormData();
     formData.append("recipeName", recipeName);
     formData.append("ingredientsInfo", ingredientsInfo);
     formData.append("directions", directions);

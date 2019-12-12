@@ -24,14 +24,14 @@ export class RecipeViewComponent implements OnInit {
 
   recipeImage: string;
   recipeImagePdf: string;
-  fileString:any= "";
+  fileString: any = "";
 
   constructor(private recipeService: RecipeService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
 
-      if(params.categoryId){
+      if (params.categoryId) {
         this.selectedCategoryId = params.categoryId;
         /**
        * Passing the active Params (categoryId) to getRecipes
@@ -39,12 +39,12 @@ export class RecipeViewComponent implements OnInit {
        */
         this.recipeService.getRecipes(params.categoryId).subscribe((recipes: RecipeDetails[]) => {
           this.recipes = recipes;
-          // console.log("Recipes: ", this.recipes);
+          console.log("Recipes: ", this.recipes);
         })
       } else {
         this.recipes = undefined;
       }
-      
+
     })
 
     // Subscribing to Observeable to get an array of all existing Categories
@@ -55,24 +55,25 @@ export class RecipeViewComponent implements OnInit {
 
   // Convience function to check if Object is empty
   isEmptyObject(obj) {
-    for(let key in obj) {
-        if(obj.hasOwnProperty(key))
-            return false;
+    for (let key in obj) {
+      if (obj.hasOwnProperty(key))
+        return false;
     }
     return true;
   }
 
   // Using pdfmake
-  getRecipeInfoPdf(recipeName: string, recipeImageBlob: string){
-    
+  getRecipeInfoPdf(recipeName: string, recipeImageBlob: string, ingredientInfo: string, directions: string) {
+
     // this.recipeImagePdf = recipeImageBlob;
 
     // console.log("Blob: ", recipeImageBlob);
 
-    const docDefinition = { 
+
+    const docDefinition = {
       content: [
         {
-          text: `${recipeName} Recipe Details`,
+          text: `${recipeName} Recipe`,
           bold: true,
           fontSize: 20,
           alignment: 'center',
@@ -84,20 +85,78 @@ export class RecipeViewComponent implements OnInit {
               this.getRecipePhoto(recipeImageBlob)
             ]
           ]
-        }
+        },
+        {
+          text: 'Ingredients',
+          style: 'header'
+        },
+        {
+          style: 'recipeInfoTables',
+          table: {
+            widths: [450],
+            headerRows: 1,
+            body: [
+              [ingredientInfo]
+            ],
+          },
+          layout: 'headerLineOnly'
+        },
+        {
+          text: 'Directions',
+          style: 'header'
+        },
+
+        {
+          style: 'recipeInfoTables',
+          table: {
+            widths: [450],
+            headerRows: 1,
+            body: [
+              [ directions ]
+            ],
+          },
+          layout: 'headerLineOnly'
+        },
+
       ],
       styles: {
         name: {
           fontSize: 16,
           bold: true
+        },
+        header: {
+          fontSize: 18,
+          bold: true,
+          margin: [0, 20, 0, 10],
+          decoration: 'underline'
+        },
+        recipeInfoTables: {
+          fontSize: 14,
+          bold: true,
+          italics: true
         }
       }
-    
-    
+
+
     };
     // Open pdf file in another tab
     pdfMake.createPdf(docDefinition).open();
-    
+
+  }
+
+  getIngredientInfo(ingredientInfo: string) {
+    return {
+      table: {
+        widths: ['*'],
+        body: [
+          {
+            text: ingredientInfo,
+            style: 'ingredientsInfo'
+          }
+        ]
+      }
+    }
+
   }
 
   // Function for setting up image for external PDF file
@@ -106,8 +165,8 @@ export class RecipeViewComponent implements OnInit {
     if (imageBlob) {
       return {
         image: imageBlob,
-        width: 75,
-        alignment : 'center'
+        width: 300,
+        alignment: 'center'
       };
     }
     return null;
@@ -115,10 +174,10 @@ export class RecipeViewComponent implements OnInit {
 
   getBase64(file) {
     const reader = new FileReader();
-    reader.readAsDataURL(file);
     reader.onload = () => {
       this.recipeImagePdf = reader.result as string;
     };
+    reader.readAsDataURL(file);
     reader.onerror = (error) => {
       console.log('Error: ', error);
     };
@@ -126,14 +185,14 @@ export class RecipeViewComponent implements OnInit {
   }
 
   // Function to Delete Categories
-  onDeleteCategoryClick(){
-      this.recipeService.deleteCategory(this.selectedCategoryId).subscribe((res: any) => {
-        this.router.navigate(['/categories']);
-      })
+  onDeleteCategoryClick() {
+    this.recipeService.deleteCategory(this.selectedCategoryId).subscribe((res: any) => {
+      this.router.navigate(['/categories']);
+    })
   }
 
   // Function to delete Recipes
-  onDeleteRecipeClick(recipeId: string){
+  onDeleteRecipeClick(recipeId: string) {
     this.recipeService.deleteRecipe(this.selectedCategoryId, recipeId).subscribe((res: any) => {
       this.recipes = this.recipes.filter(val => val._id !== recipeId);
     })
