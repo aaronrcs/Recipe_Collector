@@ -1,19 +1,45 @@
 <div class="new-recipe-content">
-        <div class="modal-box-edit-recipe">
-            <h1 class="title">
-                Edit your Recipe!
-            </h1>
-            <form [formGroup]="editRecipeForm" (ngSubmit)="updateRecipe()">
-                <input formControlName="recipeName" class="input has-background-light is-medium" type="text" placeholder="Edit Recipe Name (If necessary)">
-                <textarea formControlName="ingredientsInfo" class="textarea has-background-light" placeholder="Edit Ingredient Details (If necessary)"></textarea>
-                <textarea formControlName="directions" class="textarea has-background-light" placeholder="Edit Directions (If necessary)"></textarea>
-    
-                <br><br>
-                <div class="buttons is-right">
-                    <button class="button is-medium" (click)="cancel()">Cancel</button>
-                    <button type="submit" class="button is-primary has-text-white is-medium">Save Changes</button>
-                </div>
-            </form>
-    
-        </div>
+    <div class="modal-box-edit-recipe">
+        <h1 class="title">
+            Edit your Recipe!
+        </h1>
+        <form [formGroup]="editRecipeForm" (ngSubmit)="updateRecipe()">
+            <input formControlName="recipeName" class="input has-background-light is-medium" type="text"
+                placeholder="Edit Recipe Name (If necessary)">
+            <textarea formControlName="ingredientsInfo" class="textarea has-background-light"
+                placeholder="Edit Ingredient Details (If necessary)"></textarea>
+            <textarea formControlName="directions" class="textarea has-background-light"
+                placeholder="Edit Directions (If necessary)"></textarea>
+            <div *ngIf="recipeImageBlob">
+                <img class="editImage" [src]="recipeImageBlob">
+                <!-- <input formControlName="recipeImageBlob" type="text"> -->
+            </div>
+            <div class="file has-name is-fullwidth">
+                <label class="file-label">
+                    <input class="file-input" type="file" (change)="fileChanged($event)" value="test">
+                    <span class="file-cta">
+                        <span class="file-icon">
+                            <i class="fas fa-upload"></i>
+                        </span>
+                        <span class="file-label">
+                            Choose a file…
+                        </span>
+                    </span>
+                    <span class="file-name" *ngIf="imageFileName">
+                        {{imageFileName}}
+                    </span>
+                    <span class="file-name" *ngIf="notEmptyFile">
+                        Update Image (Optional)
+                    </span>
+                </label>
+            </div>
+
+            <br><br>
+            <div class="buttons is-right">
+                <button class="button is-medium" (click)="cancel()">Cancel</button>
+                <button type="submit" class="button is-primary has-text-white is-medium">Save Changes</button>
+            </div>
+        </form>
+
     </div>
+</div>

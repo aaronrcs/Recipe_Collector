@@ -12,4 +12,12 @@ textarea{
     background: white;
     border-radius: 5px;
     padding: 35px;
+    overflow-y: auto;
+}
+.editImage{
+    width: 30%;
+}
+
+.hidden{
+    display: none;
 }

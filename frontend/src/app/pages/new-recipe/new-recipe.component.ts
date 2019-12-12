@@ -16,7 +16,7 @@ export class NewRecipeComponent implements OnInit {
   imageFileName: string;
   notEmptyFile = true;
 
-  constructor(private recipeService: RecipeService, private route: ActivatedRoute, private router: Router, public fb: FormBuilder,) { }
+  constructor(private recipeService: RecipeService, private route: ActivatedRoute, private router: Router, public fb: FormBuilder) { }
 
   // recipeForm = new FormGroup({
   //   recipeName: new FormControl(''),

@@ -18,8 +18,10 @@ const checkUserData  = require('./db/models/user.model');
 /**
  * Load in Middleware
  */
-app.use(bodyParser.json());
+// app.use(bodyParser.json());
 app.use(methodOverride('_method'));
+app.use(bodyParser.json({limit: '50mb', extended: true}))
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}))
 
 app.use('/public', express.static('public'));
 

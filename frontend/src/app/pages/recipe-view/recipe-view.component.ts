@@ -39,7 +39,7 @@ export class RecipeViewComponent implements OnInit {
        */
         this.recipeService.getRecipes(params.categoryId).subscribe((recipes: RecipeDetails[]) => {
           this.recipes = recipes;
-          console.log("Recipes: ", this.recipes);
+          // console.log("Recipes: ", this.recipes);
         })
       } else {
         this.recipes = undefined;

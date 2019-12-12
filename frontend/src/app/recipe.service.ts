@@ -7,6 +7,8 @@ import { Injectable } from '@angular/core';
 })
 export class RecipeService {
 
+  blobData: Object;
+
   constructor( private webRequestService: WebRequestService) { }
 
   // Create a new Category
@@ -59,8 +61,10 @@ export class RecipeService {
   }
 
   // Update specified Recipe
-  updateRecipe(categoryId: string, recipeId: string, recipeInfo: string){
-    return this.webRequestService.patch(`categories/${categoryId}/recipes/${recipeId}`, recipeInfo)
+  updateRecipe(categoryId: string, recipeId: string, formData: Object){
+
+
+    return this.webRequestService.patch(`categories/${categoryId}/recipes/${recipeId}`, formData)
 
   }
 
