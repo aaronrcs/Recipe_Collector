@@ -1,12 +1,13 @@
 // This file will handle connection logic to the MongoDB Database
 
 const mongoose = require('mongoose');
-
+// let connectionString = 'mongodb+srv://romeroaaron:romeroaaron1234@recipecollector-biv2s.mongodb.net/test?retryWrites=true&w=majority'
+let connectionString = 'mongodb://localhost:27017/RecipeCollector'
 // Using Bluebird for promises currently
 // For now using the global promise for javascript
 mongoose.Promise = global.Promise;
 
-mongoose.connect('mongodb://localhost:27017/RecipeCollector', { useNewUrlParser: true }).then(() => {
+mongoose.connect(connectionString, { useNewUrlParser: true }).then(() => {
     console.log('Connected to MongoDB successfully!');
 }).catch((error) => {
     console.log("Could not connect to MongoDB database");

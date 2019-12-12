@@ -3,13 +3,14 @@ const app = express();
 const bodyParser = require('body-parser');
 const { mongoose } = require('./db/mongoose');
 const jwt = require('jsonwebtoken');
+const path = require('path');
 
 const multer = require('multer');
 const GridFsStorage = require('multer-gridfs-storage');
 const Grid = require('gridfs-stream');
 const methodOverride = require('method-override');
 
-let port = process.env.PORT || 3000;
+let port = process.env.PORT || 8080;
 
 // Load in mongoose Models
 const { Categories, Recipe, User } = require('./db/models/model_index');
@@ -513,6 +514,18 @@ let deleteRecipesFromCategories = (_categoryId) => {
         console.log("Recipes from " + _categoryId + " were deleted!");
     })
 }
+
+// Code for production
+// if(process.env.NODE_ENV === 'production'){
+//     // Set static path
+//     app.use(express.static(__dirname + '/dist/'))
+
+//     // redirecting to index.html to display our project
+//     app.get(/.*/,(req,res) => res.sendFile(__dirname + '/dist/frontend/index.html'))
+// }
+
+// app.use(express.static(path.join(__dirname, 'dist')));
+// app.get('*',(req,res) => res.sendFile(path.join(__dirname + '/dist/index.html')))
 
 app.listen(port, () => {
     console.log("Server is listening on port", port);
