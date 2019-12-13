@@ -3,11 +3,33 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { shareReplay, tap, catchError } from 'rxjs/operators';
 import { HttpResponse, HttpClient } from '@angular/common/http';
+import { BehaviorSubject, Subject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+
+  // private response = new BehaviorSubject<string>('')
+
+  // public share = this.response.asObservable();
+
+  // updateInfo(loginInfo: string){
+  //   console.log("Updated Info: ", loginInfo);
+  //   this.response.next(loginInfo);
+  // }
+
+  private subject = new BehaviorSubject<any>('');
+
+    sendLoginInfo(info: any) {
+      localStorage.setItem('login-info', JSON.stringify(info));
+        
+        this.subject.next({response: info});
+    }
+
+    getLoginInfo(): Observable<any> {
+        return this.subject.asObservable();
+    }
 
   constructor(private webService: WebRequestService, private router: Router, private http: HttpClient) { }
 
@@ -19,7 +41,8 @@ export class AuthService {
         this.setSession(res.body._id, res.headers.get('x-access-token'), res.headers.get('x-refresh-token'));
 
         console.log("Logged in!");
-        console.log("Response: ", res);
+        // console.log("Response: ", res);
+        this.sendLoginInfo(res);
       })
     )
   }

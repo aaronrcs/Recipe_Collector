@@ -17,6 +17,7 @@ import { EditCategoryComponent } from './pages/edit-category/edit-category.compo
 import { EditRecipesComponent } from './pages/edit-recipes/edit-recipes.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { NavbarComponent } from './pages/navbar/navbar.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
     LoginPageComponent,
     SignupPageComponent,
     EditCategoryComponent,
-    EditRecipesComponent
+    EditRecipesComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,

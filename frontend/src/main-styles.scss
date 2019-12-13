@@ -24,7 +24,8 @@ $input-shadow: none;
 // Custom Global Styles (Applied to entire app)
 
 html{
-    background: linear-gradient(to right top, $turquoise, $green);
+    // background: linear-gradient(to right top, $turquoise, $green);
+    background: #daad5b !important;
 }
 
 html, body{

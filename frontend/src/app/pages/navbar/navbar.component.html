@@ -1,0 +1,40 @@
+<nav>
+    <ul *ngIf="loggedInInfo" class="menu">
+        <li class="logo">
+            <a href="">Recipe Collector</a>
+        </li>
+        <li class="item email" [ngClass]="{'active': isToggled}">
+            <span style="color: #fbac59; padding: 10px;">Welcome,</span>
+            <span style="color: white">{{loggedInInfo.body.email}}</span>
+        </li>
+        <button class="item button" [ngClass]="{'active': isToggled}" (click)="logout()">
+            <a>Logout</a>
+        </button>
+        <!-- <hr> -->
+        <!-- 3 Bar icon (For Mobile Devices) -->
+        <li class="toggle" (click)="toggleMenuItem()">
+            <span class="bars"></span>
+        </li>
+
+    </ul>
+    <ul *ngIf="!loggedInInfo" class="menu">
+        <li class="logo">
+            <a href="">Recipe Collector</a>
+        </li>
+        <!-- <li class="item" [ngClass]="{'active': isToggled}">
+            <a href="#">Home</a>
+        </li> -->
+
+        <button class="item button" [ngClass]="{'active': isToggled}" (click)="login()">
+            <a>Log In</a>
+        </button>
+        <button class="item button secondary" [ngClass]="{'active': isToggled}" (click)="signUp()">
+            <a>Sign Up</a>
+        </button>
+
+        <!-- 3 Bar icon (For Mobile Devices) -->
+        <li class="toggle" (click)="toggleMenuItem()">
+            <span class="bars"></span>
+        </li>
+    </ul>
+</nav>
