@@ -3,18 +3,19 @@
 
         <!-- Sidebar Container -->
         <div class="sidebar has-background-white">
-            <h1 class="title has-text-primary">
+            <h1 id="title-category" class="title has-text-primary">
                 Categories
             </h1>
-            <!-- routerLinkActive="is-active" -->
-            <div class="category-menu">
-                <a class="category-menu-item" *ngFor="let item of categories" [routerLink]="['/categories', item._id]"
-                    routerLinkActive="is-active">
-                    <p>{{item.categoryName}}</p>
-                </a>
+            <div class="category-container">
+                <div class="category-menu">
+                    <a class="category-menu-item" *ngFor="let item of categories" [routerLink]="['/categories', item._id]"
+                        routerLinkActive="is-active">
+                        <p>{{item.categoryName}}</p>
+                    </a>
+                </div>
             </div>
 
-            <button class="button is-primary has-text-white" routerLink="/new-category"> + New Category</button>
+            <button id="add-category" class="button is-primary has-text-white" routerLink="/new-category"> + New Category</button>
         </div>
 
         <!-- Recipe List Container -->
@@ -132,7 +133,7 @@
 
             </div>
 
-            <button class="add-button button is-primary has-text-black" routerLink="./new-recipe">
+            <button class="add-recipe button is-primary has-text-black" routerLink="./new-recipe">
                 + New Recipe
             </button>
 

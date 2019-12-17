@@ -21,6 +21,10 @@
 }
 
 // Category List Styles:
+.category-container{
+    overflow-y: auto;
+    height: 80%;
+}
 .category-menu{
     display: flex;
     flex-direction: column;
@@ -115,7 +119,7 @@
 }
 
 // Button Styles:
-.add-button{
+.add-recipe{
     position: absolute;
     /* bottom: 10%; */
     right: 16%;
@@ -159,4 +163,38 @@
 .recipeImage{
     max-width: 33%;
     max-height: 50%;
+}
+
+/* Media Queries: */
+@media all and (max-width: 468px){
+    .sidebar{
+        width: 100vw;
+        flex-direction: column;
+        justify-content: center;
+        align-items: baseline;
+        position: relative;
+    }
+
+    .category-container{
+        overflow-y: auto;
+        height: 33vh;
+        width: 84vw;
+    }
+    
+    .category-menu{
+        flex-direction: row;
+        flex-flow: wrap;
+        width: 89vw;
+
+        .category-menu-item{
+            // overflow-y: auto;
+            // height: 70%;
+            width: 26vw;
+        }
+       
+    }
+
+    .recipe-manager-container{
+        flex-direction: column;
+    }
 }
