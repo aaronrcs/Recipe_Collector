@@ -21,7 +21,6 @@ const RecipeSchema = new mongoose.Schema({
     },
     recipeImage: {
         type: String,
-        minlength: 1,
         trim: true
     },
     recipeImageBlob: {

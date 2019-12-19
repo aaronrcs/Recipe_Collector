@@ -3,6 +3,7 @@ import { RecipeService } from 'src/app/recipe.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Ng2ImgMaxService } from 'ng2-img-max';
 
 @Component({
   selector: 'app-new-recipe',
@@ -15,8 +16,9 @@ export class NewRecipeComponent implements OnInit {
   recipeImageBlob: string;
   imageFileName: string;
   notEmptyFile = true;
+  uploadedImage: File;
 
-  constructor(private recipeService: RecipeService, private route: ActivatedRoute, private router: Router, public fb: FormBuilder) { }
+  constructor(private ng2ImgMax: Ng2ImgMaxService, private recipeService: RecipeService, private route: ActivatedRoute, private router: Router, public fb: FormBuilder) { }
 
   // recipeForm = new FormGroup({
   //   recipeName: new FormControl(''),
@@ -41,14 +43,27 @@ export class NewRecipeComponent implements OnInit {
   fileChanged(e) {
     this.notEmptyFile = false;
     const file = (e.target as HTMLInputElement).files[0];
+    let imageLimitSize = 0.050;
+
+    // Using ng2ImgMax to compress uploaded Image files to 50 KB
+    this.ng2ImgMax.compressImage(file, imageLimitSize).subscribe(
+      result => {
+        // Converting the uploaded image to a File
+        this.uploadedImage = new File([result], result.name, {type: result.type});
+        // console.log("Image: ", this.uploadedImage);
+        this.recipeForm.patchValue({
+          recipeImage: this.uploadedImage
+        });
+      },
+      error => {
+        console.log('😢 Oh no!', error);
+      }
+    );
+    
 
     // console.log("File: ", file);
         
     this.imageFileName = file.name;
-
-    this.recipeForm.patchValue({
-      recipeImage: file
-    });
 
     this.recipeForm.get('recipeImage').updateValueAndValidity();
 

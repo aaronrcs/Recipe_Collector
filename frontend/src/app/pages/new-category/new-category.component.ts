@@ -17,7 +17,6 @@ export class NewCategoryComponent implements OnInit {
 
   createCategory(categoryName: string){
     return this.recipeService.createCategory(categoryName).subscribe((category: Categories) => {
-      console.log("Response: ", category);
       // Now we navigate /categories/response._id
       
       this.router.navigate(['/categories', category._id]);

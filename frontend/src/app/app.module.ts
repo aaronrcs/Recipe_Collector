@@ -18,6 +18,7 @@ import { EditRecipesComponent } from './pages/edit-recipes/edit-recipes.componen
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { NavbarComponent } from './pages/navbar/navbar.component';
+import { Ng2ImgMaxModule } from 'ng2-img-max';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { NavbarComponent } from './pages/navbar/navbar.component';
     HttpClientModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    MatExpansionModule
+    MatExpansionModule,
+    Ng2ImgMaxModule
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA

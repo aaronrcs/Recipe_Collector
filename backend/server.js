@@ -73,12 +73,13 @@ const storage = multer.diskStorage({
   let upload = multer({
     storage: storage,
     limits: {
-      fileSize: 1024 * 1024 * 5
+        fileSize: 1024 * 1024 * 20
     },
     fileFilter: (req, file, cb) => {
       if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg") {
         cb(null, true);
-      } else {
+      } 
+      else {
         cb(null, false);
         return cb(new Error('Only .png, .jpg and .jpeg format allowed!'));
       }
@@ -290,13 +291,24 @@ app.post('/categories/:categoryId/recipes', upload.single('recipeImage'), authen
     // The recipe information (fields) will be passed in via the JSON request body
 
             const url = req.protocol + '://' + req.get('host')
+            let recipeImage;
+            let recipeImageBlob;
+
             let recipeName = req.body.recipeName;
             let ingredientsInfo = req.body.ingredientsInfo;
             let directions = req.body.directions;
-            let recipeImage = url + '/public/' + req.file.filename;            
-            let recipeImageBlob = req.body.recipeImageBlob
 
-            // console.log("Recipe Image: ", recipeImage);
+            // Checking whether a file was sent via POST Request
+            if(!req.file){
+                recipeImage = ''
+                recipeImageBlob = ''
+            }
+            else {
+                recipeImage = url + '/public/' + req.file.filename;
+                recipeImageBlob = req.body.recipeImageBlob
+            }
+
+            // console.log("Recipe Image: ", test);
             // console.log("Recipe Blob: ", recipeImageBlob);
 
             let newRecipe = new Recipe({
