@@ -2,27 +2,10 @@
     <div class="recipe-manager-container">
 
         <!-- Sidebar Container -->
-        <div class="sidebar has-background-white">
-            <h1 id="title-category" class="title has-text-primary">
-                Categories
-            </h1>
-            <div class="category-container">
-                <div class="category-menu">
-                    <a class="category-menu-item" *ngFor="let item of categories" [routerLink]="['/categories', item._id]"
-                        routerLinkActive="is-active">
-                        <p>{{item.categoryName}}</p>
-                    </a>
-                </div>
-            </div>
-
-            <button id="add-category" class="button is-primary has-text-white" routerLink="/new-category"> + New Category</button>
-        </div>
-
-        <!-- Recipe List Container -->
-        <div class="main-recipe-container has-background-light">
-            <div class="top-bar">
-                <h1 class="title has-text-primary">
-                    Recipe Lists
+        <div class="sidebar">
+            <div class="sidebar-header-container">
+                <h1 id="title-category" class="title">
+                    Categories
                 </h1>
                 <div class="dropdown is-hoverable is-right">
                     <div class="dropdown-trigger">
@@ -44,26 +27,51 @@
                     </div>
                 </div>
             </div>
-            <div class="recipe-list-container" *ngIf="recipes">
 
-                <!-- Object Values for Recipe List -->
-                <!-- 
-                    recipeName,
-                    ingredientsInfo,
-                    directions, 
-                -->
+            <div class="category-container">
+                <div class="category-menu">
+                    <a class="category-menu-item" *ngFor="let item of categories"
+                        [routerLink]="['/categories', item._id]" routerLinkActive="is-active">
+                        <p>{{item.categoryName}}</p>
+                    </a>
+                </div>
+            </div>
+            <div class="category-button-container">
+                <button id="add-category" routerLink="/new-category" alt="New Category">
+                    + New Category
+                </button>
+            </div>
+        </div>
+
+        <!-- Recipe List Container -->
+        <div class="main-recipe-container">
+            <div class="main-recipe-header">
+                <h1 class="title">
+                    Recipe Lists
+                </h1>
+                <div class="recipe-button-container">
+                    <img id="add-recipe" routerLink="./new-recipe" src="../../../assets/plus_sign.png" alt="New Recipe"
+                        [ngClass]="{'newRecipeDisabled': categoriesEmpty}">
+                </div>
+
+                <!-- <button class="add-recipe button is-primary has-text-black" routerLink="./new-recipe">
+                    + New Recipe
+                </button> -->
+            </div>
+            <hr style="background-color: white; margin: 0; width: 100%;">
+            <div class="recipe-list-container" *ngIf="recipes">
                 <!-- Current Recipes -->
                 <div *ngFor="let recipe of recipes">
                     <div class="recipe-container">
-                        <div class="recipe-items" id="{{recipe._id}}">
-                            <p> Name: <b>{{recipe.recipeName}}</b></p>
+                        <div class="recipe-header" id="{{recipe._id}}">
+                            <p> <b>{{recipe.recipeName}}</b></p>
 
                             <!-- Recipe Image -->
                             <span class="recipeImage" *ngIf="recipe.recipeImageBlob">
                                 <img [src]="recipe.recipeImageBlob">
                             </span>
                         </div>
-
+                        <!-- CRUD Buttons -->
                         <div class="recipe-buttons">
                             <button class="button"
                                 [routerLink]="['/categories', selectedCategoryId, 'edit-recipes', recipe._id]">
@@ -77,15 +85,18 @@
                                     <i class="fas fa-trash"></i>
                                 </div>
                             </button>
-                            <button class="button is-primary" (click)="getRecipeInfoPdf(recipe.recipeName, recipe.recipeImageBlob, recipe.ingredientsInfo, recipe.directions)"
+                            <!-- Button to Convert Recipe Data to PDF file -->
+                            <button class="button is-primary"
+                                (click)="getRecipeInfoPdf(recipe.recipeName, recipe.recipeImageBlob, recipe.ingredientsInfo, recipe.directions)"
                                 style="margin-left: 10px">
                                 Convert
                             </button>
 
                         </div>
                     </div>
+                    <!-- Expansion Panel -->
                     <mat-accordion>
-                        <!-- Panel For Ingredients -->
+                        <!-- Expansion Panel For Ingredients -->
                         <mat-expansion-panel (opened)="panelOpenStateIngred = true"
                             (closed)="panelOpenStateIngred = false" class="expansion-panel">
                             <!-- Headers -->
@@ -99,10 +110,10 @@
                             </mat-expansion-panel-header>
                             <!-- HIdden Items -->
                             <mat-panel-description id="{{recipe._id}}">
-                                {{recipe.ingredientsInfo}}
+                                <b>{{recipe.ingredientsInfo}}</b>
                             </mat-panel-description>
                         </mat-expansion-panel>
-                        <!-- Panel For Directions -->
+                        <!-- Expansion Panel For Directions -->
                         <mat-expansion-panel (opened)="panelOpenStateDirect = true"
                             (closed)="panelOpenStateDirect = false" class="expansion-panel">
                             <mat-expansion-panel-header class="expansion-headers">
@@ -115,7 +126,7 @@
                             </mat-expansion-panel-header>
                             <!-- Hidden Items -->
                             <mat-panel-description id="{{recipe._id}}">
-                                {{recipe.directions}}
+                                <b>{{recipe.directions}}</b>
                             </mat-panel-description>
                         </mat-expansion-panel>
                     </mat-accordion>
@@ -125,16 +136,14 @@
                 <div *ngIf="recipes.length === 0">
                     <h1 class="empty-recipe-list">
                         -- There are no recipes created for this category.
-                        Click the 'New Recipe' below
+                        Click the
+                        <span><img id="add-recipe-info" src="../../../assets/plus_sign.png" alt="New Recipe"></span>
+                        above
                         to create a new recipe! --
                     </h1>
                 </div>
 
             </div>
-
-            <button class="add-recipe button is-primary has-text-black" routerLink="./new-recipe">
-                + New Recipe
-            </button>
 
             <!-- When Categories are empty, this text will appear-->
             <div *ngIf="isEmptyObject(categories)">
@@ -147,7 +156,9 @@
             <!-- If Categories are created but not selected upon logging in -->
             <div *ngIf="!isEmptyObject(categories) && !recipes">
                 <h1 class="is-category-empty">
-                    Welcome back! Make sure to click on a Category to view your recipes!
+                    Welcome back! <b style="color: #f1b850;">{{loggedInInfo.body.email}}</b>
+                    <br>
+                    Click on a Category to view your recipes!
                 </h1>
             </div>
 

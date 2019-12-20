@@ -15,6 +15,10 @@ export class NewCategoryComponent implements OnInit {
   ngOnInit() {
   }
 
+  cancel(){
+    this.router.navigate(['/categories']);
+  }
+
   createCategory(categoryName: string){
     return this.recipeService.createCategory(categoryName).subscribe((category: Categories) => {
       // Now we navigate /categories/response._id

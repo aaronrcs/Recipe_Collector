@@ -19,12 +19,15 @@ export class RecipeViewComponent implements OnInit {
   // Boolean values for expansion panels
   panelOpenStateIngred = false;
   panelOpenStateDirect = false;
+  //Boolean value for when Categories are empty
+  categoriesEmpty = false;
 
   selectedCategoryId: string;
 
   recipeImage: string;
   recipeImagePdf: string;
-  fileString: any = "";
+
+  loggedInInfo: any;
 
   constructor(private recipeService: RecipeService, private route: ActivatedRoute, private router: Router) { }
 
@@ -50,7 +53,19 @@ export class RecipeViewComponent implements OnInit {
     // Subscribing to Observeable to get an array of all existing Categories
     this.recipeService.getCategory().subscribe((categories: Categories[]) => {
       this.categories = categories;
+      // console.log("Categories: ", this.categories);
+      
+      // If no Categories have been created, disable the 'plus' button
+      // For creating a new recipe
+      if(this.categories.length === 0){
+        this.categoriesEmpty = true;
+      }
     })
+
+    // Attaining Login Info
+    let getInfo = localStorage.getItem('login-info');
+    let parseInfo = JSON.parse(getInfo);
+    this.loggedInInfo = parseInfo;
   }
 
   // Convience function to check if Object is empty
