@@ -19,16 +19,30 @@ export class AuthService {
   //   this.response.next(loginInfo);
   // }
 
-  private subject = new BehaviorSubject<any>('');
+  getStatus: Boolean;
+
+  // Using BehaviorSubject to check SignUp status
+  private signUpSubject = new BehaviorSubject<Boolean>(null);
+
+  sendSignUpStatus(status: boolean){
+    this.signUpSubject.next(status);
+  }
+
+  getSignUpStatus(): Observable<any> {
+    return this.signUpSubject.asObservable();
+  }
+
+  // BehaviorSubject for Login Info
+  private subjectLogin = new BehaviorSubject<any>('');
 
     sendLoginInfo(info: any) {
       localStorage.setItem('login-info', JSON.stringify(info));
         
-        this.subject.next({response: info});
+        this.subjectLogin.next({response: info});
     }
 
     getLoginInfo(): Observable<any> {
-        return this.subject.asObservable();
+        return this.subjectLogin.asObservable();
     }
 
   constructor(private webService: WebRequestService, private router: Router, private http: HttpClient) { }
@@ -53,6 +67,9 @@ export class AuthService {
       tap((res: HttpResponse<any>) => {
         // Auth tokens will be in header of this response
         this.setSession(res.body._id, res.headers.get('x-access-token'), res.headers.get('x-refresh-token'));
+
+        //Change sign up status to 'True'
+        this.sendSignUpStatus(res.ok);
 
         console.log("You signed up!");
         console.log("Response: ", res);

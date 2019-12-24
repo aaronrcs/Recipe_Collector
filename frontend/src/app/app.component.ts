@@ -1,5 +1,6 @@
-import { NavbarComponent } from './pages/navbar/navbar.component';
+import { AuthService } from './auth.service';
 import { Component } from '@angular/core';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -8,4 +9,17 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'R.C';
+  signedUpMessage: Boolean;
+  sub: Subscription;
+
+  constructor(private authService: AuthService){}
+
+  ngOnInit(){
+    this.authService.getSignUpStatus().subscribe(res => this.signedUpMessage = res)
+    console.log("Status: ", this.signedUpMessage);
+  }
+  closeNotification(){
+    this.signedUpMessage = false;
+  }
+
 }
