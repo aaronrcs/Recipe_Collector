@@ -78,7 +78,7 @@ export class RecipeViewComponent implements OnInit {
   }
 
   // Using pdfmake
-  getRecipeInfoPdf(recipeName: string, recipeImageBlob: string, ingredientInfo: string, directions: string) {
+  openRecipeInfoPdf(recipeName: string, recipeImageBlob: string, ingredientInfo: string, directions: string) {
 
     // this.recipeImagePdf = recipeImageBlob;
 
@@ -86,6 +86,9 @@ export class RecipeViewComponent implements OnInit {
 
 
     const docDefinition = {
+      info: {
+        title: `${recipeName}-recipe`
+      },
       content: [
         {
           text: `${recipeName} Recipe`,
@@ -111,7 +114,7 @@ export class RecipeViewComponent implements OnInit {
             widths: [450],
             headerRows: 1,
             body: [
-              [ingredientInfo]
+              [ ingredientInfo ] 
             ],
           },
           layout: 'headerLineOnly'
@@ -159,6 +162,83 @@ export class RecipeViewComponent implements OnInit {
 
   }
 
+  saveRecipeInfoPdf(recipeName: string, recipeImageBlob: string, ingredientInfo: string, directions: string) {
+
+    const docDefinition = {
+      content: [
+        {
+          text: `${recipeName} Recipe`,
+          bold: true,
+          fontSize: 20,
+          alignment: 'center',
+          margin: [0, 0, 0, 20]
+        },
+        {
+          columns: [
+            [
+              this.getRecipePhoto(recipeImageBlob)
+            ]
+          ]
+        },
+        {
+          text: 'Ingredients',
+          style: 'header'
+        },
+        {
+          style: 'recipeInfoTables',
+          table: {
+            widths: [450],
+            headerRows: 1,
+            body: [
+              [ ingredientInfo ] 
+            ],
+          },
+          layout: 'headerLineOnly'
+        },
+        {
+          text: 'Directions',
+          style: 'header'
+        },
+
+        {
+          style: 'recipeInfoTables',
+          table: {
+            widths: [450],
+            headerRows: 1,
+            body: [
+              [ directions ]
+            ],
+          },
+          layout: 'headerLineOnly'
+        },
+
+      ],
+      styles: {
+        name: {
+          fontSize: 16,
+          bold: true
+        },
+        header: {
+          fontSize: 18,
+          bold: true,
+          margin: [0, 20, 0, 10],
+          decoration: 'underline'
+        },
+        recipeInfoTables: {
+          fontSize: 14,
+          bold: true,
+          italics: true
+        }
+      }
+
+
+    };
+    // Save pdf file
+    pdfMake.createPdf(docDefinition).download(`${recipeName}-recipe.pdf`);
+
+  }
+
+  // Function for setting Ingredients Info
   getIngredientInfo(ingredientInfo: string) {
     return {
       table: {

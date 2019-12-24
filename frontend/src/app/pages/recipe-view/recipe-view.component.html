@@ -64,7 +64,7 @@
                 <div *ngFor="let recipe of recipes">
                     <div class="recipe-container">
                         <div class="recipe-header" id="{{recipe._id}}">
-                            <p> <b>{{recipe.recipeName}}</b></p>
+                            <p style="font-size: 20px;"> <b>{{recipe.recipeName}}</b></p>
 
                             <!-- Recipe Image -->
                             <span class="recipeImage" *ngIf="recipe.recipeImageBlob">
@@ -87,9 +87,14 @@
                             </button>
                             <!-- Button to Convert Recipe Data to PDF file -->
                             <button class="button is-primary"
-                                (click)="getRecipeInfoPdf(recipe.recipeName, recipe.recipeImageBlob, recipe.ingredientsInfo, recipe.directions)"
+                                (click)="openRecipeInfoPdf(recipe.recipeName, recipe.recipeImageBlob, recipe.ingredientsInfo, recipe.directions)"
                                 style="margin-left: 10px">
-                                Convert
+                                Open to PDF
+                            </button>
+                            <button class="button is-info"
+                                (click)="saveRecipeInfoPdf(recipe.recipeName, recipe.recipeImageBlob, recipe.ingredientsInfo, recipe.directions)"
+                                style="margin-left: 10px">
+                                Save to PDF
                             </button>
 
                         </div>
