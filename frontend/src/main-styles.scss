@@ -57,7 +57,7 @@ html, body{
     font-size: 20px;
     text-transform: uppercase;
     letter-spacing: 2px;
-    color: #dca238;
+    color: #dca238 !important;
 }
 
 .signup-page-content{
@@ -110,4 +110,11 @@ html, body{
     width: 100%;
     height: 88%;
     padding-top: 3%;
+}
+
+/* Media Queries: */
+@media all and (max-width: 468px){
+    .signup-box{
+        width: 23em;
+    }
 }

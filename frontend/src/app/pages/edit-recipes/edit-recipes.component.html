@@ -10,10 +10,11 @@
                 placeholder="Edit Ingredient Details (If necessary)"></textarea>
             <textarea formControlName="directions" class="textarea has-background-light"
                 placeholder="Edit Directions (If necessary)"></textarea>
+            <!-- Showing Current Image -->
             <div *ngIf="recipeImageBlob">
                 <img class="editImage" [src]="recipeImageBlob">
-                <!-- <input formControlName="recipeImageBlob" type="text"> -->
             </div>
+            <!-- Container for Image Upload -->
             <div class="file has-name is-fullwidth">
                 <label class="file-label">
                     <input class="file-input" type="file" (change)="fileChanged($event)" value="test">

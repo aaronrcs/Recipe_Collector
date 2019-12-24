@@ -22,8 +22,6 @@ export class EditRecipesComponent implements OnInit {
   notEmptyFile = true;
   recipeImagePath: string;
 
-  allFormData: Object;
-
   editRecipeForm = new FormGroup({
     recipeName: new FormControl(''),
     ingredientsInfo: new FormControl(''),

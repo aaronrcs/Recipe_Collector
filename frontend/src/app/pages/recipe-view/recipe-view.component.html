@@ -135,11 +135,11 @@
                 <!-- If no recipes have been created for a selected Category, this text will appear -->
                 <div *ngIf="recipes.length === 0">
                     <h1 class="empty-recipe-list">
-                        -- There are no recipes created for this category.
+                        There are no recipes created for this category.
                         Click the
                         <span><img id="add-recipe-info" src="../../../assets/plus_sign.png" alt="New Recipe"></span>
                         above
-                        to create a new recipe! --
+                        to create a new recipe!
                     </h1>
                 </div>
 
@@ -148,8 +148,8 @@
             <!-- When Categories are empty, this text will appear-->
             <div *ngIf="isEmptyObject(categories)">
                 <h1 class="is-category-empty">
-                    -- Create a new Category by clicking on the 'New Category' button.
-                    Then, select a Category in the sidebar to view Recipes. --
+                    Create a new Category by clicking on the 'New Category' button.
+                    Then, select a Category in the sidebar to view Recipes.
                 </h1>
             </div>
 
