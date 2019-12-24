@@ -13,7 +13,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class LoginPageComponent implements OnInit {
 
   //Helpful variables for error handling
-  emailPasswordErrorMessage = "The username and password you specified are invalid. Please try again."
+  emailPasswordErrorMessage = "The username or password you specified are invalid. Please try again."
   errorMessage: string;
 
   //Declaring FormGroup
