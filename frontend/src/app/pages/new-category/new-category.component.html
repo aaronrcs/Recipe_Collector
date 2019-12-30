@@ -3,12 +3,19 @@
         <h1 class="title">
             Create a new Category
         </h1>
-
-        <input #categoryTitleInput class="input has-background-light is-medium" type="text" placeholder="Enter list name...">
-        <br><br>
-        <div class="buttons is-right">
-            <button class="button is-medium" (click)="cancel()">Cancel</button>
-            <button class="button is-primary has-text-white is-medium" (click)="createCategory(categoryTitleInput.value)">Create</button>
-        </div>
+        <form [formGroup]="categoryForm">
+            <input formControlName="categoryName" #categoryTitleInput class="input has-background-light is-medium" type="text"
+                placeholder="Enter category name...">
+            <!-- Showing Email Errors to User -->
+            <div *ngIf="f.categoryName.errors" class="error-message">
+                <div *ngIf="f.categoryName.errors.required">Category name is required.</div>
+            </div>
+            <br><br>
+            <div class="buttons is-right">
+                <button class="button is-medium" (click)="cancel()">Cancel</button>
+                <button class="button is-primary has-text-white is-medium"
+                    (click)="createCategory(categoryTitleInput.value)" [disabled]="categoryForm.invalid">Create</button>
+            </div>
+        </form>
     </div>
 </div>

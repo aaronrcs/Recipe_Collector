@@ -1,7 +1,7 @@
 import { RecipeDetails } from './../../models/recipe.models';
 import { RecipeService } from 'src/app/recipe.service';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Ng2ImgMaxService } from 'ng2-img-max';
 
@@ -18,6 +18,13 @@ export class NewRecipeComponent implements OnInit {
   notEmptyFile = true;
   uploadedImage: File;
 
+  //Error File Upload info
+  errorFileUpload: string;
+
+  //Booleans for File Uploads
+  checkFileType = false;
+  checkFileSize = false;
+
   constructor(private ng2ImgMax: Ng2ImgMaxService, private recipeService: RecipeService, private route: ActivatedRoute, private router: Router, public fb: FormBuilder) { }
 
   // recipeForm = new FormGroup({
@@ -28,9 +35,9 @@ export class NewRecipeComponent implements OnInit {
   // });
 
   recipeForm = this.fb.group({
-    recipeName: [''],
-    ingredientsInfo: [''],
-    directions: [''],
+    recipeName: ['', Validators.required],
+    ingredientsInfo: ['', Validators.required],
+    directions: ['', Validators.required],
     recipeImage: [null]
   });
 
@@ -43,11 +50,19 @@ export class NewRecipeComponent implements OnInit {
   fileChanged(e) {
     this.notEmptyFile = false;
     const file = (e.target as HTMLInputElement).files[0];
-    let imageLimitSize = 0.050;
+    let imageLimitSizeServer = 0.050;
 
-    // Using ng2ImgMax to compress uploaded Image files to 50 KB
-    this.ng2ImgMax.compressImage(file, imageLimitSize).subscribe(
+    // File Validation
+    if(file.size >= 150000){
+      this.checkFileSize = true;
+    } else {
+      this.checkFileSize = false;
+    }
+    
+    // Using ng2ImgMax to compress uploaded Image files to 50 KB if > 50 KB
+    this.ng2ImgMax.compressImage(file, imageLimitSizeServer).subscribe(
       result => {
+        this.checkFileType = false;
         // Converting the uploaded image to a File
         this.uploadedImage = new File([result], result.name, {type: result.type});
         // console.log("Image: ", this.uploadedImage);
@@ -56,7 +71,9 @@ export class NewRecipeComponent implements OnInit {
         });
       },
       error => {
-        console.log('😢 Oh no!', error);
+        this.checkFileType = true;
+        this.errorFileUpload = error.reason;
+        // console.log('😢 Oh no!', error);
       }
     );
     
@@ -92,6 +109,10 @@ export class NewRecipeComponent implements OnInit {
 
   cancel(){
     this.router.navigate(['/categories', this.categoryId]);
+  }
+  // Simple getter function for FormControls
+  get f() { 
+    return this.recipeForm.controls; 
   }
 
   createRecipe(){

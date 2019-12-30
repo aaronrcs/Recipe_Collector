@@ -6,10 +6,22 @@
     <form [formGroup]="recipeForm" (ngSubmit)="createRecipe()">
       <input formControlName="recipeName" class="input has-background-light is-medium" type="text"
         placeholder="Enter a Recipe Name">
+      <!-- Error checking Recipe Name -->
+      <div *ngIf="f.recipeName.errors" class="error-message">
+        <div *ngIf="f.recipeName.errors.required">Recipe name is required.</div>
+      </div>
       <textarea formControlName="ingredientsInfo" class="textarea has-background-light"
         placeholder="Enter Ingredient Details"></textarea>
+      <!-- Error checking Ingredients Information -->
+      <div *ngIf="f.ingredientsInfo.errors" class="error-message">
+        <div *ngIf="f.ingredientsInfo.errors.required">Ingredients information is required.</div>
+      </div>
       <textarea formControlName="directions" class="textarea has-background-light"
         placeholder="Enter Directions"></textarea>
+      <!-- Error checking Directions -->
+      <div *ngIf="f.directions.errors" class="error-message">
+        <div *ngIf="f.directions.errors.required">Directions is required.</div>
+      </div>
       <!-- Showing Current Image -->
       <div *ngIf="recipeImageBlob">
         <img class="newImage" [src]="recipeImageBlob">
@@ -34,6 +46,13 @@
           </span>
         </label>
       </div>
+      <!-- Error checking File Upload -->
+      <div *ngIf="checkFileType" class="error-message">
+        <div>{{errorFileUpload}}</div>
+      </div>
+      <div *ngIf="checkFileSize" class="error-message">
+        <div>Must not exceed more than 150 KB in file size.</div>
+      </div>
 
       <!-- <input type="file" (change)="fileChanged($event)" aria-describedby="fileHelpId"> -->
       <!-- <img *ngIf="recipeImage" [src]="recipeImage"> -->
@@ -41,7 +60,8 @@
       <br><br>
       <div class="buttons is-right">
         <button class="button is-medium" (click)="cancel()">Cancel</button>
-        <button type="submit" class="button is-primary has-text-white is-medium">Create</button>
+        <button type="submit" class="button is-primary has-text-white is-medium"
+          [disabled]="recipeForm.invalid" [ngClass]="{'newRecipeImageDisabled': checkFileType || checkFileSize}">Create</button>
       </div>
     </form>
 

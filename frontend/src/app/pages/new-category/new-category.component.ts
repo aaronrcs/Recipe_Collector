@@ -2,6 +2,7 @@ import { Categories } from './../../models/categories.models';
 import { RecipeService } from 'src/app/recipe.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-new-category',
@@ -10,19 +11,29 @@ import { Router } from '@angular/router';
 })
 export class NewCategoryComponent implements OnInit {
 
-  constructor( private recipeService: RecipeService, private router: Router) { }
+  //Declaring FormGroup
+  categoryForm: FormGroup;
+
+  constructor( private recipeService: RecipeService, private router: Router, private formBuilder: FormBuilder) { }
 
   ngOnInit() {
+    this.categoryForm = this.formBuilder.group({
+      categoryName: ['', Validators.required]
+    });
   }
 
   cancel(){
     this.router.navigate(['/categories']);
   }
+  
+  // Simple getter function for FormControls
+  get f() { 
+    return this.categoryForm.controls; 
+  }
 
   createCategory(categoryName: string){
     return this.recipeService.createCategory(categoryName).subscribe((category: Categories) => {
       // Now we navigate /categories/response._id
-      
       this.router.navigate(['/categories', category._id]);
     })
 

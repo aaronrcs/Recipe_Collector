@@ -16,7 +16,6 @@ export class AppComponent {
 
   ngOnInit(){
     this.authService.getSignUpStatus().subscribe(res => this.signedUpMessage = res)
-    console.log("Status: ", this.signedUpMessage);
   }
   closeNotification(){
     this.signedUpMessage = false;

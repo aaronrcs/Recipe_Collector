@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { RecipeService } from 'src/app/recipe.service';
 import { ActivatedRoute, Router, Params } from '@angular/router';
-import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { RecipeDetails } from './../../models/recipe.models';
+import { Ng2ImgMaxService } from 'ng2-img-max';
 
 @Component({
   selector: 'app-edit-recipes',
@@ -21,17 +22,25 @@ export class EditRecipesComponent implements OnInit {
   imageFileName: string;
   notEmptyFile = true;
   recipeImagePath: string;
+  uploadedImage: File;
 
   editRecipeForm = new FormGroup({
-    recipeName: new FormControl(''),
-    ingredientsInfo: new FormControl(''),
-    directions: new FormControl(''),
+    recipeName: new FormControl('', Validators.required),
+    ingredientsInfo: new FormControl('', Validators.required),
+    directions: new FormControl('', Validators.required),
     recipeImage: new FormControl(null),
     recipeImageBlob: new FormControl('')
   });
+
+  //Error File Upload info
+  errorFileUpload: string;
+
+  //Booleans for File Uploads
+  checkFileType = false;
+  checkFileSize = false;
   
 
-  constructor(private recipeService: RecipeService, private route: ActivatedRoute, private router: Router, public fb: FormBuilder) { }
+  constructor(private ng2ImgMax: Ng2ImgMaxService, private recipeService: RecipeService, private route: ActivatedRoute, private router: Router, public fb: FormBuilder) { }
 
   // editRecipeForm = this.fb.group({
   //   recipeName: [''],
@@ -69,20 +78,39 @@ export class EditRecipesComponent implements OnInit {
   fileChanged(e) {
     this.notEmptyFile = false;
     const file = (e.target as HTMLInputElement).files[0];
-    let path = this.recipeImagePath.substring(0,29)
-    let fullPath = path + file.name;
+    let imageLimitSizeServer = 0.050;
 
+    // Name of uploaded file
     this.imageFileName = file.name;
 
-    this.editRecipeForm.patchValue({
-      recipeImage: fullPath
-    });
+    // File Validation
+    if(file.size >= 150000){
+      this.checkFileSize = true;
+    } else {
+      this.checkFileSize = false;
+    }
+    
+    // Using ng2ImgMax to compress uploaded Image files to 50 KB if > 50 KB
+    this.ng2ImgMax.compressImage(file, imageLimitSizeServer).subscribe(
+      result => {
+        let path = this.recipeImagePath.substring(0,29)
+        this.checkFileType = false;
 
-    // console.log("Path: ", fullPath);
+        // Converting the uploaded image to a File
+        this.uploadedImage = new File([result], result.name, {type: result.type});
+        let fullPath = path + this.uploadedImage.name;
+        // console.log("Image: ", this.uploadedImage);
 
-    // this.editRecipeForm.get("recipeImage").setValue(fullPath);
-
-    // this.editRecipeForm.get('recipeImage').updateValueAndValidity();
+        this.editRecipeForm.patchValue({
+          recipeImage: fullPath
+        });
+      },
+      error => {
+        this.checkFileType = true;
+        this.errorFileUpload = error.reason;
+        // console.log('😢 Oh no!', error);
+      }
+    );
 
     // // File Preview
     const reader = new FileReader();
@@ -98,6 +126,10 @@ export class EditRecipesComponent implements OnInit {
 
   cancel(){
     this.router.navigate(['/categories', this.categoryId]);
+  }
+  // Simple getter function for FormControls
+  get f() { 
+    return this.editRecipeForm.controls; 
   }
 
   updateRecipe(){

@@ -6,10 +6,14 @@
         <form [formGroup]="editCategoryForm" (ngSubmit)="updateCategory()">
             <input formControlName="categoryName" class="input has-background-light is-medium" type="text"
                 placeholder="Enter Category name">
+            <div *ngIf="f.categoryName.errors" class="error-message">
+                <div *ngIf="f.categoryName.errors.required">Category name is required.</div>
+            </div>
             <br><br>
             <div class="buttons is-right">
                 <button class="button is-medium" (click)="cancel()">Cancel</button>
-                <button class="button is-primary has-text-white is-medium">Save</button>
+                <button class="button is-primary has-text-white is-medium"
+                    [disabled]="editCategoryForm.invalid">Save</button>
             </div>
         </form>
     </div>

@@ -18,3 +18,11 @@ textarea{
 .newImage{
     width: 30%;
 }
+
+// Disabled if error for Image upload
+.newRecipeImageDisabled{
+    color: currentColor;
+    cursor: not-allowed;
+    opacity: 0.5;
+    text-decoration: none;
+}

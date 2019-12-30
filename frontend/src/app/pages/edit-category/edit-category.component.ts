@@ -2,7 +2,7 @@ import { Categories } from './../../models/categories.models';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { RecipeService } from 'src/app/recipe.service';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-edit-category',
@@ -17,7 +17,7 @@ export class EditCategoryComponent implements OnInit {
   singleCategoryInfo: Categories;
 
   editCategoryForm = new FormGroup({
-    categoryName: new FormControl('')
+    categoryName: new FormControl('', Validators.required)
   });
 
 
@@ -43,6 +43,11 @@ export class EditCategoryComponent implements OnInit {
 
   cancel(){
     this.router.navigate(['/categories', this.categoryId]);
+  }
+
+  // Simple getter function for FormControls
+  get f() { 
+    return this.editCategoryForm.controls; 
   }
 
   updateCategory(){

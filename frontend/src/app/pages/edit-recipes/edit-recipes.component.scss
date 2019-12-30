@@ -21,3 +21,11 @@ textarea{
 .hidden{
     display: none;
 }
+
+// Disabled if error for Image upload
+.newRecipeImageDisabled{
+    color: currentColor;
+    cursor: not-allowed;
+    opacity: 0.5;
+    text-decoration: none;
+}
