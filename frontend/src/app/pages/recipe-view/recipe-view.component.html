@@ -70,9 +70,7 @@
                             <span class="recipeImage" *ngIf="recipe.recipeImageBlob">
                                 <img [src]="recipe.recipeImageBlob">
                             </span>
-                        </div>
-                        <!-- CRUD Buttons -->
-                        <div class="recipe-buttons">
+
                             <button class="button"
                                 [routerLink]="['/categories', selectedCategoryId, 'edit-recipes', recipe._id]">
                                 <div class="icon">
@@ -85,6 +83,21 @@
                                     <i class="fas fa-trash"></i>
                                 </div>
                             </button>
+                        </div>
+                        <!-- CRUD Buttons -->
+                        <div class="recipe-buttons">
+                            <!-- <button class="button"
+                                [routerLink]="['/categories', selectedCategoryId, 'edit-recipes', recipe._id]">
+                                <div class="icon">
+                                    <i class="fas fa-edit"></i>
+                                </div>
+                            </button>
+                            <button class="button is-danger" (click)="onDeleteRecipeClick(recipe._id)"
+                                style="margin-left: 10px">
+                                <div class="icon">
+                                    <i class="fas fa-trash"></i>
+                                </div>
+                            </button> -->
                             <!-- Button to Convert Recipe Data to PDF file -->
                             <button class="button is-primary"
                                 (click)="openRecipeInfoPdf(recipe.recipeName, recipe.recipeImageBlob, recipe.ingredientsInfo, recipe.directions)"
