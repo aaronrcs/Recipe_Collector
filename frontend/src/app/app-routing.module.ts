@@ -16,6 +16,7 @@ const routes: Routes = [
   { path: 'login', component: LoginPageComponent},
   { path: 'signup', component: SignupPageComponent},
   { path: 'new-recipe', component: NewRecipeComponent},
+  { path: 'app-recipe-view', component: RecipeViewComponent},
   { path: 'categories', component: RecipeViewComponent},
   { path: 'categories/:categoryId', component: RecipeViewComponent},
   { path: 'categories/:categoryId/new-recipe', component: NewRecipeComponent},

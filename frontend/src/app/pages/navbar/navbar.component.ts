@@ -33,6 +33,10 @@ export class NavbarComponent implements OnInit {
     this.isToggled = !this.isToggled
     this.router.navigate(['/login']);
   }
+  viewRecipes(){
+    this.isToggled = !this.isToggled;
+    this.router.navigate(['/app-recipe-view']);
+  }
 
   logout(){
     this.isToggled = !this.isToggled
