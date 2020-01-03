@@ -28,6 +28,9 @@
   .logo a:hover {
     text-decoration: none;
   }
+  .main-logo{
+    width: 18%;
+  }
   .email{
     display: block;
   }
@@ -110,6 +113,10 @@
     .logo {
         flex: 1;
     }
+
+    .main-logo{
+      width: 15%;
+    }
   
     .item.button {
         width: auto;
@@ -155,6 +162,9 @@
     }
     .logo {
         order: 0;
+    }
+    .main-logo{
+      width: 10%;
     }
     .item {
         order: 1;

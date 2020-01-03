@@ -70,7 +70,7 @@
                             <span class="recipeImage" *ngIf="recipe.recipeImageBlob">
                                 <img [src]="recipe.recipeImageBlob">
                             </span>
-
+                            <!-- Edit and Delete Buttons -->
                             <button class="button"
                                 [routerLink]="['/categories', selectedCategoryId, 'edit-recipes', recipe._id]">
                                 <div class="icon">

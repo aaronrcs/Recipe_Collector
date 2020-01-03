@@ -1,7 +1,8 @@
 <nav>
     <ul *ngIf="loggedInInfo" class="menu">
+        <img class="main-logo" src="../../../assets/rc_logo.png">
         <li class="logo">
-            <a href="">Recipe Collector</a>
+            <a>Recipe Collector</a>
         </li>
         <li class="item email" [ngClass]="{'active': isToggled}">
             <span style="color: #fbac59; padding: 10px;">Welcome,</span>
@@ -18,6 +19,7 @@
 
     </ul>
     <ul *ngIf="!loggedInInfo" class="menu">
+        <img class="main-logo" src="../../../assets/rc_logo.png">
         <li class="logo">
             <a href="">Recipe Collector</a>
         </li>
