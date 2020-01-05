@@ -60,12 +60,23 @@ html, body{
     color: #dca238 !important;
 }
 
+.home-page-content{
+    padding-top: 8%;
+}
+
+.home-info-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
 .signup-page-content{
     display: flex;
     justify-content: center;
     align-content: center;
     width: 100%;
-    padding-top: 14%;
+    padding-top: 6%;
 }
 
 .login-page-content{

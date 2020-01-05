@@ -19,6 +19,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { NavbarComponent } from './pages/navbar/navbar.component';
 import { Ng2ImgMaxModule } from 'ng2-img-max';
+import { HomeComponent } from './pages/home/home.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { Ng2ImgMaxModule } from 'ng2-img-max';
     SignupPageComponent,
     EditCategoryComponent,
     EditRecipesComponent,
-    NavbarComponent
+    NavbarComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

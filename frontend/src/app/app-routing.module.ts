@@ -1,3 +1,4 @@
+import { HomeComponent } from './pages/home/home.component';
 import { EditRecipesComponent } from './pages/edit-recipes/edit-recipes.component';
 import { EditCategoryComponent } from './pages/edit-category/edit-category.component';
 import { SignupPageComponent } from './pages/signup-page/signup-page.component';
@@ -9,12 +10,13 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
-  { path: '', redirectTo:'login', pathMatch: 'full'},
+  { path: '', redirectTo:'home', pathMatch: 'full'},
   // { path: '', redirectTo:'categories', pathMatch: 'full'},
   { path: 'new-category', component: NewCategoryComponent},
   { path: 'edit-category/:categoryId', component: EditCategoryComponent},
   { path: 'login', component: LoginPageComponent},
   { path: 'signup', component: SignupPageComponent},
+  { path: 'home', component: HomeComponent},
   { path: 'new-recipe', component: NewRecipeComponent},
   { path: 'app-recipe-view', component: RecipeViewComponent},
   { path: 'categories', component: RecipeViewComponent},
