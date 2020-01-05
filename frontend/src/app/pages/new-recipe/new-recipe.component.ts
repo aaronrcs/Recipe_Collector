@@ -88,6 +88,7 @@ export class NewRecipeComponent implements OnInit {
     const reader = new FileReader();
     reader.onload = () => {
       this.recipeImageBlob = reader.result as string;
+      // console.log("Blob: ", this.recipeImageBlob);
     }
     reader.readAsDataURL(file)
   }

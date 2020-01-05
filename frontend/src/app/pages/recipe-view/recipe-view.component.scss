@@ -95,17 +95,17 @@
     transition: box-shadow 0.2s ease,
     transform ease 0.2s;
 
-    &:active {
-      transform: scale(0.95);
-    }
+    // &:active {
+    //   transform: scale(0.95);
+    // }
 
     &:hover {
       box-shadow: 0 0 0 5px #eee;
 
-        .recipe-buttons{
-            opacity: 1;
-            transform: scale(1);
-        }
+        // .recipe-buttons{
+        //     opacity: 1;
+        //     transform: scale(1);
+        // }
     }
 
     .recipe-header{
@@ -118,9 +118,9 @@
     }
 
     .recipe-buttons{
-        opacity: 0;
-        transition: opacity 0.2s, transform 0.2s;
-        transform: scale(0.5);
+        // opacity: 0;
+        // transition: opacity 0.2s, transform 0.2s;
+        // transform: scale(0.5);
         display: flex;
         flex-direction: row-reverse;
         justify-content: center;
@@ -201,6 +201,7 @@
 .recipeImage{
     width: 33%;
     height: 50%;
+    padding: 8px;
 }
 .recipeImage > img{
     max-width: 80%;
