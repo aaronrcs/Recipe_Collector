@@ -113,6 +113,7 @@ export class AuthService {
   }
 
   private removeSession(){
+    localStorage.removeItem('login-info');
     localStorage.removeItem('user-id');
     localStorage.removeItem('x-access-token');
     localStorage.removeItem('x-refresh-token');
