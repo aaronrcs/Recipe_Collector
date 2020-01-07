@@ -24,7 +24,7 @@ app.use(methodOverride('_method'));
 app.use(bodyParser.json({limit: '50mb', extended: true}))
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}))
 
-app.use('/public', express.static('public'));
+app.use('/recipe_images', express.static('recipe_images'));
 
 // Mongo URI
 // const mongoURI = 'mongodb://localhost:27017/RecipeCollector';
@@ -58,7 +58,7 @@ app.use('/public', express.static('public'));
   
 //   const upload = multer({ storage });
 
-const DIR = './public/';
+const DIR = './recipe_images/';
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -304,7 +304,7 @@ app.post('/categories/:categoryId/recipes', upload.single('recipeImage'), authen
                 recipeImageBlob = ''
             }
             else {
-                recipeImage = url + '/public/' + req.file.filename;
+                recipeImage = url + '/recipe_images/' + req.file.filename;
                 recipeImageBlob = req.body.recipeImageBlob
             }
 
