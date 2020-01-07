@@ -14,7 +14,7 @@ dotenv.config({path:"./config.env"});
 
 
 // JWT Secret
-const jwtSecret = "51778657246321226641fsdklafjasdkljfsklfjd7148924065";
+// const jwtSecret = "51778657246321226641fsdklafjasdkljfsklfjd7148924065";
 
 // Personally customed made validation
 // Check if the email exists in database
@@ -126,7 +126,7 @@ UserSchema.methods.generateAccessAuthToken = function () {
     const user = this;
     return new Promise((resolve, reject) => {
         // Create the JSON Web Token and return that
-        jwt.sign({ _id: user._id.toHexString() }, jwtSecret, { expiresIn: process.env.JWTEXPIRES | 0 }, (err, token) => {
+        jwt.sign({ _id: user._id.toHexString() }, process.env.JWTSECRET, { expiresIn: process.env.JWTEXPIRES | 0 }, (err, token) => {
             if (!err) {
                 resolve(token);
             } else {
@@ -170,7 +170,7 @@ UserSchema.methods.createSession = function () {
 /* MODEL METHODS (static methods) */
 
 UserSchema.statics.getJWTSecret = () => {
-    return jwtSecret;
+    return process.env.JWTSECRET;
 }
 
 
