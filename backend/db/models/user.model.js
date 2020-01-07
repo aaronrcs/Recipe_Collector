@@ -5,6 +5,12 @@ const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 const bcrypt = require('bcryptjs');
 const Joi = require('joi');
+const dotenv = require('dotenv');
+
+// Load config( or env)
+dotenv.config({path:"./config.env"});
+
+// console.log("Secret: ", process.env.JWTEXPIRES);
 
 
 // JWT Secret
@@ -120,7 +126,7 @@ UserSchema.methods.generateAccessAuthToken = function () {
     const user = this;
     return new Promise((resolve, reject) => {
         // Create the JSON Web Token and return that
-        jwt.sign({ _id: user._id.toHexString() }, jwtSecret, { expiresIn: "15m" }, (err, token) => {
+        jwt.sign({ _id: user._id.toHexString() }, jwtSecret, { expiresIn: process.env.JWTEXPIRES | 0 }, (err, token) => {
             if (!err) {
                 resolve(token);
             } else {
