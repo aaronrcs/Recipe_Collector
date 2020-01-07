@@ -1,9 +1,9 @@
 // This file will handle connection logic to the MongoDB Database
 
 const mongoose = require('mongoose');
-// cont connectionString = 'mongodb+srv://romeroaaron:romeroaaron1234@recipecollector-biv2s.mongodb.net/test?retryWrites=true&w=majority'
+// const connectionString = 'mongodb+srv://romeroaaron:romeroaaron1234@cluster0-biv2s.mongodb.net/test?retryWrites=true&w=majority'
 const connectionString = process.env.MONGODB_URI || 'mongodb://localhost:27017/RecipeCollector'
-// cont connectionString = 'mongodb://localhost:27017/RecipeCollector'
+// const connectionString = 'mongodb://localhost:27017/RecipeCollector'
 // Using Bluebird for promises currently
 // For now using the global promise for javascript
 mongoose.Promise = global.Promise;
