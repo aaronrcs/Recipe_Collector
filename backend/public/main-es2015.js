@@ -451,7 +451,7 @@ AppRoutingModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (".signup-box {\n  background-color: #76e8de;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9Vc2Vycy9hYXJvbnJvbWVyby9EZXNrdG9wL0FuZ3VsYXJfUHJvamVjdHMvUmVjaXBlX0NvbGxlY3Rvci9mcm9udGVuZC9zcmMvYXBwL2FwcC5jb21wb25lbnQuc2NzcyIsInNyYy9hcHAvYXBwLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0kseUJBQUE7QUNDSiIsImZpbGUiOiJzcmMvYXBwL2FwcC5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIi5zaWdudXAtYm94e1xuICAgIGJhY2tncm91bmQtY29sb3I6ICM3NmU4ZGU7XG59IiwiLnNpZ251cC1ib3gge1xuICBiYWNrZ3JvdW5kLWNvbG9yOiAjNzZlOGRlO1xufSJdfQ== */");
+/* harmony default export */ __webpack_exports__["default"] = (".signup-box {\n  background-color: #76e8de;\n  width: 100vw;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9Vc2Vycy9hYXJvbnJvbWVyby9EZXNrdG9wL0FuZ3VsYXJfUHJvamVjdHMvUmVjaXBlX0NvbGxlY3Rvci9mcm9udGVuZC9zcmMvYXBwL2FwcC5jb21wb25lbnQuc2NzcyIsInNyYy9hcHAvYXBwLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0kseUJBQUE7RUFDQSxZQUFBO0FDQ0oiLCJmaWxlIjoic3JjL2FwcC9hcHAuY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIuc2lnbnVwLWJveHtcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiAjNzZlOGRlO1xuICAgIHdpZHRoOiAxMDB2dztcbn0iLCIuc2lnbnVwLWJveCB7XG4gIGJhY2tncm91bmQtY29sb3I6ICM3NmU4ZGU7XG4gIHdpZHRoOiAxMDB2dztcbn0iXX0= */");
 
 /***/ }),
 
