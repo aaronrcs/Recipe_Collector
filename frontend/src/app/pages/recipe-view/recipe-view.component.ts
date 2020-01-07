@@ -91,7 +91,7 @@ export class RecipeViewComponent implements OnInit {
       },
       content: [
         {
-          text: `${recipeName} Recipe`,
+          text: `Recipe for ${recipeName}`,
           bold: true,
           fontSize: 20,
           alignment: 'center',
