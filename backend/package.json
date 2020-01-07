@@ -4,7 +4,8 @@
   "description": "Backend for Recipe Collector",
   "main": "server.js",
   "scripts": {
-    "server": "nodemon server"
+    "server": "nodemon server",
+    "start": "node server"
   },
   "author": "Aaron Romero",
   "license": "ISC",
