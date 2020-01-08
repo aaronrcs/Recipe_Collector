@@ -8,7 +8,7 @@ const Joi = require('joi');
 const dotenv = require('dotenv');
 
 // Load config( or env)
-dotenv.config({path:"../config.env"});
+dotenv.config({path:"./config.env"});
 
 // console.log("Expires: ", process.env.JWTEXPIRES);
 // console.log("Secret: ", process.env.JWTSECRET)
