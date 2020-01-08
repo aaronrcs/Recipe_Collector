@@ -8,13 +8,11 @@ const Joi = require('joi');
 const dotenv = require('dotenv');
 
 // Load config( or env)
-dotenv.config({path:"./config.env"});
+dotenv.config({path:"../config.env"});
 
-// console.log("Secret: ", process.env.JWTEXPIRES);
+// console.log("Expires: ", process.env.JWTEXPIRES);
+// console.log("Secret: ", process.env.JWTSECRET)
 
-
-// JWT Secret
-// const jwtSecret = "51778657246321226641fsdklafjasdkljfsklfjd7148924065";
 
 // Personally customed made validation
 // Check if the email exists in database
