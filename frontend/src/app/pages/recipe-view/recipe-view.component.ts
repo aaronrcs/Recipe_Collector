@@ -7,6 +7,7 @@ import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
+
 @Component({
   selector: 'app-recipe-view',
   templateUrl: './recipe-view.component.html',
@@ -66,6 +67,22 @@ export class RecipeViewComponent implements OnInit {
     let getInfo = localStorage.getItem('login-info');
     let parseInfo = JSON.parse(getInfo);
     this.loggedInInfo = parseInfo;
+
+    // let route = this.router.url
+    // let currentRoute = route.substring(0,11);
+
+    // console.log("Current Route: ", currentRoute);
+
+    // if(currentRoute !== '/login'){
+    //   window.addEventListener("beforeunload", function (event) {
+    //     let confirmationMessage = "Reloading may cause errors";
+    //     // console.log("Event:", e);
+    //     event.returnValue = confirmationMessage;    
+    //     return confirmationMessage;  
+        
+    //   });
+    //   // console.log("True");
+    // }
   }
 
   // Convience function to check if Object is empty

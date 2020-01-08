@@ -188,6 +188,9 @@ app.get('/categories', authenticate, (req, res) => {
     .then((categories) => {
         res.send(categories);
     })
+    .catch(err =>{
+        response.status(400).json({ errorCategories: err });
+    })
 });
 
 // Return a single Category based on categoryId
@@ -199,6 +202,9 @@ app.get('/categories/:categoryId', authenticate, (req, res) => {
     })
     .then((singleCategory) => {
         res.send(singleCategory);
+    })
+    .catch(err =>{
+        response.status(400).json({ error: err });
     })
 })
 
@@ -268,6 +274,10 @@ app.get('/categories/:categoryId/recipes', authenticate, (req, res) => {
     .then((recipes) => {
         res.send(recipes);
     })
+    .catch(err =>{
+        response.status(400).json({ errorRecipes: err });
+    })
+    
 });
 
 // Purpose: Return one recipe based on recipeId
@@ -279,6 +289,9 @@ app.get('/categories/:categoryId/recipes/:recipeId', authenticate, (req, res) =>
     })
     .then((recipe) => {
         res.send(recipe);
+    })
+    .catch(err =>{
+        response.status(400).json({ errorOneRecipe: err });
     })
 });
 

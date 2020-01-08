@@ -131,7 +131,8 @@ UserSchema.methods.generateAccessAuthToken = function () {
                 resolve(token);
             } else {
                 // there is an error
-                reject();
+                // reject();
+                return response.status(400).json({ notValideJWT: "Could not generate JWT!" });
             }
         })
     })
@@ -146,6 +147,8 @@ UserSchema.methods.generateRefreshAuthToken = function () {
                 let token = buf.toString('hex');
 
                 return resolve(token);
+            } else {
+                return response.status(400).json({ notValidHexString: "Could not generate valid hex string!" });
             }
         })
     })
@@ -161,7 +164,7 @@ UserSchema.methods.createSession = function () {
         // now return the refresh token
         return refreshToken;
     }).catch((e) => {
-        return Promise.reject('Failed to save session to database.\n' + e);
+        return response.status(400).json({ notValidSafeSession: "Faild to save sessions to database!" });
     })
 }
 
@@ -256,7 +259,7 @@ let saveSessionToDatabase = (user, refreshToken) => {
             // saved session successfully
             return resolve(refreshToken);
         }).catch((e) => {
-            reject(e);
+            return response.status(400).json({ notValidRefreshToken: "Refresh Token Error!" });
         });
     })
 }
