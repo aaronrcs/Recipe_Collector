@@ -1,13 +1,16 @@
 // This file will handle connection logic to the MongoDB Database
-
+const dotenv = require('dotenv');
 const mongoose = require('mongoose');
-const connectionString = process.env.MONGODB_URI || 'mongodb://localhost:27017/RecipeCollector'
+// const connectionString = process.env.MONGODB_URI || 'mongodb://localhost:27017/RecipeCollector'
 // const connectionString = 'mongodb://localhost:27017/RecipeCollector'
 // Using Bluebird for promises currently
 // For now using the global promise for javascript
 mongoose.Promise = global.Promise;
 
-mongoose.connect(connectionString, { useNewUrlParser: true }).then(() => {
+// Load config( or env)
+dotenv.config({path:"./config.env"});
+
+mongoose.connect(process.env.CONNECTION_STRING, { useNewUrlParser: true }).then(() => {
     console.log('Connected to MongoDB successfully!');
 }).catch((error) => {
     console.log("Could not connect to MongoDB database");
