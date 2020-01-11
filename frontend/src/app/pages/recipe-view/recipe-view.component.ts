@@ -42,7 +42,9 @@ export class RecipeViewComponent implements OnInit {
        * to obtain all recipes for a certain Category
        */
         this.recipeService.getRecipes(params.categoryId).subscribe((recipes: RecipeDetails[]) => {
-          this.recipes = recipes;
+          
+          // Show the most recently created recipe at the top
+          this.recipes = recipes.slice().reverse();
           // console.log("Recipes: ", this.recipes);
         })
       } else {
@@ -68,21 +70,6 @@ export class RecipeViewComponent implements OnInit {
     let parseInfo = JSON.parse(getInfo);
     this.loggedInInfo = parseInfo;
 
-    // let route = this.router.url
-    // let currentRoute = route.substring(0,11);
-
-    // console.log("Current Route: ", currentRoute);
-
-    // if(currentRoute !== '/login'){
-    //   window.addEventListener("beforeunload", function (event) {
-    //     let confirmationMessage = "Reloading may cause errors";
-    //     // console.log("Event:", e);
-    //     event.returnValue = confirmationMessage;    
-    //     return confirmationMessage;  
-        
-    //   });
-    //   // console.log("True");
-    // }
   }
 
   // Convience function to check if Object is empty
@@ -100,7 +87,6 @@ export class RecipeViewComponent implements OnInit {
     // this.recipeImagePdf = recipeImageBlob;
 
     // console.log("Blob: ", recipeImageBlob);
-
 
     const docDefinition = {
       info: {
