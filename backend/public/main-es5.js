@@ -966,7 +966,7 @@
         /***/ (function (module, __webpack_exports__, __webpack_require__) {
             "use strict";
             __webpack_require__.r(__webpack_exports__);
-            /* harmony default export */ __webpack_exports__["default"] = ("h1 {\n  color: black;\n  font-size: 26px;\n  font-family: sans-serif;\n  padding-bottom: 30px;\n}\n\nh2 {\n  color: #de2c19;\n  font-size: 3vw;\n}\n\n.logo {\n  width: 23%;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9Vc2Vycy9hYXJvbnJvbWVyby9EZXNrdG9wL0FuZ3VsYXJfUHJvamVjdHMvUmVjaXBlX0NvbGxlY3Rvci9mcm9udGVuZC9zcmMvYXBwL3BhZ2VzL2hvbWUvaG9tZS5jb21wb25lbnQuc2NzcyIsInNyYy9hcHAvcGFnZXMvaG9tZS9ob21lLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksWUFBQTtFQUNBLGVBQUE7RUFDQSx1QkFBQTtFQUNBLG9CQUFBO0FDQ0o7O0FEQ0E7RUFDSSxjQUFBO0VBQ0EsY0FBQTtBQ0VKOztBREFBO0VBQ0ksVUFBQTtBQ0dKIiwiZmlsZSI6InNyYy9hcHAvcGFnZXMvaG9tZS9ob21lLmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiaDF7XG4gICAgY29sb3I6IGJsYWNrO1xuICAgIGZvbnQtc2l6ZTogMjZweDtcbiAgICBmb250LWZhbWlseTogc2Fucy1zZXJpZjtcbiAgICBwYWRkaW5nLWJvdHRvbTogMzBweDtcbn1cbmgye1xuICAgIGNvbG9yOiAjZGUyYzE5O1xuICAgIGZvbnQtc2l6ZTogM3Z3O1xufVxuLmxvZ297XG4gICAgd2lkdGg6IDIzJTtcbn0iLCJoMSB7XG4gIGNvbG9yOiBibGFjaztcbiAgZm9udC1zaXplOiAyNnB4O1xuICBmb250LWZhbWlseTogc2Fucy1zZXJpZjtcbiAgcGFkZGluZy1ib3R0b206IDMwcHg7XG59XG5cbmgyIHtcbiAgY29sb3I6ICNkZTJjMTk7XG4gIGZvbnQtc2l6ZTogM3Z3O1xufVxuXG4ubG9nbyB7XG4gIHdpZHRoOiAyMyU7XG59Il19 */");
+            /* harmony default export */ __webpack_exports__["default"] = ("h1 {\n  color: black;\n  font-size: 26px;\n  font-family: sans-serif;\n  padding-bottom: 30px;\n}\n\nh2 {\n  color: #000000;\n  font-size: 4vw;\n}\n\n.logo {\n  width: 23%;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9Vc2Vycy9hYXJvbnJvbWVyby9EZXNrdG9wL0FuZ3VsYXJfUHJvamVjdHMvUmVjaXBlX0NvbGxlY3Rvci9mcm9udGVuZC9zcmMvYXBwL3BhZ2VzL2hvbWUvaG9tZS5jb21wb25lbnQuc2NzcyIsInNyYy9hcHAvcGFnZXMvaG9tZS9ob21lLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksWUFBQTtFQUNBLGVBQUE7RUFDQSx1QkFBQTtFQUNBLG9CQUFBO0FDQ0o7O0FEQ0E7RUFDSSxjQUFBO0VBQ0EsY0FBQTtBQ0VKOztBREFBO0VBQ0ksVUFBQTtBQ0dKIiwiZmlsZSI6InNyYy9hcHAvcGFnZXMvaG9tZS9ob21lLmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiaDF7XG4gICAgY29sb3I6IGJsYWNrO1xuICAgIGZvbnQtc2l6ZTogMjZweDtcbiAgICBmb250LWZhbWlseTogc2Fucy1zZXJpZjtcbiAgICBwYWRkaW5nLWJvdHRvbTogMzBweDtcbn1cbmgye1xuICAgIGNvbG9yOiAjMDAwMDAwO1xuICAgIGZvbnQtc2l6ZTogNHZ3O1xufVxuLmxvZ297XG4gICAgd2lkdGg6IDIzJTtcbn0iLCJoMSB7XG4gIGNvbG9yOiBibGFjaztcbiAgZm9udC1zaXplOiAyNnB4O1xuICBmb250LWZhbWlseTogc2Fucy1zZXJpZjtcbiAgcGFkZGluZy1ib3R0b206IDMwcHg7XG59XG5cbmgyIHtcbiAgY29sb3I6ICMwMDAwMDA7XG4gIGZvbnQtc2l6ZTogNHZ3O1xufVxuXG4ubG9nbyB7XG4gIHdpZHRoOiAyMyU7XG59Il19 */");
             /***/ 
         }),
         /***/ "./src/app/pages/home/home.component.ts": 
@@ -1637,7 +1637,7 @@
                 RecipeViewComponent.prototype.onDeleteCategoryClick = function () {
                     var _this = this;
                     this.recipeService.deleteCategory(this.selectedCategoryId).subscribe(function (res) {
-                        _this.router.navigate(['/categories']);
+                        _this.router.navigate(['/app-recipe-view']);
                     });
                 };
                 // Function to delete Recipes

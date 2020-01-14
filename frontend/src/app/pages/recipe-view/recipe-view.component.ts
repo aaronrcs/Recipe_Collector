@@ -285,7 +285,7 @@ export class RecipeViewComponent implements OnInit {
   // Function to Delete Categories
   onDeleteCategoryClick() {
     this.recipeService.deleteCategory(this.selectedCategoryId).subscribe((res: any) => {
-      this.router.navigate(['/categories']);
+      this.router.navigate(['/app-recipe-view']);
     })
   }
 
