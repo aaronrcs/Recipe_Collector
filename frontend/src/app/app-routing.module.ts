@@ -19,10 +19,9 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent},
   { path: 'new-recipe', component: NewRecipeComponent},
   { path: 'app-recipe-view', component: RecipeViewComponent},
-  { path: 'categories', component: RecipeViewComponent},
-  { path: 'categories/:categoryId', component: RecipeViewComponent},
-  { path: 'categories/:categoryId/new-recipe', component: NewRecipeComponent},
-  { path: 'categories/:categoryId/edit-recipes/:recipeId', component: EditRecipesComponent}
+  { path: 'app-recipe-view/:categoryId', component: RecipeViewComponent},
+  { path: 'app-recipe-view/:categoryId/new-recipe', component: NewRecipeComponent},
+  { path: 'app-recipe-view/categories/:categoryId/edit-recipes/:recipeId', component: EditRecipesComponent}
 
 ];
 

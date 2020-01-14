@@ -23,7 +23,7 @@ export class NewCategoryComponent implements OnInit {
   }
 
   cancel(){
-    this.router.navigate(['/categories']);
+    this.router.navigate(['/app-recipe-view']);
   }
   
   // Simple getter function for FormControls
@@ -33,8 +33,8 @@ export class NewCategoryComponent implements OnInit {
 
   createCategory(categoryName: string){
     return this.recipeService.createCategory(categoryName).subscribe((category: Categories) => {
-      // Now we navigate /categories/response._id
-      this.router.navigate(['/categories', category._id]);
+      // Now we navigate /app-recipe-view/response._id
+      this.router.navigate(['/app-recipe-view', category._id]);
     })
 
   }

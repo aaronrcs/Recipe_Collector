@@ -30,8 +30,9 @@
 
             <div class="category-container">
                 <div class="category-menu">
+                    <!-- [routerLink]="['/categories', item._id]" -->
                     <a class="category-menu-item" *ngFor="let item of categories"
-                        [routerLink]="['/categories', item._id]" routerLinkActive="is-active">
+                         [routerLink]="['/app-recipe-view', item._id]" routerLinkActive="is-active">
                         <p>{{item.categoryName}}</p>
                     </a>
                 </div>
@@ -53,10 +54,6 @@
                     <img id="add-recipe" routerLink="./new-recipe" src="../../../assets/plus_sign.png" alt="New Recipe"
                         [ngClass]="{'newRecipeDisabled': categoriesEmpty}">
                 </div>
-
-                <!-- <button class="add-recipe button is-primary has-text-black" routerLink="./new-recipe">
-                    + New Recipe
-                </button> -->
             </div>
             <hr style="background-color: white; margin: 0; width: 100%;">
             <div class="recipe-list-container" *ngIf="recipes">
@@ -76,7 +73,7 @@
                             </span>
                             <!-- Edit and Delete Buttons -->
                             <button class="button"
-                                [routerLink]="['/categories', selectedCategoryId, 'edit-recipes', recipe._id]">
+                                [routerLink]="['/app-recipe-view/categories', selectedCategoryId, 'edit-recipes', recipe._id]">
                                 <div class="icon">
                                     <i class="fas fa-edit"></i>
                                 </div>

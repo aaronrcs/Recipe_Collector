@@ -51,7 +51,7 @@ export class LoginPageComponent implements OnInit {
       
       if(res.status == 200){
         // Thus user has logged in!
-        this.router.navigate(['/categories']);
+        this.router.navigate(['/app-recipe-view']);
       }
     }, 
       (err) =>{

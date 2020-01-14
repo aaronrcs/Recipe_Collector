@@ -42,7 +42,7 @@ export class EditCategoryComponent implements OnInit {
   }
 
   cancel(){
-    this.router.navigate(['/categories', this.categoryId]);
+    this.router.navigate(['/app-recipe-view', this.categoryId]);
   }
 
   // Simple getter function for FormControls
@@ -54,7 +54,7 @@ export class EditCategoryComponent implements OnInit {
     let formData = this.editCategoryForm.value;
 
     this.recipeService.updateCategory(this.categoryId, formData).subscribe(() => {
-      this.router.navigate(['/categories', this.categoryId]);
+      this.router.navigate(['/app-recipe-view', this.categoryId]);
     })
   }
 

@@ -125,7 +125,7 @@ export class EditRecipesComponent implements OnInit {
   }
 
   cancel(){
-    this.router.navigate(['/categories', this.categoryId]);
+    this.router.navigate(['/app-recipe-view', this.categoryId]);
   }
   // Simple getter function for FormControls
   get f() { 
@@ -137,7 +137,7 @@ export class EditRecipesComponent implements OnInit {
     
     this.recipeService.updateRecipe(this.categoryId, this.recipeId, formData).subscribe((newRecipe: RecipeDetails) => {
       // this.router.navigate(['../'], { relativeTo: this.route });
-      this.router.navigate(['/categories', this.categoryId]);
+      this.router.navigate(['/app-recipe-view', this.categoryId]);
     })
 
   }

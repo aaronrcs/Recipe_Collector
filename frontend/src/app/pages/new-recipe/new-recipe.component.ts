@@ -109,7 +109,7 @@ export class NewRecipeComponent implements OnInit {
   }
 
   cancel(){
-    this.router.navigate(['/categories', this.categoryId]);
+    this.router.navigate(['/app-recipe-view', this.categoryId]);
   }
   // Simple getter function for FormControls
   get f() { 
