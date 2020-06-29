@@ -12,15 +12,15 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class SignupPageComponent implements OnInit {
 
-  //Helpful variables for error handling
-  inputErrorMessage = "Invalid Email or Password."
+  // Helpful variables for error handling
+  inputErrorMessage = 'Invalid Email or Password.';
   errorMessage: string;
   duplicateUser: string;
 
-  //Declaring FormGroup
+  // Declaring FormGroup
   signUpForm: FormGroup;
 
-  //Boolean to check when the form was submitted
+  // Boolean to check when the form was submitted
   submitted = false;
 
   constructor( private authService: AuthService, private router: Router, private formBuilder: FormBuilder ) { }
@@ -36,17 +36,17 @@ export class SignupPageComponent implements OnInit {
   }
 
   // Simple getter function for FormControls
-  get f() { 
-    return this.signUpForm.controls; 
+  get f() {
+    return this.signUpForm.controls;
   }
 
-  onSignupClicked(email: string, password: string){
+  onSignupClicked(email: string, password: string) {
 
     this.submitted = true;
-    
+
     this.authService.signup(email, password).subscribe(
       (res: HttpResponse<any>) => {
-      if(res.status === 200){
+      if (res.status === 200) {
         // Were able to make an account
         // Re-direct user to login page
         this.router.navigate(['/login']);
@@ -55,20 +55,13 @@ export class SignupPageComponent implements OnInit {
       (err) => {
         // If error upon signing up
         this.errorMessage = this.inputErrorMessage;
-        console.log("Signup Error: ", err);
-        
+        console.log('Signup Error: ', err);
+
         // duplicateUser will recieve an error message when the email already exists
         this.duplicateUser = err.error.duplicateUser;
 
-        // if(this.duplicateUser){
-        //   console.log("Error (User exists)");
-        // } else {
-        //   this.errormessage = err.error
-        //   console.log("Errors (from backend): ", err.error);
-        // }
-
       }
-    )
+    );
   }
 
 }

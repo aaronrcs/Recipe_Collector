@@ -20,7 +20,7 @@ export class RecipeViewComponent implements OnInit {
   // Boolean values for expansion panels
   panelOpenStateIngred = false;
   panelOpenStateDirect = false;
-  //Boolean value for when Categories are empty
+  // Boolean value for when Categories are empty
   categoriesEmpty = false;
 
   selectedCategoryId: string;
@@ -37,46 +37,46 @@ export class RecipeViewComponent implements OnInit {
 
       if (params.categoryId) {
         this.selectedCategoryId = params.categoryId;
-        /**
-       * Passing the active Params (categoryId) to getRecipes
-       * to obtain all recipes for a certain Category
-       */
-        this.recipeService.getRecipes(params.categoryId).subscribe((recipes: RecipeDetails[]) => {
-          
-          // Show the most recently created recipe at the top
-          this.recipes = recipes.slice().reverse();
-          // console.log("Recipes: ", this.recipes);
-        })
+        // Passing the active Params (categoryId) to getRecipes
+        // inorder to obtain all recipes for a certain Category
+        this.recipeService.getRecipes(params.categoryId)
+          .subscribe((recipes: RecipeDetails[]) => {
+            // Show the most recently created recipe at the top
+            this.recipes = recipes.slice().reverse();
+            // console.log("Recipes: ", this.recipes);
+        });
       } else {
         this.recipes = undefined;
       }
 
-    })
+    });
 
     // Subscribing to Observeable to get an array of all existing Categories
-    this.recipeService.getCategory().subscribe((categories: Categories[]) => {
-      this.categories = categories;
-      // console.log("Categories: ", this.categories);
-      
-      // If no Categories have been created, disable the 'plus' button
-      // For creating a new recipe
-      if(this.categories.length === 0){
-        this.categoriesEmpty = true;
-      }
-    })
+    this.recipeService.getCategory()
+      .subscribe((categories: Categories[]) => {
+        this.categories = categories;
+        // console.log("Categories: ", this.categories);
+
+        // If no Categories have been created, disable the 'plus' button
+        // For creating a new recipe
+        if (this.categories.length === 0) {
+          this.categoriesEmpty = true;
+        }
+    });
 
     // Attaining Login Info
-    let getInfo = localStorage.getItem('login-info');
-    let parseInfo = JSON.parse(getInfo);
+    const getInfo = localStorage.getItem('login-info');
+    const parseInfo = JSON.parse(getInfo);
     this.loggedInInfo = parseInfo;
 
   }
 
   // Convience function to check if Object is empty
   isEmptyObject(obj) {
-    for (let key in obj) {
-      if (obj.hasOwnProperty(key))
+    for (const key in obj) {
+      if (obj.hasOwnProperty(key)) {
         return false;
+      }
     }
     return true;
   }
@@ -117,7 +117,7 @@ export class RecipeViewComponent implements OnInit {
             widths: [450],
             headerRows: 1,
             body: [
-              [ ingredientInfo ] 
+              [ ingredientInfo ]
             ],
           },
           layout: 'headerLineOnly'
@@ -193,7 +193,7 @@ export class RecipeViewComponent implements OnInit {
             widths: [450],
             headerRows: 1,
             body: [
-              [ ingredientInfo ] 
+              [ ingredientInfo ]
             ],
           },
           layout: 'headerLineOnly'
@@ -253,8 +253,7 @@ export class RecipeViewComponent implements OnInit {
           }
         ]
       }
-    }
-
+    };
   }
 
   // Function for setting up image for external PDF file
@@ -286,14 +285,15 @@ export class RecipeViewComponent implements OnInit {
   onDeleteCategoryClick() {
     this.recipeService.deleteCategory(this.selectedCategoryId).subscribe((res: any) => {
       this.router.navigate(['/app-recipe-view']);
-    })
+    });
   }
 
   // Function to delete Recipes
   onDeleteRecipeClick(recipeId: string) {
-    this.recipeService.deleteRecipe(this.selectedCategoryId, recipeId).subscribe((res: any) => {
-      this.recipes = this.recipes.filter(val => val._id !== recipeId);
-    })
+    this.recipeService.deleteRecipe(this.selectedCategoryId, recipeId)
+      .subscribe((res: any) => {
+        this.recipes = this.recipes.filter(val => val._id !== recipeId);
+    });
   }
 
 }

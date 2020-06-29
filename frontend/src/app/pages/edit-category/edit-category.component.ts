@@ -20,7 +20,6 @@ export class EditCategoryComponent implements OnInit {
     categoryName: new FormControl('', Validators.required)
   });
 
-
   ngOnInit() {
 
     this.route.params.subscribe(
@@ -29,33 +28,33 @@ export class EditCategoryComponent implements OnInit {
 
         this.recipeService.getSingleCategory(this.categoryId).subscribe((singleCategory: Categories) => {
           this.singleCategoryInfo = singleCategory;
-          console.log("Single Category: ", this.singleCategoryInfo);
-  
+          console.log('Single Category: ', this.singleCategoryInfo);
+
           // Using 'setValue' to set the value of each input with the specified information
           // This will will help when using wants edit/update a Category name
           this.editCategoryForm.setValue({
             categoryName: this.singleCategoryInfo.categoryName
           });
-  
-        })
-    })
+
+        });
+    });
   }
 
-  cancel(){
+  cancel() {
     this.router.navigate(['/app-recipe-view', this.categoryId]);
   }
 
   // Simple getter function for FormControls
-  get f() { 
-    return this.editCategoryForm.controls; 
+  get f() {
+    return this.editCategoryForm.controls;
   }
 
-  updateCategory(){
-    let formData = this.editCategoryForm.value;
+  updateCategory() {
+    const formData = this.editCategoryForm.value;
 
     this.recipeService.updateCategory(this.categoryId, formData).subscribe(() => {
       this.router.navigate(['/app-recipe-view', this.categoryId]);
-    })
+    });
   }
 
 }

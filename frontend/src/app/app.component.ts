@@ -12,9 +12,9 @@ export class AppComponent {
   signedUpMessage: Boolean;
   sub: Subscription;
 
-  constructor(private authService: AuthService){}
+  constructor(private authService: AuthService) {}
 
-  ngOnInit(){
+  ngOnInit() {
     this.authService.getSignUpStatus().subscribe(res => this.signedUpMessage = res)
   }
   closeNotification(){

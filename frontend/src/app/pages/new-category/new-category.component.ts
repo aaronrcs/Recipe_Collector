@@ -11,7 +11,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class NewCategoryComponent implements OnInit {
 
-  //Declaring FormGroup
+  // Declaring FormGroup
   categoryForm: FormGroup;
 
   constructor( private recipeService: RecipeService, private router: Router, private formBuilder: FormBuilder) { }
@@ -22,20 +22,20 @@ export class NewCategoryComponent implements OnInit {
     });
   }
 
-  cancel(){
+  cancel() {
     this.router.navigate(['/app-recipe-view']);
   }
-  
+
   // Simple getter function for FormControls
-  get f() { 
-    return this.categoryForm.controls; 
+  get f() {
+    return this.categoryForm.controls;
   }
 
-  createCategory(categoryName: string){
-    return this.recipeService.createCategory(categoryName).subscribe((category: Categories) => {
-      // Now we navigate /app-recipe-view/response._id
-      this.router.navigate(['/app-recipe-view', category._id]);
-    })
-
+  createCategory(categoryName: string) {
+    return this.recipeService.createCategory(categoryName)
+      .subscribe((category: Categories) => {
+        // Now we navigate /app-recipe-view/response._id
+        this.router.navigate(['/app-recipe-view', category._id]);
+    });
   }
 }

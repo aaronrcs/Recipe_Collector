@@ -12,14 +12,14 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class LoginPageComponent implements OnInit {
 
-  //Helpful variables for error handling
-  emailPasswordErrorMessage = "The username or password you specified are invalid. Please try again."
+  // Helpful variables for error handling
+  emailPasswordErrorMessage = 'The username or password you specified are invalid. Please try again.';
   errorMessage: string;
 
-  //Declaring FormGroup
+  // Declaring FormGroup
   loginForm: FormGroup;
 
-  //Boolean to check when the form was submitted
+  // Boolean to check when the form was submitted
   submitted = false;
 
   selectedCategoryId: string;
@@ -39,28 +39,28 @@ export class LoginPageComponent implements OnInit {
   }
 
   // Simple getter function for FormControls
-  get f() { 
-    return this.loginForm.controls; 
+  get f() {
+    return this.loginForm.controls;
   }
 
-  onLoginClicked(email: string, password: string){
+  onLoginClicked(email: string, password: string) {
     this.submitted = true;
 
     this.authService.login(email, password).subscribe(
       (res: HttpResponse<any>) => {
-      
-      if(res.status == 200){
+
+      if (res.status === 200) {
         // Thus user has logged in!
         this.router.navigate(['/app-recipe-view']);
       }
-    }, 
-      (err) =>{
+    },
+      (err) => {
         // If error upon logging in
         this.errorMessage = this.emailPasswordErrorMessage;
-        console.log("Login Error: ", err);
+        console.log('Login Error: ', err);
 
       }
-    )
+    );
   }
 
 }

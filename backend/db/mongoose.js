@@ -2,7 +2,7 @@
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 // const connectionString = process.env.MONGODB_URI || 'mongodb://localhost:27017/RecipeCollector'
-// const connectionString = 'mongodb://localhost:27017/RecipeCollector'
+const connectionString = 'mongodb://localhost:27017/RecipeCollector'
 //process.env.CONNECTION_STRING
 
 // Using Bluebird for promises currently
@@ -12,7 +12,7 @@ mongoose.Promise = global.Promise;
 // Load config( or env)
 dotenv.config({path:"./config.env"});
 
-mongoose.connect(process.env.CONNECTION_STRING, { useNewUrlParser: true }).then(() => {
+mongoose.connect(connectionString, { useNewUrlParser: true }).then(() => {
     console.log('Connected to MongoDB successfully!');
 }).catch((error) => {
     console.log("Could not connect to MongoDB database");

@@ -22,8 +22,8 @@ export class WebReqInterceptor implements HttpInterceptor {
     // call next() and handle the response
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
-        console.log("HTTP ERROR: ", error);
-    
+        console.log('HTTP ERROR: ', error);
+
         if (error.status === 401) {
           // 401 error so we are unauthorized
 
@@ -35,17 +35,16 @@ export class WebReqInterceptor implements HttpInterceptor {
                 return next.handle(request);
               }),
               catchError((err: any) => {
-                console.log("Catch Error: " + err);
+                console.log('Catch Error: ' + err);
                 this.authService.logout();
                 return empty();
-          
               })
-            )
+            );
         }
 
         return throwError(error);
       })
-    )
+    );
   }
 
   refreshAccessToken() {
@@ -55,20 +54,19 @@ export class WebReqInterceptor implements HttpInterceptor {
           // this code will run when the access token has been refreshed
           observer.next();
           observer.complete();
-        })
-      })
+        });
+      });
     } else {
       this.refreshingAccessToken = true;
       // we want to call a method in the auth service to send a request to refresh the access token
       return this.authService.getNewAccessToken().pipe(
         tap(() => {
-          console.log("Access Token Refreshed!");
+          console.log('Access Token Refreshed!');
           this.refreshingAccessToken = false;
           this.accessTokenRefreshed.next();
         })
-      )
+      );
     }
-    
   }
 
 
@@ -82,7 +80,7 @@ export class WebReqInterceptor implements HttpInterceptor {
         setHeaders: {
           'x-access-token': token
         }
-      })
+      });
     }
     return request;
   }

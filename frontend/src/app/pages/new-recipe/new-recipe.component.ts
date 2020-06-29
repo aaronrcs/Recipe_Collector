@@ -18,14 +18,15 @@ export class NewRecipeComponent implements OnInit {
   notEmptyFile = true;
   uploadedImage: File;
 
-  //Error File Upload info
+  // Error File Upload info
   errorFileUpload: string;
 
-  //Booleans for File Uploads
+  // Booleans for File Uploads
   checkFileType = false;
   checkFileSize = false;
 
-  constructor(private ng2ImgMax: Ng2ImgMaxService, private recipeService: RecipeService, private route: ActivatedRoute, private router: Router, public fb: FormBuilder) { }
+  constructor(private ng2ImgMax: Ng2ImgMaxService,
+              private recipeService: RecipeService, private route: ActivatedRoute, private router: Router, public fb: FormBuilder) { }
 
   // recipeForm = new FormGroup({
   //   recipeName: new FormControl(''),
@@ -43,22 +44,22 @@ export class NewRecipeComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
-      this.categoryId = params['categoryId'];
-    })
+      this.categoryId = params.categoryId;
+    });
   }
 
   fileChanged(e) {
     this.notEmptyFile = false;
     const file = (e.target as HTMLInputElement).files[0];
-    let imageLimitSizeServer = 0.050;
+    const imageLimitSizeServer = 0.050;
 
     // File Validation
-    if(file.size >= 150000){
+    if (file.size >= 150000) {
       this.checkFileSize = true;
     } else {
       this.checkFileSize = false;
     }
-    
+
     // Using ng2ImgMax to compress uploaded Image files to 50 KB if > 50 KB
     this.ng2ImgMax.compressImage(file, imageLimitSizeServer).subscribe(
       result => {
@@ -76,10 +77,7 @@ export class NewRecipeComponent implements OnInit {
         // console.log('😢 Oh no!', error);
       }
     );
-    
 
-    // console.log("File: ", file);
-        
     this.imageFileName = file.name;
 
     this.recipeForm.get('recipeImage').updateValueAndValidity();
@@ -89,8 +87,8 @@ export class NewRecipeComponent implements OnInit {
     reader.onload = () => {
       this.recipeImageBlob = reader.result as string;
       // console.log("Blob: ", this.recipeImageBlob);
-    }
-    reader.readAsDataURL(file)
+    };
+    reader.readAsDataURL(file);
   }
 
   getBase64(file) {
@@ -98,7 +96,7 @@ export class NewRecipeComponent implements OnInit {
     reader.readAsDataURL(file);
     // reader.readAsText(file);
     reader.onload = () => {
-      console.log("Image: " , reader.result as string); 
+      console.log('Image: ' , reader.result as string);
       this.recipeImageBlob = reader.result as string;
       // console.log("Read file as text: ", reader.readAsText(file));
     };
@@ -108,25 +106,20 @@ export class NewRecipeComponent implements OnInit {
 
   }
 
-  cancel(){
+  cancel() {
     this.router.navigate(['/app-recipe-view', this.categoryId]);
   }
   // Simple getter function for FormControls
-  get f() { 
-    return this.recipeForm.controls; 
+  get f() {
+    return this.recipeForm.controls;
   }
 
-  createRecipe(){
-    // console.log("Recipe Name: ", this.recipeForm.value.recipeName);
-    // let formData = this.recipeForm.value;
-
-    // formData.recipeImage = this.imageFileName;
-
-    // console.log("Form Data: ", formData);
-    
-    this.recipeService.createRecipe(this.recipeForm.value.recipeName,this.recipeForm.value.ingredientsInfo, this.recipeForm.value.directions, this.recipeForm.value.recipeImage, this.recipeImageBlob, this.categoryId).subscribe((newRecipe: RecipeDetails) => {
+  createRecipe() {
+    this.recipeService.createRecipe(this.recipeForm.value.recipeName, this.recipeForm.value.ingredientsInfo,
+        this.recipeForm.value.directions, this.recipeForm.value.recipeImage, this.recipeImageBlob, this.categoryId)
+      .subscribe(() => {
       this.router.navigate(['../'], { relativeTo: this.route });
-    })
+    });
 
   }
 
