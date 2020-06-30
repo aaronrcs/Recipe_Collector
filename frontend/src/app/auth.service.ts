@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { shareReplay, tap, catchError } from 'rxjs/operators';
 import { HttpResponse, HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Subject, Observable } from 'rxjs';
+import { AlertifyService } from './alertify.service';
 
 @Injectable({
   providedIn: 'root'
@@ -32,7 +33,8 @@ export class AuthService {
         return this.subjectLogin.asObservable();
     }
 
-  constructor(private webService: WebRequestService, private router: Router, private http: HttpClient) { }
+  constructor(private webService: WebRequestService, private router: Router,
+              private http: HttpClient, private alertify: AlertifyService) { }
 
   login(email: string, password: string) {
     return this.webService.login(email, password).pipe(
@@ -40,9 +42,8 @@ export class AuthService {
       tap((res: HttpResponse<any>) => {
         // Auth tokens will be in header of this response
         this.setSession(res.body._id, res.headers.get('x-access-token'), res.headers.get('x-refresh-token'));
-
-        console.log('Logged in!');
-        // console.log("Response: ", res);
+        this.alertify.success(`Hi there, ${res.body.email}`);
+        // console.log('Response: ', res);
         this.sendLoginInfo(res);
       })
     );
@@ -56,13 +57,15 @@ export class AuthService {
         this.setSession(res.body._id, res.headers.get('x-access-token'), res.headers.get('x-refresh-token'));
 
         // Change sign up status to 'True'
-        this.sendSignUpStatus(res.ok);
+        // this.sendSignUpStatus(res.ok);
 
-        console.log('You signed up!');
-        console.log('Response: ', res);
+        this.alertify.success('You signed up Successfully!');
+
+        // console.log('Response: ', res);
 
         // Catch error
         catchError((err) => {
+          this.alertify.error(err);
           return err;
         });
       })

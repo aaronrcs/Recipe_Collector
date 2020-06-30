@@ -1,3 +1,4 @@
+import { AlertifyService } from './../../alertify.service';
 import { RecipeDetails } from './../../models/recipe.models';
 import { Categories } from './../../models/categories.models';
 import { Component, OnInit } from '@angular/core';
@@ -30,7 +31,8 @@ export class RecipeViewComponent implements OnInit {
 
   loggedInInfo: any;
 
-  constructor(private recipeService: RecipeService, private route: ActivatedRoute, private router: Router) { }
+  constructor(private recipeService: RecipeService,
+              private route: ActivatedRoute, private router: Router, private alertify: AlertifyService) { }
 
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
@@ -43,7 +45,7 @@ export class RecipeViewComponent implements OnInit {
           .subscribe((recipes: RecipeDetails[]) => {
             // Show the most recently created recipe at the top
             this.recipes = recipes.slice().reverse();
-            // console.log("Recipes: ", this.recipes);
+            // console.log('Recipes: ', this.recipes);
         });
       } else {
         this.recipes = undefined;
@@ -55,7 +57,7 @@ export class RecipeViewComponent implements OnInit {
     this.recipeService.getCategory()
       .subscribe((categories: Categories[]) => {
         this.categories = categories;
-        // console.log("Categories: ", this.categories);
+        // console.log('Categories: ', this.categories);
 
         // If no Categories have been created, disable the 'plus' button
         // For creating a new recipe
@@ -282,17 +284,29 @@ export class RecipeViewComponent implements OnInit {
   }
 
   // Function to Delete Categories
-  onDeleteCategoryClick() {
-    this.recipeService.deleteCategory(this.selectedCategoryId).subscribe((res: any) => {
-      this.router.navigate(['/app-recipe-view']);
+  onDeleteCategoryClick(selectedCategoryId: string) {
+      const getCategoryName = this.categories.filter(val => val._id === selectedCategoryId);
+
+      this.alertify.confirm(`Are you sure you want to delete '${getCategoryName[0].categoryName}' Category?`, () => {
+        this.recipeService.deleteCategory(selectedCategoryId).subscribe(() => {
+          this.router.navigate(['/app-recipe-view']);
+        }, error => {
+          this.alertify.error(error);
+        });
     });
   }
 
   // Function to delete Recipes
   onDeleteRecipeClick(recipeId: string) {
-    this.recipeService.deleteRecipe(this.selectedCategoryId, recipeId)
-      .subscribe((res: any) => {
+    const getRecipeName = this.recipes.filter(val => val._id === recipeId);
+
+    this.alertify.confirm(`Are you sure you want to delete '${getRecipeName[0].recipeName}' Recipe?`, () => {
+      this.recipeService.deleteRecipe(this.selectedCategoryId, recipeId)
+      .subscribe(() => {
         this.recipes = this.recipes.filter(val => val._id !== recipeId);
+      }, error => {
+        this.alertify.error('Could not delete Recipe!');
+      });
     });
   }
 

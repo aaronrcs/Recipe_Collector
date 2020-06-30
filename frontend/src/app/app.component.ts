@@ -9,16 +9,18 @@ import { Subscription } from 'rxjs';
 })
 export class AppComponent {
   title = 'R.C';
-  signedUpMessage: Boolean;
+  signedUpMessage: boolean;
   sub: Subscription;
 
   constructor(private authService: AuthService) {}
 
   ngOnInit() {
-    this.authService.getSignUpStatus().subscribe(res => this.signedUpMessage = res)
+    // this.authService.getSignUpStatus().subscribe(res =>
+    //   this.signedUpMessage = res
+    // );
   }
-  closeNotification(){
-    this.signedUpMessage = false;
-  }
+  // closeNotification() {
+  //   this.signedUpMessage = false;
+  // }
 
 }

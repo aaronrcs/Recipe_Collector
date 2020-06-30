@@ -1,3 +1,4 @@
+import { AlertifyService } from './../../alertify.service';
 import { AuthService } from './../../auth.service';
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
@@ -25,7 +26,8 @@ export class LoginPageComponent implements OnInit {
   selectedCategoryId: string;
 
 
-  constructor( private authService: AuthService, private router: Router, private formBuilder: FormBuilder) { }
+  constructor( private authService: AuthService, private router: Router,
+               private formBuilder: FormBuilder, private alertify: AlertifyService) { }
 
   ngOnInit() {
 
@@ -57,7 +59,8 @@ export class LoginPageComponent implements OnInit {
       (err) => {
         // If error upon logging in
         this.errorMessage = this.emailPasswordErrorMessage;
-        console.log('Login Error: ', err);
+        // console.log('Login Error: ', err);
+        this.alertify.error('Error logging in, Please try again!');
 
       }
     );

@@ -20,7 +20,7 @@
                             <a [routerLink]="['/edit-category', selectedCategoryId]" class="dropdown-item">
                                 Edit
                             </a>
-                            <a (click)="onDeleteCategoryClick()" class="dropdown-item has-text-danger">
+                            <a (click)="onDeleteCategoryClick(selectedCategoryId)" class="dropdown-item has-text-danger">
                                 Delete
                             </a>
                         </div>

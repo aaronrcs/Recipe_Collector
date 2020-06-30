@@ -1,3 +1,8 @@
+import { AlertifyService } from './alertify.service';
+import { WebRequestService } from './web-request.service';
+import { RecipeService } from 'src/app/recipe.service';
+import { AuthService } from './auth.service';
+
 import { HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
@@ -47,6 +52,10 @@ import { HomeComponent } from './pages/home/home.component';
     CUSTOM_ELEMENTS_SCHEMA
   ],
   providers: [
+    AuthService,
+    RecipeService,
+    WebRequestService,
+    AlertifyService,
     {
       provide: HTTP_INTERCEPTORS, useClass: WebReqInterceptor, multi: true
     }

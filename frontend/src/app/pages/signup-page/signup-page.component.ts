@@ -1,3 +1,4 @@
+import { AlertifyService } from './../../alertify.service';
 import { AuthService } from './../../auth.service';
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
@@ -23,7 +24,8 @@ export class SignupPageComponent implements OnInit {
   // Boolean to check when the form was submitted
   submitted = false;
 
-  constructor( private authService: AuthService, private router: Router, private formBuilder: FormBuilder ) { }
+  constructor( private authService: AuthService, private router: Router,
+               private formBuilder: FormBuilder ) { }
 
   ngOnInit() {
     this.signUpForm = this.formBuilder.group({
@@ -55,7 +57,7 @@ export class SignupPageComponent implements OnInit {
       (err) => {
         // If error upon signing up
         this.errorMessage = this.inputErrorMessage;
-        console.log('Signup Error: ', err);
+        // console.log('Signup Error: ', err);
 
         // duplicateUser will recieve an error message when the email already exists
         this.duplicateUser = err.error.duplicateUser;
